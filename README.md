@@ -4,7 +4,7 @@
 > Ko na hyeon, Go eun a, Moon seok ho, Sin su bin, Yu jun hyeok, Lee ye jin, Hwang se hyeon
 
 ## Project Outline:
-1. Project Name:
+1. Project Name: 단체 톡방 채팅점유율 분석, 온도체크 서비스
 2. Project Goal:
 3. 
 
