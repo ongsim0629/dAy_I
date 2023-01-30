@@ -1,4 +1,4 @@
-# Gyeong-In Line
+# Team Gyeong-In Line
 ----------------------------------------------------------------------------------------
 ## Member: 
 > Go na hyeon, Go eun a, Moon seok ho, Sin su bin, Yu jun hyeok, Lee ye jin, Hwang se hyeon
