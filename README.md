@@ -1,15 +1,15 @@
 # Team Gyeong-In Line
 ----------------------------------------------------------------------------------------
 ## Member: 
-|Name|Position|
-|:---:|---|
-|Ko na hyeon|Server Developer|
-|Go eun a|Server Developer|
-|Moon seok ho|Data Engineer|
-|Sin su bin|Server Developer|
-|Yu jun hyeok|DL Developer|
-|Lee ye jin|Frontend Developer|
-|Hwang se hyeon|DB Administration|
+|Name|Univ.|Position|
+|:---:|---|---|
+|Ko na hyeon|Inha|Server Developer|
+|Go eun a|Kyonggi|Server Developer|
+|Moon seok ho|Kyonggi|Data Engineer|
+|Sin su bin|Kyonggi|Server Developer|
+|Yu jun hyeok|Kyonggi|DL Developer|
+|Lee ye jin|Inha|Frontend Developer|
+|Hwang se hyeon|Kyonggi|DB Administration|
 
 ## Project Outline:
 ### Project Name: 
