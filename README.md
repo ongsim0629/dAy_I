@@ -1,8 +1,8 @@
 # Team Gyeong-In Line
 ----------------------------------------------------------------------------------------
 ## Member: 
-|Name|<center>Position</center>|
-|:---:|:---|
+|Name|Position|
+|:---:|---|
 |Ko na hyeon|Server Developer|
 |Go eun a|Server Developer|
 |Moon seok ho|Data Engineer|
@@ -14,7 +14,7 @@
 ## Project Outline:
 ### Project Name: 
 > 단체 톡방 채팅점유율, 채팅온도 분석 서비스
-### implement Goal: 
+### Implement Goal: 
 > SNS 대화 데이터를 분석, 채팅방의 온도와 인물별 채팅 점유율을 분석하여 대시보드화하여 출력
 >> * 채팅 온도란?: 채팅방의 분위기를 수치화한 만들어낸 단위로 대화의 내용이 긍정적일수록 높고, 부정적일수록 낮다.
 ### Why?: 
