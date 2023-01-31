@@ -16,11 +16,11 @@
 > 일기를 통한 멘탈 케어 서비스
 ### Project Goal: 
 > 일기에 적혀져 있는 문장을 분석하여 사용자의 감정을 파악하고 그에 맞는 맞춤 컨텐츠를 제공
+### Project Date:
+> 2023.01.30 ~ 2023.02.28
 ### Implement Goal: 
 > 논의 중
-
-## 📚 STACKS
-
+### 📚 STACKS
 <table>
   <tr>
     <th> Backend </th>
@@ -50,6 +50,3 @@
     </td>
   </tr>
 </table>
-<div align=center> 
-
-</div>
