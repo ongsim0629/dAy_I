@@ -7,7 +7,7 @@
 |Go eun a|Kyonggi|Server Developer|
 |Moon seok ho|Kyonggi|Data Engineer|
 |Sin su bin|Kyonggi|Server Developer|
-|Yu jun hyeok|Kyonggi|DL Developer|
+|Yoo jun hyeok|Kyonggi|DL Developer|
 |Lee ye jin|Inha|Frontend Developer|
 |Hwang se hyeon|Kyonggi|DB Administration|
 
