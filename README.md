@@ -4,7 +4,7 @@
 |Name|Univ.|Position|
 |:---:|---|---|
 |Ko na hyeon|Inha|Server Developer|
-|Go eun a|Kyonggi|Server Developer|
+|Ko eun a|Kyonggi|Server Developer|
 |Moon seok ho|Kyonggi|Data Engineer|
 |Sin su bin|Kyonggi|Server Developer|
 |Yoo jun hyeok|Kyonggi|DL Developer|
