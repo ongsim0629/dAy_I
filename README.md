@@ -63,5 +63,3 @@
     </td>
   </tr>
 </table>
-
-![KakaoTalk_20230203_152504089](https://user-images.githubusercontent.com/93309561/216534979-02feba3d-f4ef-4d36-82d9-f97cfa688ee9.jpg)
