@@ -1,5 +1,6 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForSequenceClassification
+import numpy as np
 import nltk
 import matplotlib.pyplot as plt
 
@@ -28,18 +29,13 @@ def emo_model(temp): # 감정 추출 모델
 
     with torch.no_grad():
         tokens = tokenizer_emo.encode(temp, return_tensors='pt')
-        print(model_emo(tokens))
         output = model_emo(tokens)
     
     #전처리
-    n = str(output.logits)
-    n = n[9:-3]
-    n = n.replace(" ","")
-    em_list = n.split(',')
-    return list(map(float, em_list)) # 정수로 변환
+    return output.logits.tolist()[0]
 
 def model_visualization(iplist):
     emotion = ['neutrality', 'happiness', 'Embarrassment','anger','unrest','sadness','aversion']
     plt.figure(figsize=(11,8))
     plt.bar(emotion, iplist, width=0.3)
-    plt.show()
+    plt.savefig('./static/image/analyzeresult.png')
