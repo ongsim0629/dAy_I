@@ -7,11 +7,13 @@ import Header from "./Layout/Header";
 
 const Input = styled.input`
     color: #999999;
-    padding: 8px 200px;
+    padding: 8px 200px 3px 10px;
+    margin: 10px 0px;
     background: white;
     border-radius: 4px;
     border-width: 1.4px;
     border-color: #CCCCCC;
+    text-align: left;
 `;
 
 const Button = styled.button`
@@ -34,9 +36,7 @@ const CancelButton = styled.button`
 `;
 
 function RegisterPage(props) {
-
     //const dispatch = useDispatch();
-    
 
     const [Id, setId] = useState("");
     const [Password, setPassword] = useState("");
@@ -48,7 +48,6 @@ function RegisterPage(props) {
     const onPasswordHandler = (event) => {
         setPassword(event.currentTarget.value);
     }
-
     const onConfirmPasswordHandler = (event) => {
         setConfirmPassword(event.currentTarget.value);
     }
@@ -73,10 +72,10 @@ function RegisterPage(props) {
         fetch("http://localhost:3000", { 
             method: "POST",
             body: JSON.stringify({
-              id: this.state.Id,
-              password: this.state.Password,
+                id: this.state.Id,
+                password: this.state.Password,
             }),
-          })
+        })
             .then((response) => response.json())
             .then((result) => console.log("결과: ", result))
             .then(response => {
@@ -87,34 +86,33 @@ function RegisterPage(props) {
 
     return (
         <div>
-        <Header></Header>
-        <div>
-            <div style={{ 
-            display: 'flex', justifyContent: 'center', alignItems: 'center', 
-            width: '100%', height: '100vh'
-            }}>
-
+            <Header></Header>
             <div>
-                <div>
-                    <h1 align="center">회원가입</h1>
+                <div style={{ 
+                display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                width: '100%', height: '100vh'
+                }}>
+                    <div>
+                        <div>
+                            <h1 align="center">회원가입</h1><br />
+                        </div>
+                        <form style={{ display: 'flex', flexDirection: 'column'}} onSubmit={onSubmitHandler} >
+                            <label>아이디</label>
+                            <Input type='text' value={Id} onChange={onIdHandler} placeholder='6~15자까지 영문자(소문자), 숫자 사용 가능합니다.'/><br /><br />
+                            <label>비밀번호</label>
+                            <Input type='password' value={Password} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br /><br />
+                            <label>비밀번호 확인</label>
+                            <Input type='password' value={ConfirmPassword} onChange={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br /><br />
+                            <button formAction='/home'>{/* form Action 안에 login url 넣어주면 됨 */}
+                                완료
+                            </button><br></br>
+                            <button>
+                                취소
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <form style={{ display: 'flex', flexDirection: 'column'}} onSubmit={onSubmitHandler} >
-                    
-                    <label>아이디</label>
-                    <Input type='text' value={Id} onChange={onIdHandler} placeholder='6~15자까지 영문자(소문자), 숫자 사용 가능합니다.'/><br />
-                    <label>비밀번호</label>
-                    <Input type='password' value={Password} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br />
-                    <label>비밀번호 확인</label>
-                    <Input type='password' value={ConfirmPassword} onChange={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br /><br />
-                    <button formAction='/home'>
-                    {/* form Action 안에 login url 넣어주면 됨 */}
-                        완료
-                    </button><br></br>
-                    <button> 취소</button>
-                </form>
             </div>
-        </div>
-        </div>
         </div>
     )
 }
