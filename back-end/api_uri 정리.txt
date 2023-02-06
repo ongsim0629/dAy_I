@@ -1,0 +1,56 @@
+- 초기화면
+/index (GET)
+
+- 로그인 폼
+/members/login (GET)
+- 로그인
+/members/login (POST)
+
+- 회원가입 폼
+/members/new (GET)
+- 회원가입
+/members/new (POST)
+
+- 홈화면
+/home (GET)
+
+- 회원정보 수정 폼
+/members/{id}/edit (GET)
+- 회원정보 수정
+/members/{id}/edit (POST)
+
+- user 로그아웃
+/logout (GET)
+
+
+
+- 일기 작성 폼
+/diaries/{id}/write?date=230102 (GET)
+- 일기 작성
+/diaries/{id}/write?date=230102 (POST)
+
+- 일기 수정
+/diaries/{id}/edit?date=230102 (POST)
+
+- 일기 삭제
+/diaries/{id}/delete?date=230102 (POST)
+
+- 일기 조회
+/diaries/{id}?date=230102 (GET)
+
+- 통계 저장
+/mypage/{id}/store (POST)
+- 통계 업데이트
+/mypage/{id}/update (POST)
+- 통계 조회(mypage)
+/mypage/{id} (GET)
+- 로딩
+/loading (GET)
+
+
+
+
+[Feedback]
+1. Front -> DB (query 날리기) DB
+2. Password -> 암호화처리
+
