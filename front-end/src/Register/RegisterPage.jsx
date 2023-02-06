@@ -86,6 +86,9 @@ function RegisterPage(props) {
 
 
     return (
+        <div>
+        <Header></Header>
+        <div>
             <div style={{ 
             display: 'flex', justifyContent: 'center', alignItems: 'center', 
             width: '100%', height: '100vh'
@@ -110,6 +113,8 @@ function RegisterPage(props) {
                     <button> 취소</button>
                 </form>
             </div>
+        </div>
+        </div>
         </div>
     )
 }
