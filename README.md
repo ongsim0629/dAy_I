@@ -1,26 +1,39 @@
 # Team Gyeong-In Line
-----------------------------------------------------------------------------------------
-## Member: 
-|Name|Univ.|Position|
-|:---:|---|---|
-|Ko na hyeon|Inha|Server Developer|
-|Go eun a|Kyonggi|Server Developer|
-|Moon seok ho|Kyonggi|Data Engineer|
-|Sin su bin|Kyonggi|Server Developer|
-|Yoo jun hyeok|Kyonggi|DL Developer|
-|Lee ye jin|Inha|Frontend Developer|
-|Hwang se hyeon|Kyonggi|DB Administration|
+
+---
+
+## Member:
+
+|     Name      | Univ.   | Position           |
+| :-----------: | ------- | ------------------ |
+|  Ko na hyeon  | Inha    | Server Developer   |
+|   Ko eun a    | Kyonggi | Server Developer   |
+| Moon seok ho  | Kyonggi | Data Engineer      |
+|  Shin su bin  | Kyonggi | Server Developer   |
+| Yoo jun hyeok | Kyonggi | DL Developer       |
+|  Lee ye jin   | Inha    | Frontend Developer |
+| Hwang se hyun | Kyonggi | DB Administration  |
 
 ## Project Outline:
-### Project Name: 
+
+### Project Name:
+
 > 일기를 통한 멘탈 케어 서비스
-### Project Goal: 
+
+### Project Goal:
+
 > 일기에 적혀져 있는 문장을 분석하여 사용자의 감정을 파악하고 그에 맞는 맞춤 컨텐츠를 제공
+
 ### Project Date:
+
 > 2023.01.30 ~ 2023.02.28
-### Implement Goal: 
+
+### Implement Goal:
+
 > 논의 중
+
 ### 📚 STACKS
+
 <table>
   <tr>
     <th> Backend </th>

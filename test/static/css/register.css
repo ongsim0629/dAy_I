@@ -1,0 +1,20 @@
+.checkbutton {
+    /* position: absolute;
+    width: 378px;
+    height: 44px;
+    left: 531px;
+    top: 801px; */
+    
+    background: #A2A1FF;
+    border-radius: 8px;
+}
+.cancelbutton {
+    /* position: absolute;
+    width: 378px;
+    height: 48px;
+    left: 531px;
+    top: 871px; */
+    
+    background: #E5E5E5;
+    border-radius: 8px;
+}

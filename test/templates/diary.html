@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지난 일기</title>
+</head>
+<body>
+    <h1>일기 조회</h1>
+    <br>
+    <div>
+        {% if summary %}
+            <span class="result_lable">
+                {% block content %}
+                {{ summary }}
+                {% endblock %}
+            </span>
+        {% endif %}
+    </div>
+    <br>
+    <img src="./static/image/analyzeresult.png">
+</body>
+</html>
