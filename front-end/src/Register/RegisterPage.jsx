@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import Layout from "./Layout/Layout";
-import Header from "./Layout/Header";
+//import Layout from "./Layout/Layout";
+//import Header from "./Layout/Header";
 //import { useDispatch } from 'react-redux';
 //import { registerUser } from '../../../_actions/user_action';
+
+const Header = styled.header`
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100px;
+    background-color: #E5E0FF;
+`;
 
 const Input = styled.input`
     color: #999999;
@@ -16,24 +24,41 @@ const Input = styled.input`
     text-align: left;
 `;
 
-const Button = styled.button`
+const SubmitButton = styled.button`
     color: white;
     font-weight: bold;
-    padding: 8px 1px;
+    padding: 5px 1px;
     background: #A2A1FF;
     font-size:1.2rem;
     border:none;
     border-radius: 7px;
+
+    &:hover {
+        cursor: pointer;
+    }
+    &:focus{
+        box-shadow: 0 0 0 1px gray;
+    }
 `;
 
 const CancelButton = styled.button`
     color: #AEAEAE;
     font-weight: bold;
+    padding: 5px 1px;
     background: #E5E5E5;
     font-size:1.2rem;
     border: none;
     border-radius: 7px;
+
+    &:hover {
+        cursor: pointer;
+    }
+    &:focus{
+        box-shadow: 0 0 0 1px gray;
+    }
 `;
+
+
 
 function RegisterPage(props) {
     //const dispatch = useDispatch();
@@ -63,7 +88,7 @@ function RegisterPage(props) {
             password: Password,
             confirmPassword: ConfirmPassword,
         }
-        //console.log("Button Click"); //확인용
+        console.log("Button Click"); //확인용
 
 
         //<fetch 주소 부분에다 register API 주소를 달면 됩니다!>
@@ -103,12 +128,12 @@ function RegisterPage(props) {
                             <Input type='password' value={Password} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br /><br />
                             <label>비밀번호 확인</label>
                             <Input type='password' value={ConfirmPassword} onChange={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br /><br />
-                            <button formAction='/home'>{/* form Action 안에 login url 넣어주면 됨 */}
+                            <SubmitButton type='submit' formAction='/login'>{/* form Action 안에 login url 넣어주면 됨 */}
                                 완료
-                            </button><br></br>
-                            <button>
+                            </SubmitButton><br></br>
+                            <CancelButton formAction='/login'> 
                                 취소
-                            </button>
+                            </CancelButton>
                         </form>
                     </div>
                 </div>
