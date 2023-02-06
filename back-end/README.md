@@ -120,6 +120,8 @@ diary - 일기 작성
 diary - 일기 수정
 /diaries/{id}/edit?date=230102 (POST)
 
+<!-- 동시에, front에서 쿼리 날리기 -> 조회 정보 -> 출력 -->
+
 1. request (front -> back)
    {
    "diary_write_date" : "230226",
@@ -137,5 +139,7 @@ diary - 일기 수정
    diary - 통계 저장
    diary - 통계 업데이트 (일기 업데이트 되는 경우)
    diary - 통계 조회
+
+7
 
 # 고은아
