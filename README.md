@@ -1,4 +1,4 @@
-# Team Gyeong-In Line
+# Team Gyeong-In Line / GitHub Commit 시 JIRA 업로드도 병행!!
 
 ---
 
