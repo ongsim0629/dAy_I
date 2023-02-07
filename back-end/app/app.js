@@ -106,6 +106,60 @@ app.post("/members/new", (req, res) => {
   });
 });
 
+//로그인
+app.post('/members/login',(req,res) => {
+  console.log('/members/login 호출됨' + req)
+  const paramId = req.body.user_id;
+  const paramPassword = req.body.user_password;
+
+  console.log('로그인 요청'+paramId+' '+paramPassword);
+
+  pool.getConnection((err,conn)=> {
+      if(err){
+          conn.release();
+          console.log('Mysql get connection error');
+          res.writeHead('200',{'content-Type':'text/html; charset=utf8'})
+          res.write('<h2>DB 서버 연결 실패</h2>')
+          res.end();
+          return;
+      }
+
+      const exec = conn.query('select `user_id` from `user` where `user_id`=? and `user_password`=?',
+      
+          [paramId,paramPassword],
+          (err,rows)=>{
+              conn.release();
+              console.log('실행된 SQL query: '+exec.sql);
+
+              if(err){
+                  console.dir(err);
+                  res.writeHead('200',{'content-Type':'text/html; charset=utf8'})
+                  res.write('<h2>SQL 실행 실패</h2>')
+                  res.end();
+                  return;
+              }
+
+              if(rows.length > 0) {/*user_id와 user_password가 같은게 있다. rows안에 있는 정보는 user_id,user_password다*/
+              console.log('아이디 [%s], 패스워드가 일치합니다', paramId)
+              res.writeHead('200',{'content-Type':'text/html; charset=utf8'})
+              res.write('<h2>로그인 성공</h2>')
+              res.end();
+              return;
+              }
+              else{
+              console.log('아이디 [%s] , 패스워드가 존재하지 않거나 일치하지 않습니다', paramId)
+              res.writeHead('200',{'content-Type':'text/html; charset=utf8'})
+              res.write('<h2>아이디와 비밀번호를 확인해주세요.</h2>')
+              res.end();
+              return; 
+              }
+          }  
+      )
+  })
+});
+
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
+
