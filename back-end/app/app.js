@@ -7,6 +7,7 @@ const connection = mysql.createConnection(dbconfig); // 순전히 /us를 위한 
 const port = 3000;
 const crypto = require("crypto");
 
+// 커넥션 객체 생성해 저장하고, 반환되는 공간
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: dbconfig.host,
@@ -48,9 +49,11 @@ app.post("/members/new", (req, res) => {
     .update(paramPassword + salt)
     .digest("hex");
 
+    // 커넥션 풀에서 커넥션 가져오기
   pool.getConnection((err, conn) => {
-    // 1. sql 연결 문제
+    // 1. sql 연결 문제 -> db 커넥션 문제 발생할 시 실행되는 함수
     if (err) {
+      //커넥션 풀에 커넥션 반환 -> 연결 해제
       conn.release();
       console.log("Mysql get connection error");
       res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
@@ -60,9 +63,11 @@ app.post("/members/new", (req, res) => {
     }
     // sql 연결 성공 시
     console.log("데이터베이스 conn");
+    // sql qeury문 삽입 -> ?에 순서대로 대괄호 안의 내용이 삽입됨
     const exec = conn.query(
       "insert into USERTEST (USER_ID, USER_PASSWORD, salt) values (?, ?, ?);",
       [paramId, hashPassword, salt],
+      //sql query 실행 실패, 혹은 성공할 경우에 대한 코드
       (err, result) => {
         conn.release();
         console.log("실행된 SQL: " + exec.sql);
