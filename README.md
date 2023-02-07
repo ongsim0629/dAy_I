@@ -4,14 +4,14 @@
 
 ## Member:
 
-|     Name      | Univ.   | Position           |
+|      Name     |  Univ.  |      Position      |
 | :-----------: | ------- | ------------------ |
-|  Ko na hyeon  | Inha    | Server Developer   |
+|  Ko na hyeon  |  Inha   | Frontend Developer |
 |   Ko eun a    | Kyonggi | Server Developer   |
 | Moon seok ho  | Kyonggi | Data Engineer      |
 |  Shin su bin  | Kyonggi | Server Developer   |
 | Yoo jun hyeok | Kyonggi | DL Developer       |
-|  Lee ye jin   | Inha    | Frontend Developer |
+|  Lee ye jin   |  Inha   | Frontend Developer |
 | Hwang se hyun | Kyonggi | DB Administration  |
 
 ## Project Outline:
