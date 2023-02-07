@@ -4,6 +4,8 @@ import numpy as np
 import nltk
 import matplotlib.pyplot as plt
 
+from krwordrank.word import KRWordRank
+
 def summary_model(text): # 요약 모델
     nltk.download('punkt')
 
@@ -33,6 +35,23 @@ def emo_model(temp): # 감정 추출 모델
     
     #전처리
     return output.logits.tolist()[0]
+
+def keyword_model(text): #키워드 추출 모델
+    min_count = 2   # 단어의 최소 출현 빈도수 (그래프 생성 시)
+    max_length = 10 # 단어의 최대 길이
+    wordrank_extractor = KRWordRank(min_count=min_count, max_length=max_length)
+    beta = 0.85    # PageRank의 decaying factor beta
+    max_iter = 10
+    texts = []
+    texts.append(text)
+    keywords, rank, graph = wordrank_extractor.extract(texts, beta, max_iter)
+    
+    key_list = []
+    for word, r in sorted(keywords.items(), key=lambda x:x[1], reverse=True)[:30]:
+            key_list.append(word)
+    
+    key_list = key_list[:10]
+    return key_list
 
 def model_visualization(iplist):
     emotion = ['neutrality', 'happiness', 'Embarrassment','anger','unrest','sadness','aversion']
