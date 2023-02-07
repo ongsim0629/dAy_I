@@ -1,6 +1,6 @@
 -- 새롭게 db 스키마 생성 시, utf8, utf8 bin 선택바랍니다! (한글지원)
 
-
+ 
 -- 1. User Table
 CREATE TABLE USER (
 	USER_ID VARCHAR(30) NOT NULL PRIMARY KEY, 

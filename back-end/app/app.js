@@ -60,21 +60,6 @@ app.post("/members/new", (req, res) => {
     }
     // sql 연결 성공 시
     console.log("데이터베이스 conn");
-    /*
-    var hash_password;
-    crypto.randomBytes(64, (err, salt) => {
-      crypto.pbkdf2(
-        paramPassword,
-        salt.toSring("base64"),
-        100000,
-        64,
-        "sha512",
-        (err, key) => {
-          console.log(key.toString("base64"));
-          hash_password = key.toString("base64");
-        }
-      );
-    });*/
     const exec = conn.query(
       "insert into USERTEST (USER_ID, USER_PASSWORD, salt) values (?, ?, ?);",
       [paramId, hashPassword, salt],
