@@ -15,9 +15,8 @@ function App(){
             <Route path ="/members/login" element={<LoginPage/>}/>
         </Routes>
 
-      </div>
-
-    
-    
+      </div> 
   );
 };
+
+export default App;
