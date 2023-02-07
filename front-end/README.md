@@ -1,3 +1,12 @@
+### [실행 방법]
+front-end 폴더에서 터미널에 npm start 입력 
+
+### [폴더 구조]
+1. src: 컴파일 시에 사용되는 파일들 (대부분의 코드가 여기에 들어감)
+src 내부에서 기능별로(ex: Register, Login...) 폴더를 따로 만들어 관리 중입니다. <br>
+2. public: 컴파일시에 사용되지 않는 파일들
+
+
 ### [Figma로 그린 대략적인 Flow]
 https://www.figma.com/proto/5GivgDbnMIQB0Cm3FUN0sL/%EC%B5%9C%EC%A2%85%EB%B3%B8?node-id=36%3A161&scaling=scale-down&page-id=0%3A1&starting-point-node-id=36%3A161&show-proto-sidebar=1
 
