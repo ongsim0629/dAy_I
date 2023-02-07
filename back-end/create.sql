@@ -1,11 +1,13 @@
+-- 새롭게 db 스키마 생성 시, utf8, utf8 bin 선택바랍니다! (한글지원)
+
+ 
 -- 1. User Table
 CREATE TABLE USER (
 	USER_ID VARCHAR(30) NOT NULL PRIMARY KEY, 
-	USER_PASSWORD VARCHAR(50) NOT NULL
+	USER_PASSWORD VARCHAR(300) NOT NULL,
+	SALT FLOAT
 );
 /* +) primary key는 애초에 not null인데 명시가 필요한가? */
-
-
 
 -- 2. Diary Table
 CREATE TABLE DIARY (
