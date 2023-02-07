@@ -3,3 +3,10 @@
 목요일 목표: 회원가입 수정
 
 개인 주간 목표: SQL문 쿼리문 작성
+
+
+2/7: 키워드 테이블 작성을 위한 키워드 수집
+키워드 데이터 테이블:
+https://docs.google.com/spreadsheets/d/1_0t-8GMT9GUW01HDM3LnXX_8R5vRE5F7at2LfqPSHoQ/edit#gid=0
+
+
