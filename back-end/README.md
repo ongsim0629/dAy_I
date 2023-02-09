@@ -6,6 +6,7 @@ yarn.exe 설치 필요
 
 (초기 패키지 설치)
 front_test 폴더 진입 -> npm install
+<br>
 (초기 패키지 설치)
 server 폴더 진입 -> npm install
 
