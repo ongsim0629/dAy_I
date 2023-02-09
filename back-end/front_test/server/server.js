@@ -1,11 +1,12 @@
-const express = require('express');
-const app = express();
-const test = require('./Router/test');
+var express = require('express');
 
-app.use('/juso', test);
+var usersRouter = require('./routes/users');
+var registerRouter = require('./routes/register')
 
+var app = express();
 
-const port = 5000; //node 서버가 사용할 포트 번호, 리액트의 포트번호(3000)와 충돌하지 않게 다른 번호로 할당
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-})
+app.use('/users', usersRouter);
+app.use('/members/new', registerRouter)
+
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log(`Listening on port ${port}`));
