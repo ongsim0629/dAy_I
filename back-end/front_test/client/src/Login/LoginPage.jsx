@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import {useEffect} from 'react';
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-//1. 구분선으로 넣으려고 한 hr태그가 안먹힌다!
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 const Background = styled.div`
     height: auto;
@@ -23,7 +24,7 @@ const SignUpLink = styled.a`
     color: #5475ED;
     font-weight: bold;
     text-decoration: none;
-
+    font-size: large;
     &:hover {
         cursor: pointer;
         text-decoration: underline;
@@ -34,20 +35,21 @@ const LoginFormRectangle = styled.div`
     width: 397px;
     height: 341px;
     background-color: #f5f5f5;
-    border-radious: 8em;
+    border-radius: 0.8em;
     box-shadow: 0px 7px 4px #00000040;
     padding: 50px;
 `;
 
 const Input = styled.input`
-    color: #999999;
+    color: black;
+    background-color:transparent;
     padding: 8px 100px 3px 0px;
     margin: 10px 0px;
-    background: white;
-    border: none;
-    border-radius: 4px;
-    border-width: 1.4px;
-    border-color: #CCCCCC;
+    border-left-width:0;
+    border-right-width:0;
+    border-top-width:0;
+    border-bottom-width:0.8px;
+    border-color: black;
     padding-left: 14px;
     text-align: left;
 `;
@@ -71,57 +73,73 @@ const LoginButton= styled.button`
 `;
 
 
-
 function LoginPage(props){
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
+    const {navigate} = useNavigate();
+
+    const onIdHandler = (event) => {
+        setId(event.currentTarget.value);
+    }
+    const onPasswordHandler = (event) => {
+        setPassword(event.currentTarget.value);
+    }
+
 
     const onLoginHandler = (event) =>{
-        alert('login');
+        alert('login 버튼 클릭!');
+        if (id === "" || password === "") {
+            alert("아이디와 비밀번호를 입력해주세요.");
+            return;
+        }
 
-        fetch("http://localhost:3000", { 
-            method: "POST",
-            body: JSON.stringify({
-                user_id: id,
-                user_password: password,
-                //Pending: don't know {this.state} is working
-                // id: this.state.Id,
-                // password: this.state.Password,
-            }),
+        axios.post('/members/login', { //서버로 id, password 전달
+            id: id,
+            password: password,
         })
-            .then((response) => response.json()) // response: HTTP response object. get the data of object by json()
-            .then((result) => console.log("결과: ", result))
-            .then(response => {
-                alert('로그인 완료');
-            })
-            .catch((error) => {
-                alert('error:', error);
-            });
+        .then((response) => {
+            console.log("로그인 성공");
+            console.log("User Token", response.data.jwt);
+            localStorage.setItem("token", response.data.jwt); //데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
+            navigate("/"); //페이지 이동 => home으로 바꿔야댐!!!!
+        })
+        .catch((error) => {
+            console.log("로그인 에러 발생", error.response);
+        });
     }
+    //로그인 하고 로그인페이지 돌아오면 다시 홈으로 가도록 하는 기능 구현
+    //(): 받아올 변수, {}: 실행할 코드, []: []에 들어있는 조건이 해당될 때만 렌더링 이외의 다른 정보를 다시 reload 하겠다!
+useEffect(() => {
+    if (localStorage.getItem("token")) { //위의 setItem으로 이미 localStorage에 저장해두었음
+        //로그인 이미 한 경우
+        navigate("/"); //페이지 이동 => home으로 바꿔야댐!!!!
+    }
+}, [])
 
     return(
         <div>
             <Background>
-                <center > <h1>웹페이지 이름</h1> </center>
+                <br /><br />
+                <center><h1 style={{color:'#424448'}}>웹페이지 이름</h1> </center>
                 <div style={{ 
                     display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    width: '100%', height: '100vh'
+                    width: '100%', height: '90vh'
                 }}>
                     <div>
                         <LoginFormRectangle>
                             <form style={{ display: 'flex', flexDirection: 'column'}} >
                                 <center><h1 style={{color:'#616161'}}>User Login</h1></center>
-                                <Label>User Id</Label>  
-                                <Input></Input> <hr size='10px'/>
-                                <Label>Passsword</Label> <hr/>
-                                <Input></Input>
+                                <Label>User Id</Label>
+                                <Input type='text' onChange={onIdHandler} value={id}/><br /><br />
+                                <Label>Passsword</Label>
+                                <Input type='password' onChange={onPasswordHandler} value={password}/>
+                                <br /><br />
                                 <LoginButton onClick={onLoginHandler}>Log in</LoginButton> <hr/>
                             </form>
                         </LoginFormRectangle>
-                        <Link to="/members/register">
-                            <center><SignUpLink >Sign Up</SignUpLink></center>
+                        <Link to="/members/register"><br /><br />
+                            <center><SignUpLink>Sign Up</SignUpLink></center>
                         </Link>
-                        
                     </div>
                 </div>
             </Background>

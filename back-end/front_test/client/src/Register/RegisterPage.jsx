@@ -155,7 +155,7 @@ function RegisterPage(props) {
         //<fetch 주소 부분에다 register API 주소를 달면 됩니다!>
         //ex) fetch('http://10.58.4.36:8000/users/signup', ...
 
-        fetch("http://localhost:3000", { 
+        fetch("http://localhost:3000/members/new", { 
             method: "POST",
             body: JSON.stringify({
                 user_id: id,
