@@ -1,21 +1,20 @@
+## [개발 현황]
+1. LoginPage.jsx, server.js 수정 중
+- 로그인 창에서 아이디, 패스워드 입력 시 db에 있는 데이터 있는 경우 로그인 성공 및 페이지 이동
 ### [실행 방법]
 front-end 폴더에서 터미널에 npm start 입력 
 
+<hr>
+## [개요]
 ### [폴더 구조]
 1. src: 컴파일 시에 사용되는 파일들 (대부분의 코드가 여기에 들어감)
-src 내부에서 기능별로(ex: Register, Login...) 폴더를 따로 만들어 관리 중입니다. <br>
+* src 내부에서 기능별로(ex: Register, Login...) 폴더를 따로 만들어 관리 중입니다. <br>
 2. public: 컴파일시에 사용되지 않는 파일들
-
 
 ### [Figma로 그린 대략적인 Flow]
 https://www.figma.com/proto/5GivgDbnMIQB0Cm3FUN0sL/%EC%B5%9C%EC%A2%85%EB%B3%B8?node-id=36%3A161&scaling=scale-down&page-id=0%3A1&starting-point-node-id=36%3A161&show-proto-sidebar=1
 
-### [Figma UI Design]
-https://www.figma.com/file/5GivgDbnMIQB0Cm3FUN0sL/%EC%B5%9C%EC%A2%85%EB%B3%B8?node-id=0%3A1&t=jaAnrC7YbuO2Quf7-0
-
-### [Flow 다이어그램]
-![빠른 메모 1 P1 (2)](https://user-images.githubusercontent.com/111052302/216250266-3757097e-18a4-4c7b-977a-4fc3aa75c1c1.png)
-
+<hr>
 ## [회의 내용]
 ### 0203 (금)
 1. 수정사항<br>
