@@ -2,7 +2,7 @@
 
 # 실행 방법
 
-yarn.exe 설치 필요 
+yarn.exe 설치 필요
 
 (초기 패키지 설치)
 front_test 폴더 진입 -> npm install
@@ -10,22 +10,20 @@ front_test 폴더 진입 -> npm install
 (초기 패키지 설치)
 server 폴더 진입 -> npm install
 
-
 (패키지 설치 완료 후 실행 부분)
 server 폴더 내에서 -> npm start
-
 
 # 고은아
 
 front에서 db로 바로 쿼리 날리기
 
-서버할것: 로그만 남기기 
+서버할것: 로그만 남기기
 
 패스워드 비밀키로 넘기기
 
 (1) get
 데이터를 read 조회하는데 사용한다.
-get https://(도메인)/classes/2/students  
+get https://(도메인)/classes/2/students
 
 (2)post
 post는 create, 새로운 정보를 추가하는데 사용한다.
@@ -35,3 +33,15 @@ post는 create, 새로운 정보를 추가하는데 사용한다.
 
 **2/9**
 프론트와 백엔드 연결 성공. 그러나 mysql을 연동하지 못함. 회원가입도 에러발생.
+
+# 황세현
+
+react, nodejs 연동 시도
+
+- (2/8)
+  nodejs만으로 로그인페이지, 회원가입 페이지 생성.
+  세션 이용한 로그인 기능 구현.
+
+- (2/9)
+  react와 nodejs api를 이용하여 연결 성공.
+  mysql 연동 및 js 파일 수정 시도했지만 실패.
