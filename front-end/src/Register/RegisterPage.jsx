@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 //import Layout from "./Layout/Layout";
 //import Header from "./Layout/Header";
 //import { useDispatch } from 'react-redux';
@@ -62,7 +63,6 @@ const SubmitButton = styled.button`
     font-weight: bold;
     border:none;
     border-radius: 7px;
-
     &:hover {
         cursor: pointer;
     }
@@ -81,7 +81,6 @@ const CancelButton = styled.button`
     font-weight: bold;
     border: none;
     border-radius: 7px;
-
     &:hover {
         cursor: pointer;
     }
@@ -90,6 +89,16 @@ const CancelButton = styled.button`
     }
 `;
 
+//=======추가부분====================================
+// var mysql = require('mysql');
+// const connection = mysql.createPool({
+//     host : 'localhost',
+//     user : 'root',
+//     password : '12345678',
+//     database : 'diary_db' //db명
+// });
+//=======추가부분====================================
+//var db = require('../server/config/db');
 
 
 function RegisterPage(props) {
@@ -131,7 +140,7 @@ function RegisterPage(props) {
 
     }
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = async(event) => {
         event.preventDefault();
 
         if(password !== confirmPassword){
@@ -143,6 +152,21 @@ function RegisterPage(props) {
         else if(setUsableId(false)){
             return ('아이디 중복 확인을 해주세요.');
         }
+
+
+
+
+        //const db = require('../server/config/db.js');
+        // connection.connect();
+        // connection.query('SELECT * from Users', (error, rows, fields) => {
+        //     if (error) throw error;
+        //     console.log('User info is: ', rows);
+        // });
+
+
+
+
+
         //Pending: <This body never used in fetch>
         // let body = {
         //     id: Id,
@@ -150,29 +174,20 @@ function RegisterPage(props) {
         //     confirmPassword: ConfirmPassword,
         // }
 
+
+        /*
+        // 2. SELECT TEST
+        const result = await axios.get('/register') //서버에 요청 보내기!! (비동기로, 요청 보내면 응답 받기 위해 돌고 있는 와중에 다른 코드들도 돌아감. 요청 받을때까지 기다리고 리턴받음)
+        console.log(result) //프론트 쪽, 브라우저에서 볼 수 있다!!
+        */
+
+        // 3. 회원가입
+        const result = await axios.post('/members/register', {
+            id: id, //post로 보낼 데이터
+            password: password,
+            confirmPassword: confirmPassword
+        });
         console.log("Submit Button Click"); //확인용
-
-        //<fetch 주소 부분에다 register API 주소를 달면 됩니다!>
-        //ex) fetch('http://10.58.4.36:8000/users/signup', ...
-
-        fetch("http://localhost:3000", { 
-            method: "POST",
-            body: JSON.stringify({
-                user_id: id,
-                user_password: password,
-                //Pending: don't know {this.state} is working
-                // id: this.state.Id,
-                // password: this.state.Password,
-            }),
-        })
-            .then((response) => response.json()) // response: HTTP response object. get the data of object by json()
-            .then((result) => console.log("결과: ", result))
-            .then(response => {
-                alert('가입되셨습니다.');
-            })
-            .catch((error) => {
-                alert('error:', error);
-            });
     }
 
 
