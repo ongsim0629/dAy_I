@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
+import axios from 'axios';
 import { Link } from "react-router-dom";
-//import { useDispatch } from 'react-redux';
-//import { registerUser } from '../../../_actions/user_action';
-
-//0. 아래의 기능이 아직 미완성이므로 비밀번호 입력시 오류 발생함 
-//1. 중복 체크시에 멘트 dp되는거
-//2. 비밀번호 유효성 검사
 
 const Header = styled.header`
     position: fixed;
@@ -39,7 +34,6 @@ const IdInput = styled.input`
 const Input = styled.input`
     color: #999999;
     padding: 8px 100px 3px 0px;
-    margin: 1px 0px;
     background: white;
     border-radius: 4px;
     border-width: 1.4px;
@@ -89,28 +83,32 @@ const CancelButton = styled.button`
 `;
 
 function EditPage(props) {
-    //const dispatch = useDispatch();
 
-    const [id, setId] = useState("");
+    // const reqOption = {
+    //     url = "http://localhost:3000/members/test/edit",
+    //     methond: 'POST',
+    //     header:{
+
+    //     }
+    // }
+    axios
+    .then(response => setId(response.data)); 
+    
+    const [id, setId] = useState("asdf");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
-    // 비밀번호 특수문자 검사를 위한 정규식표현.
-    //const specialLetter = password.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
-    // 특수문자 1자 이상, 전체 8자 이상일것.
-    //const isValidPassword = (password.length >= 8 && password.length<=40 ) && specialLetter >= 1;
+    // <유효성 검사 여부 저장>
+    const [isPassword, setIsPassword] = useState(false);
+    const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+
+    // <공백 제거 함수>
+    const delSpace = (data) => {
+        return data.replace(/\s/g, "");
+    }
 
     const onPasswordHandler = (event) => {
-        setPassword(event.currentTarget.value);
-    }
-    const onPasswordBlurHandler = (event) =>{
-        if(password){ //pwd값이 존재하면
-            var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,40}$/
-        if(regExp.test(event.Target.value)===true){
-            alert('test');
-        }
-        else{}
-        }
+        setPassword(delSpace(event.currentTarget.value));
     }
 
     const onConfirmPasswordHandler = (event) => {
@@ -120,34 +118,21 @@ function EditPage(props) {
     const onSubmitHandler = (event) => {
         event.preventDefault();
 
-        if(password !== confirmPassword){
-            return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
-        }
+        if(password.length <=0 || confirmPassword.length<=0)
+           return alert('비밀번호와 비밀번호 확인을 모두 입력해주세요.');
         
+        const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,40}$/g;
+        if(regExp.test(password)===true) setIsPassword(true);
+        if(!isPassword) 
+            return alert('형식에 맞지 않는 비밀번호입니다.');
+        
+        if(password === confirmPassword) setIsPasswordConfirm(true);
+        if(!isPasswordConfirm)
+            return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+        
+        alert('비밀번호 이상 없음');
+        //이제 db에 수정사항 전송
 
-        console.log("Submit Button Click"); //확인용
-
-        //<fetch 주소 부분에다 register API 주소를 달면 됩니다!>
-        //ex) fetch('http://10.58.4.36:8000/users/signup', ...
-
-        fetch("http://localhost:3000", { 
-            method: "POST",
-            body: JSON.stringify({
-                user_id: id,
-                user_password: password,
-                //Pending: don't know {this.state} is working
-                // id: this.state.Id,
-                // password: this.state.Password,
-            }),
-        })
-            .then((response) => response.json()) // response: HTTP response object. get the data of object by json()
-            .then((result) => console.log("결과: ", result))
-            .then(response => {
-                alert('가입되셨습니다.');
-            })
-            .catch((error) => {
-                alert('error:', error);
-            });
     }
 
 
@@ -166,21 +151,24 @@ function EditPage(props) {
                         <form style={{ display: 'flex', flexDirection: 'column'}} >
                             <Label>아이디</Label> 
                             <div style={{ display:'flex', flexDirection: 'row'}}>
-                            <IdInput type='text' size ='70' placeholder='해당 유저의 ID를 dp해야 함' disabled/>
-                            
+                            <IdInput type='text' size ='70' placeholder={id} disabled/>
                             </div>
                             <br/><br/>
 
                             <Label>비밀번호</Label>
-                            <Input type='password' defaultValue={password|| ''} onChange={onPasswordHandler} onBlur={onPasswordBlurHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br /><br />
+                            <Input type='password' defaultValue={password|| ''} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자 이상, 40자 이하여야 합니다.'/>
+                            
+                            {/* <Message >{passwordMessage}</Message> */}
+                            <br/><br/>
+
                             <Label>비밀번호 확인</Label>
-                            <Input type='password' defaultValue={confirmPassword|| ''} onBlur={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br /><br />
+                            <Input type='password' defaultValue={confirmPassword|| ''} onChange={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br /><br />
                             
 
                             <div style={{ display:'flex', flexDirection:'column', alignItems:'center'}}>
                                 <SubmitButton type='submit' onClick={onSubmitHandler} >
                                     완료
-                                {/* 완료 클릭 이후 Mypage로 가야 함. formAction? */}
+                                {/* 완료 클릭 이후 Mypage로 가야 함.  */}
                                 </SubmitButton>
                                 <br></br>
                                 <Link to="/index">
@@ -193,7 +181,7 @@ function EditPage(props) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 
 export default EditPage;
