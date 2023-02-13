@@ -5,7 +5,7 @@
 CREATE TABLE USER (
 	USER_ID VARCHAR(30) NOT NULL PRIMARY KEY, 
 	USER_PASSWORD VARCHAR(300) NOT NULL,
-	SALT FLOAT
+	SALT BIGINT
 );
 /* +) primary key는 애초에 not null인데 명시가 필요한가? */
 
