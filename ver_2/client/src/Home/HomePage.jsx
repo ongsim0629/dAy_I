@@ -14,9 +14,18 @@ function HomePage() {
             <Link to="/diaries/id/date">
                 <h1>10일</h1>
             </Link>
+            /*
+            <Link to="/">
+                <button onclick="logout()">로그아웃</button>
+            </Link>
+            */
         </div>
-        
     )
 }
+/*
+function logout() {
+    localStorage.removeItem("token");
+}
+*/
 
 export default HomePage;
