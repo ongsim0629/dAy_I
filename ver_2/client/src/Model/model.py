@@ -2,26 +2,22 @@ import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForSequenceClassification
 import numpy as np
 import nltk
+import matplotlib.pyplot as plt
 
 from krwordrank.word import KRWordRank
 
-#요약 모델
-sum_model = AutoModelForSeq2SeqLM.from_pretrained('eenzeenee/t5-base-korean-summarization')
-sum_tokenizer = AutoTokenizer.from_pretrained('eenzeenee/t5-base-korean-summarization')
+#감정 추출 모델
+tokenizer_emo = AutoTokenizer.from_pretrained('./model/emmo')
+model_emo = AutoModelForSequenceClassification.from_pretrained('./model/emmo')
 
-#감정 모델
-tokenizer_emo = AutoTokenizer.from_pretrained(
-'nlp04/korean_sentiment_analysis_dataset3',   # or float32 version: revision=KoGPT6B-ryan1.5b
-bos_token='[BOS]', eos_token='[EOS]', unk_token='[UNK]', pad_token='[PAD]', mask_token='[MASK]'
-)
-model_emo = AutoModelForSequenceClassification.from_pretrained(
-'nlp04/korean_sentiment_analysis_dataset3',  # or float32 version: revision=KoGPT6B-ryan1.5b
-)
+#요약 모델
+sum_model = AutoModelForSeq2SeqLM.from_pretrained('./model/summ')
+sum_tokenizer = AutoTokenizer.from_pretrained('./model/summ')
 
 #키워드 추출 모델
 min_count = 2   # 단어의 최소 출현 빈도수 (그래프 생성 시)
 max_length = 10 # 단어의 최대 길이
-wordrank_extractor = KRWordRank(min_count=min_count, max_length=max_length)
+wordrank_extractor = KRWordRank(min_count=2, max_length=6)
 
 def summary_model(text): # 요약 모델
     nltk.download('punkt')
@@ -29,7 +25,7 @@ def summary_model(text): # 요약 모델
 
     inputs = [prefix + text]
     inputs = sum_tokenizer(inputs, max_length=512, truncation=True, return_tensors="pt")
-    output = sum_model.generate(**inputs, num_beams=3, do_sample=True, min_length=20, max_length=100)
+    output = sum_model.generate(**inputs, num_beams=3, do_sample=True, min_length=30, max_length=100)
     decoded_output = sum_tokenizer.batch_decode(output, skip_special_tokens=True)[0]
     return nltk.sent_tokenize(decoded_output.strip())[0]
 
@@ -58,4 +54,3 @@ def keyword_model(text): #키워드 추출 모델
     
     key_list = key_list[:10]
     return key_list
-
