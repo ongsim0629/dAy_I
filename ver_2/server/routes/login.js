@@ -47,19 +47,19 @@ router.post("/", (req, res) => {
 
           var token = jwt.sign(
             {
-              test: "test", //Private Claim 자리 (키: 데이터)
+              user_id: id, //Private Claim 자리 (키: 데이터)
             },
             "secretKey", //Signature (비밀키가 들어갈 자리)
             {
-              subject: "sehyun jwtToken",
+              subject: "gyeongInLine jwtToken",
               expiresIn: "60m",
-              issuer: "sehyun",
+              issuer: "gyeongInLine",
             }
           );
 
           console.log("토큰 생성", token);
 
-          res.send({ userId: id });
+          res.send({ userId: id, token: token });
 
           //기존 코드
           /*res.cookie("user", id, {
