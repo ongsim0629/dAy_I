@@ -1,0 +1,18 @@
+# 사용 방법
+<img width="1267" alt="image" src="https://user-images.githubusercontent.com/87406080/218004061-74898bc5-e254-4524-9764-204339d16ab0.png">
+
+yarn.exe 설치 필요 <br>
+
+VER_2 폴더 열기<br>
+
+(초기 패키지 설치, 맨 처음에만 실행해주면 됨)
+터미널 ver_2\client-> npm install
+터미널 ver_2\server> -> npm install
+
+<br>
+(패키지 설치 완료 후 실행 부분)
+터미널 ver_2\server -> npm start
+
+2) DB 연결<br>
+- src/server/config/db.js에서 password(5번째 줄), database(6번째 줄) 본인 데이터베이스에 맞게 바꿔야 함 <br>
+- mysql column 명 : id, password 맞추기
