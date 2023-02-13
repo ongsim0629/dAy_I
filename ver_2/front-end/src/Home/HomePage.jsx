@@ -8,7 +8,11 @@ function HomePage() {
             <Link to="/">
                 <h1>페이지 이름</h1>
             </Link>
+            <Link to="/writetest">
+                <h1>일기 쓰러 가기</h1>
+            </Link>
         </div>
+        
     )
 }
 

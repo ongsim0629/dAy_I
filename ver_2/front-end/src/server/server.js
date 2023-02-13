@@ -11,6 +11,60 @@ app.get('/',(req,res)=>{
     console.log('/root')
 })
 
+/////////////////////// flask 연동 test ////////////////////////////
+
+var request = require('request'); // 일기 내용 담는 변수
+
+// FLASK-NODEJS 연동
+app.post("/writetest", (req, res) => {
+    console.log("text: ", req.body.text);
+
+    // REACT로부터 일기 내용 받아오기
+    let body = req.body;
+    const diarycontent = body.text;
+
+    // FLASK로 일기 내용 보내기
+    const ModelResult  = (callback)=>{
+        const options = {
+            method: 'POST',
+            uri: "http://127.0.0.1:4000/sendmodeltext",
+            qs: {
+                text: diarycontent
+            }
+        }
+        request(options, function (err, res, body) {
+            callback(undefined, {
+                result:body
+            });
+        });
+    }
+
+    //FLASK로부터 변경 내용 받아서 REACT로 넘기기
+    ModelResult((err, {result}={})=>{
+        if(err){
+            console.log("error!!!!");
+            res.send({
+                message: "fail",
+                status: "fail"
+            });
+        }
+
+        let json = JSON.parse(result);
+        console.log(json);
+        res.send({
+            message: "from flask",
+            status: "success",
+            data:{
+                json
+            }
+        });
+    })
+})
+
+
+/////////////////////// flask 연동 test ////////////////////////////
+
+
 // 1. 회원가입 기능
 app.post("/members/register", (req, res) => {
     const paramId = req.body.id;
