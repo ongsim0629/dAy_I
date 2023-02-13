@@ -8,6 +8,7 @@ import IndexPage from "./Index/IndexPage"
 import EditPage from "./Edit/EditPage";
 import WritePage from "./Write/WritePage";
 import HomePage from "./Home/HomePage";
+import DiaryPage from "./Diary/DiaryPage";
 
 // flask-node-react 연결 테스트 페이지
 import WriteTestPage from "./FlaskTest/WriteTestPage";
@@ -22,6 +23,7 @@ function App(){
             <Route path="/members/test/edit" element={<EditPage/>}/>
             <Route path="/members/test/write" element={<WritePage/>}/>
             <Route path="/members/home" element={<HomePage/>}/>
+            <Route path ="/diaries/id/date" element={<DiaryPage/>}/>
             
             {/* flask-node-react 연결 테스트 페이지 */}
             <Route path="/writetest" element={<WriteTestPage/>}/>

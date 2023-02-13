@@ -11,6 +11,9 @@ function HomePage() {
             <Link to="/writetest">
                 <h1>일기 쓰러 가기</h1>
             </Link>
+            <Link to="/diaries/id/date">
+                <h1>10일</h1>
+            </Link>
         </div>
         
     )
