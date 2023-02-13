@@ -51,7 +51,7 @@ router.post("/", (req, res) => {
             },
             "secretKey", //Signature (비밀키가 들어갈 자리)
             {
-              subject: "gyeongInLine jwtToken",
+              subject: "gyeongInLine jwtToken", //Public Claim 자리 (부가정보 자리)
               expiresIn: "60m",
               issuer: "gyeongInLine",
             }
@@ -60,26 +60,6 @@ router.post("/", (req, res) => {
           console.log("토큰 생성", token);
 
           res.send({ userId: id, token: token });
-
-          //기존 코드
-          /*res.cookie("user", id, {
-            expires: new Date(Date.now() + 900000),
-            httpOnly: true,
-          });
-          */
-
-          //블로그 코드
-          /* x_auth라는 이름으로 유저의 토큰을 쿠키에 넣는 것 ! */
-          /*res
-            .cookie("x_auth", user.token, {
-              expires: new Date(Date.now() + 900000),
-              httpOnly: true,
-            })
-            .status(200)
-            .json({ loginSuccess: true, userId: user._id });
-        } else {
-          res.send(err);
-          */
         }
       }
     }
