@@ -111,6 +111,9 @@ function LoginPage(props) {
         console.log(res);
         console.log("res.data.userId :: ", res.data.userId);
         console.log("res.data.msg :: ", res.data.msg);
+
+        console.log("res.data.token", res.data.token);
+
         if (res.data.userId === undefined) {
           // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
           console.log("======================", res.data.msg);
@@ -127,6 +130,7 @@ function LoginPage(props) {
           console.log("======================", "로그인 성공");
           navigate("/members/home");
           //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
+          localStorage.setItem("token", res.data.token);
 
           //sessionStorage.setItem('user_id', id) //참고로 적어둠
         }
