@@ -144,12 +144,13 @@ function LoginPage(props) {
     console.log("Submit Button Click"); //확인용
   };
   //로그인 하고 로그인페이지 돌아오면 다시 홈으로 가도록 하는 기능 구현. (): 받아올 변수, {}: 실행할 코드, []: []에 들어있는 조건이 해당될 때만 렌더링 이외의 다른 정보를 다시 reload 하겠다!
-  // useEffect(() => {
-  //     if (localStorage.getItem("token")) { //위의 setItem으로 이미 localStorage에 저장해두었음
-  //         //로그인 이미 한 경우
-  //         navigate("/members/home"); //페이지 이동 => home으로 바꿔야댐!!!!
-  //     }
-  // }, [])
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      //위의 setItem으로 이미 localStorage에 저장해두었음
+      //로그인 이미 한 경우
+      navigate("/members/home"); //페이지 이동 => home으로 바꿔야댐!!!!
+    }
+  }, []);
 
   return (
     <div>
