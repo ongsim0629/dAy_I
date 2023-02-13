@@ -1,5 +1,10 @@
 var express = require("express");
 var router = express.Router();
+
+//var jwt = require("../node_modules/jsonwebtoken"); //추가
+
+var jwt = require("jsonwebtoken");
+
 const db = require("../../server/config/db.js");
 const crypto = require("crypto");
 
@@ -40,11 +45,28 @@ router.post("/", (req, res) => {
         if (password_db == hash) {
           console.log("로그인 성공");
 
+          var token = jwt.sign(
+            {
+              test: "test", //Private Claim 자리 (키: 데이터)
+            },
+            "secretKey", //Signature (비밀키가 들어갈 자리)
+            {
+              subject: "sehyun jwtToken",
+              expiresIn: "60m",
+              issuer: "sehyun",
+            }
+          );
+
+          console.log("토큰 생성", token);
+
+          res.send({ userId: id });
+
           //기존 코드
-          res.cookie("user", id, {
+          /*res.cookie("user", id, {
             expires: new Date(Date.now() + 900000),
             httpOnly: true,
           });
+          */
 
           //블로그 코드
           /* x_auth라는 이름으로 유저의 토큰을 쿠키에 넣는 것 ! */
