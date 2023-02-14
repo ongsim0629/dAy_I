@@ -171,7 +171,9 @@ function EditPage(props) {
         })
         .then((res) => {
             console.log("서버로 수정된 비밀번호가 전달 되었습니다");
-            localStorage.removeItem(token);
+            //console.log("토큰 삭제 전", localStorage.getItem('token'))
+            localStorage.clear()
+            //console.log("토큰 삭제 후", localStorage.getItem('token'))
             navigate('/members/login');
         });
 
