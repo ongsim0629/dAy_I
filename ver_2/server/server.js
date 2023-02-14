@@ -24,7 +24,7 @@ app.post("/writetest", (req, res) => {
   const ModelResult = (callback) => {
     const options = {
       method: "POST",
-      uri: "http://127.0.0.1:4000/sendmodeltext",
+      uri: "http://127.0.0.1:5000/sendmodeltext",
       qs: {
         text: diarycontent,
       },
@@ -61,7 +61,7 @@ app.post("/writetest", (req, res) => {
 app.use("/users", usersRouter);
 app.use("/members/new", registerRouter);
 app.use("/members/login", loginRouter);
-app.use("/members/:{id}/edit", editRouter);
+app.use("/members/edit", editRouter);
 app.use("/members/test/write", writeRouter); //test 끼워넣기는 front팀과 일치시키기 위함
 
 const port = process.env.PORT || 5000;
