@@ -2,7 +2,6 @@ import torch
 from transformers import AutoTokenizer, AutoModelForSeq2SeqLM, AutoModelForSequenceClassification
 import numpy as np
 import nltk
-import matplotlib.pyplot as plt
 
 from krwordrank.word import KRWordRank
 
