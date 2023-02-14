@@ -1,10 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router-dom"; // 로그인정보 전달
 
 function HomePage() {
-
-  const {state} = useLocation(); // 로그인정보 저장
 
   // 로그아웃
   const onLogoutHandler = () => {
@@ -15,7 +12,7 @@ function HomePage() {
   return (
     <div>
       <h1>HomePage.jsx</h1>
-      <h1>{state}님 환영합니다.</h1>
+      {/* <h1>---님 환영합니다.</h1> */}
       <Link to="/">
         <h1>페이지 이름</h1>
       </Link>
