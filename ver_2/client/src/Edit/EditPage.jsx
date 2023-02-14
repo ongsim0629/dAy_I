@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const Header = styled.header`
     position: fixed;
@@ -84,6 +85,8 @@ const CancelButton = styled.button`
 
 function EditPage(props) {
     const [id, setId] = useState("");
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
 
     // <임시 post 코드: db에서 회원의 id를 가져와서 화면에 보여줘야 함>
     // 당연하지만 작동하지 않고 주석 해제하면 오류남
@@ -97,9 +100,9 @@ function EditPage(props) {
     // axios
     // .then(response => setId(response.data)); 
     //받아온 id를 setId에 넣어줌, response 객체를 string으로 변환해야 할 듯
-        let login_id = axios.get('/members/edit')
+    //edit 저장 누르면 토큰 없애고 navigate로 로그인 화면으로
+        axios.get('/members/edit')
         .then(function () {
-            const token = localStorage.getItem("token");
             var base64Url = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
             var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
             var result = JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
@@ -121,8 +124,8 @@ function EditPage(props) {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     // <유효성 검사 여부 저장>
-    const [isPassword, setIsPassword] = useState(false);
-    const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
+    let isPassword = false;
+    let isPasswordConfirm = false;
 
     // <공백 제거 함수>
     const delSpace = (data) => {
@@ -143,26 +146,33 @@ function EditPage(props) {
         if(password.length <=0 || confirmPassword.length<=0)
            return alert('비밀번호와 비밀번호 확인을 모두 입력해주세요.');
         
-        const regExp = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,40}$/g;
-        if(regExp.test(password)===true) setIsPassword(true);
-        if(!isPassword) 
+        const regExp = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$ %^&*-]).{8,40}$/;
+    
+        isPassword = regExp.test(password);
+
+        if (!isPassword) {
             return alert('형식에 맞지 않는 비밀번호입니다.');
+        }
+
+        if(password === confirmPassword) {
+            isPasswordConfirm = true;
+        }
         
-        if(password === confirmPassword) setIsPasswordConfirm(true);
         if(!isPasswordConfirm)
             return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
         
-        alert('비밀번호 이상 없음');
+        alert('비밀번호가 변경되어습니다. 다시 로그인해주세요!');
         //이제 db에 수정사항 전송
 
-        const result = await axios
-        .post("/members/edit", {
-          //서버로 id, password 전달
-          id : id,
-          password: password,
+        const result = await axios.post("/members/edit", {
+            //서버로 id, password 전달
+            id : id,
+            password: password,
         })
         .then((res) => {
             console.log("서버로 수정된 비밀번호가 전달 되었습니다");
+            localStorage.removeItem(token);
+            navigate('/members/login');
         });
 
     }
