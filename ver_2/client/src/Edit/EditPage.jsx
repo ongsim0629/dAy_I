@@ -96,8 +96,30 @@ function EditPage(props) {
     // axios
     // .then(response => setId(response.data)); 
     //받아온 id를 setId에 넣어줌, response 객체를 string으로 변환해야 할 듯
+    async function getId() { 
+        let login_id = axios.get('/members/edit')
+        .then(function () {
+            const token = localStorage.getItem("token");
+            var base64Url = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
+            var result = JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join('')));
+            let login_id = result.user_id;
+            console.log(login_id);
+            return(login_id);
+        })
+        // 응답(실패)
+        .catch(function (error) {
+            console.log(error);
+        })
+        // 응답(항상 실행)
+        }
     
-    const [id, setId] = useState("asdf");
+    var token_id = getId();
+    console.log(token_id)
+
+    const [id, setId] = useState(token_id);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -118,7 +140,7 @@ function EditPage(props) {
         setConfirmPassword(event.currentTarget.value);
     }
 
-    const onSubmitHandler = (event) => {
+    const onSubmitHandler = async (event) => {
         event.preventDefault();
 
         if(password.length <=0 || confirmPassword.length<=0)
@@ -135,6 +157,16 @@ function EditPage(props) {
         
         alert('비밀번호 이상 없음');
         //이제 db에 수정사항 전송
+
+        const result = await axios
+        .post("/members/edit", {
+          //서버로 id, password 전달
+          id : "test1212",
+          password: password,
+        })
+        .then((res) => {
+            console.log("서버로 수정된 비밀번호가 전달 되었습니다");
+        });
 
     }
 
