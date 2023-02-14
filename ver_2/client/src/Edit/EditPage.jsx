@@ -83,6 +83,7 @@ const CancelButton = styled.button`
 `;
 
 function EditPage(props) {
+    const [id, setId] = useState("");
 
     // <임시 post 코드: db에서 회원의 id를 가져와서 화면에 보여줘야 함>
     // 당연하지만 작동하지 않고 주석 해제하면 오류남
@@ -96,7 +97,6 @@ function EditPage(props) {
     // axios
     // .then(response => setId(response.data)); 
     //받아온 id를 setId에 넣어줌, response 객체를 string으로 변환해야 할 듯
-    async function getId() { 
         let login_id = axios.get('/members/edit')
         .then(function () {
             const token = localStorage.getItem("token");
@@ -107,19 +107,16 @@ function EditPage(props) {
             }).join('')));
             let login_id = result.user_id;
             console.log(login_id);
-            return(login_id);
+            setId(login_id);
         })
         // 응답(실패)
         .catch(function (error) {
             console.log(error);
         })
         // 응답(항상 실행)
-        }
     
-    var token_id = getId();
-    console.log(token_id)
 
-    const [id, setId] = useState(token_id);
+    //const [id, setId] = useState(token_id);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -161,7 +158,7 @@ function EditPage(props) {
         const result = await axios
         .post("/members/edit", {
           //서버로 id, password 전달
-          id : "test1212",
+          id : id,
           password: password,
         })
         .then((res) => {
