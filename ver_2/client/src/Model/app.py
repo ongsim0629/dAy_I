@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-# from model import summary_model, emo_model, model_visualization, keyword_model
+from model import summary_model, emo_model, keyword_model
 import numpy as np
 # import json
 
@@ -25,10 +25,16 @@ app = Flask(__name__)
 @app.route("/sendmodeltext", methods=['POST'])
 def writetest():
     # print("모델 서버 현재 text: " + request.args['text'])
-    params = request.args['text'] + "지금 이 내용이 보인다면 FLASK와 NODEJS 간의 API 서버 연결에 성공했다는 의미이다."
+    raw_text = request.args['text']
+    oneLine_text = text_oneLine(raw_text)
+    summ = summary_model(oneLine_text)
+    emo_list = emo_model(summ)
+    key_list = keyword_model(raw_text)
     # print("모델 서버 현재 text: " + params)
     return jsonify({
-        'result': params
+        'emo_list': emo_list,
+        'summ': summ,
+        'key_list': key_list
     })
 
 ############################## Node.js 연동 test ####################################
