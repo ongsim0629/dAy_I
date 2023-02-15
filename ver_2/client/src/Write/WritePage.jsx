@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import DatePicker from "react-datepicker";
@@ -104,11 +104,12 @@ const Content = styled.textarea`
 //임시저장 버튼 보류
 
 function WritePage() {
-  const [startDate, setStartDate] = useState(new window.Date());
-  const [title, setTitle] = useState("제목");
-  const [content, setContent] = useState("");
+  const location = useLocation();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [startDate, setStartDate] = useState(location.state.selectedDate);
+  const [title, setTitle] = useState("제목");
+  const [content, setContent] = useState("");
 
   const onTitleHandler = (event) => {
     setTitle(event.target.value);
@@ -191,7 +192,7 @@ function WritePage() {
           </div>
           <hr />
           {/* 데이터 확인용 버튼 */}
-          {/* <button onClick={()=>{ console.log(dateToString(startDate)); console.log(title); console.log(content);}} />  */}
+          {/* <button onClick={()=>{ console.log(location.state.selectedDate); }} />  */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Content onChange={onContentHandler}>{content}</Content>
           </div>

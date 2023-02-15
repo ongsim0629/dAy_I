@@ -215,9 +215,11 @@ function EditPage(props) {
                                 {/* 완료 클릭 이후 Mypage로 가야 함.  */}
                                 </SubmitButton>
                                 <br></br>
-                                <Link to="/">
+                                <Link to="/members/test/mypage">
                                     {/*  테스트용. 원래 Mypage로 가야 함 */}
-                                    <CancelButton > 취소</CancelButton>
+                                    <CancelButton>
+                                        취소
+                                    </CancelButton>
                                 </Link>
                             </div>
                         </form>

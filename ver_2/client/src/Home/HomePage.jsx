@@ -1,13 +1,55 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "./DatePicker.css"
+import "react-datepicker/dist/react-datepicker.css";
+//import ko from 'date-fns/locale/ko';
 
+const Header = styled.header`
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    background-color: #E5E0FF;
+`;
+
+const Layout = styled.div`
+    padding-top:25px;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const CustomButton = styled.button`
+    color: #8F8F8F;
+    background: #F5F5F5;
+    font-weight: bold;
+    border: none;
+    margin-top: 32px;
+    border-radius: 4px;
+    padding: 7px 10px;
+
+    &:hover {
+        cursor: pointer;
+    }
+    &:focus{
+        box-shadow: 0 0 0 1px gray;
+    }
+`;
 
         // 응답(항상 실행)
 
 function HomePage() {
   const [id, setId] = useState("");
-  
+  const [startDate, setStartDate] = useState(new window.Date());
+  const navigate = useNavigate();
+
   let login_id = axios.get('/members/edit')
         .then(function () {
             const token = localStorage.getItem("token");
@@ -26,29 +68,47 @@ function HomePage() {
         })
 
   // 로그아웃
-  const onLogoutHandler = () => {
+  const onLogoutButtonHandler = () => {
     let token = localStorage.getItem('token')
     localStorage.clear()
   }
 
+  const onDatePickHandler = (date)=>{
+    setStartDate(date);
+    //작성한 내용이 있으면 읽기 페이지로, 없으면 쓰기 페이지로 가야 하지만 
+    //일단 선택한 날짜의 읽기 페이지로 가도록 함
+    navigate("/members/test/write", {state: {selectedDate: date}});
+    
+}
   return (
-    <div>
-      <h1>HomePage.jsx</h1>
-      <h1>{id}님 환영합니다</h1>
-      {/* <h1>---님 환영합니다.</h1> */}
-      <Link to="/">
-        <h1>페이지 이름</h1>
-      </Link>
-      <Link to="/members/test/write">
-        <h1>일기 쓰러 가기</h1>
-      </Link>
-      <Link to="/diaries/id/date">
-        <h1>10일</h1>
-      </Link>
-      <Link to="/">
-        <button type="button" onClick={onLogoutHandler}>로그아웃</button>
-      </Link>
-    </div>
+    <>
+      <Header>
+        <Link to="/">
+          <CustomButton onClick={onLogoutButtonHandler} style={{marginLeft:'1320px'}}>로그아웃</CustomButton>
+        </Link>
+        <Link to="/members/test/mypage">
+          <CustomButton type='button' style={{marginLeft:'20px'}}>마이페이지</CustomButton>
+        </Link>
+      </Header>
+      <Layout> 
+            {/* <h4>{id}님 환영합니다</h4>
+            <Link to="/diaries/id/date">
+              <h5>10일</h5>
+            </Link> */}
+            <h2 style={{color:'#AEAEAE', fontFamily:'AbeeZee'}}>당신의 소중한 하루를 기록해보세요.</h2><br/>
+            <DatePicker
+                onChange={(date)=>onDatePickHandler(date)}
+                selected={startDate}
+                // {/* locale={ko} */}
+               //  {/* highlightDates={[]} */}
+                className="datePicker"
+                inline
+                >
+      </DatePicker>
+            
+      </Layout> 
+    </>
+    
   );
 }
 
