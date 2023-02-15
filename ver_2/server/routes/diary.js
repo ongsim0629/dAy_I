@@ -24,12 +24,12 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 //date, token 받음
-router.get("/", (req, res) => {
+router.post("/", (req, res) => {
   //GET 메소드라, body X; params O;
-  const id = req.params.id;
-  const date = req.params.date;
+  const id = req.body.id;
+  const date = req.body.date;
 
-  /*
+  /* 
   try {
     var check = jwt.verify(token, "secretKey");
     if (check) {
@@ -42,49 +42,66 @@ router.get("/", (req, res) => {
   */
 
   //var query = "select * from diary where = ?";
-  const exec = conn.query(
-    "select * from diary where diary_writer_id = ? AND diary_write_date = ?;",
-    [id, date],
-    (err, result) => {
-      conn.release();
-      console.log("실행된 SQL: " + exec.sql);
 
-      if (err) {
-        console.log("SQL 실행 시, 오류 발생");
-        console.dir(err);
-        res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
-        res.write("<h2>SQL 실행 실패;</h2>");
-        res.end();
-        res.status(404).send("오류");
-        return;
-      } else {
-        if (result.length > 1) {
-          console.log("하루에 일기 1개 초과 (2개 이상)");
+  db.getConnection((err, conn) => {
+    //db 연결 실패 시,
+    if (err) {
+      console.log("Mysql 연결 실패");
+      conn.release(); //커넥션 풀에 커넥션 반환 -> 연결 해제
+      res.writeHead("404", { "content-Type": "text/html; charset=utf8" });
+      res.write("<h2>DB 서버 연결 실패</h2>");
+      res.end();
+      return;
+    }
+    // db 연결 성공 시
+    console.log("데이터베이스 conn");
+
+    const exec = conn.query(
+      "select * from diary where diary_writer_id = ? AND diary_write_date = ?;",
+      [id, date],
+      (err, result) => {
+        conn.release();
+        console.log("실행된 SQL: " + exec.sql);
+
+        if (err) {
+          console.log("SQL 실행 시, 오류 발생");
           console.dir(err);
           res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
-          res.write("<h2>일기 날짜 중복;하루에 일기 1개 초과 (2개 이상)</h2>");
+          res.write("<h2>SQL 실행 실패;</h2>");
           res.end();
           res.status(404).send("오류");
           return;
+        } else {
+          if (result.length > 1) {
+            console.log("하루에 일기 1개 초과 (2개 이상)");
+            console.dir(err);
+            res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+            res.write(
+              "<h2>일기 날짜 중복;하루에 일기 1개 초과 (2개 이상)</h2>"
+            );
+            res.end();
+            res.status(404).send("오류");
+            return;
+          }
+          console.log("쿼리문 성공");
+          console.dir(result);
+          res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+          res.send({
+            diary_writer_id: result[0].diary_writer_id,
+            diary_write_date: result[0].diary_write_date,
+            diary_title: result[0].diary_title,
+            diary_content: result[0].diary_content,
+            diary_keyword: result[0].diary_keyword,
+            diary_category_site: result[0].diary_category_site,
+            diary_emotion: result[0].diary_emotion,
+            diary_playlist: result[0].diary_playlist,
+            diary_summary: result[0].diary_summary,
+          });
+          res.end();
         }
-        console.log("쿼리문 성공");
-        console.dir(result);
-        res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
-        res.send({
-          diary_writer_id: result[0].diary_writer_id,
-          diary_write_date: result[0].diary_write_date,
-          diary_title: result[0].diary_title,
-          diary_content: result[0].diary_content,
-          diary_keyword: result[0].diary_keyword,
-          diary_category_site: result[0].diary_category_site,
-          diary_emotion: result[0].diary_emotion,
-          diary_playlist: result[0].diary_playlist,
-          diary_summary: result[0].diary_summary,
-        });
-        res.end();
       }
-    }
-  );
+    );
+  });
 });
 
 module.exports = router;
