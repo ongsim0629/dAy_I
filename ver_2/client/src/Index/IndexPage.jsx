@@ -39,7 +39,7 @@ const LoginButton = styled.button`
 
 function IndexPage(){
     return(
-        <div style={{position:'fixed'}}>
+        <div style={{position:'fixed', width:'1250px'}}>
             <Header >
                 <div style={{display:'flex', flexDirection:'row'}}>
                     <h1 style={{width:'90%', color:'#A27CB9', marginLeft:'25px'}}> &#128393; 사이트 제목 </h1>

@@ -50,7 +50,7 @@ function HomePage() {
   const [startDate, setStartDate] = useState(new window.Date());
   const navigate = useNavigate();
 
-  let login_id = axios.get('/members/edit')
+  axios.get('/members/edit')
         .then(function () {
             const token = localStorage.getItem("token");
             var base64Url = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
@@ -73,8 +73,43 @@ function HomePage() {
     localStorage.clear()
   }
 
-  const onDatePickHandler = (date)=>{
+  //문자열 변환
+  const dateToString = () => {
+    const year = startDate.getFullYear();
+    const month = startDate.getMonth() + 1;
+    const date = startDate.getDate();
+    return `${year}-${month >= 10 ? month : "0" + month}-${
+      date >= 10 ? date : "0" + date
+    }`;
+  };
+
+  const onDatePickHandler = async(date)=>{
     setStartDate(date);
+
+    //diary 있는 경우로 조건 달아줘야 함
+    //diary로 이동 시 URL로 date, user_id 전달해야 함
+    await axios.post('/diaries/test/id', {
+      id: id,
+      date: dateToString(startDate)
+    })
+    .then((res) => {
+      console.log("서버로 date와 id가 전달되었습니다.")
+    })
+    .catch((error) => {
+      console.log(error);
+    })
+
+
+    // await axios({
+    //   method: 'get',
+    //   url: '/diaries',
+    //   params: {
+    //     id: id,
+    //     date: date
+    //   }
+    // })
+
+
     //작성한 내용이 있으면 읽기 페이지로, 없으면 쓰기 페이지로 가야 하지만 
     //일단 선택한 날짜의 읽기 페이지로 가도록 함
     navigate("/members/test/write", {state: {selectedDate: date}});
