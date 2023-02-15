@@ -25,9 +25,11 @@ router.use(express.urlencoded({ extended: false }));
 
 //date, token 받음
 router.get("/", (req, res) => {
-  const date = req.body.date;
-  const token = req.body.token;
+  //GET 메소드라, body X; params O;
+  const id = req.params.id;
+  const date = req.params.date;
 
+  /*
   try {
     var check = jwt.verify(token, "secretKey");
     if (check) {
@@ -37,14 +39,50 @@ router.get("/", (req, res) => {
     console.log("token 검증 오류");
   }
   //check.user_id로 user_id 받아왔음
+  */
 
-  var query = "select * from diary where = ?";
+  //var query = "select * from diary where = ?";
   const exec = conn.query(
     "select * from diary where diary_writer_id = ? AND diary_write_date = ?;",
-    [check.user_id, date],
+    [id, date],
     (err, result) => {
       conn.release();
       console.log("실행된 SQL: " + exec.sql);
+
+      if (err) {
+        console.log("SQL 실행 시, 오류 발생");
+        console.dir(err);
+        res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+        res.write("<h2>SQL 실행 실패;</h2>");
+        res.end();
+        res.status(404).send("오류");
+        return;
+      } else {
+        if (result.length > 1) {
+          console.log("하루에 일기 1개 초과 (2개 이상)");
+          console.dir(err);
+          res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+          res.write("<h2>일기 날짜 중복;하루에 일기 1개 초과 (2개 이상)</h2>");
+          res.end();
+          res.status(404).send("오류");
+          return;
+        }
+        console.log("쿼리문 성공");
+        console.dir(result);
+        res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+        res.send({
+          diary_writer_id: result[0].diary_writer_id,
+          diary_write_date: result[0].diary_write_date,
+          diary_title: result[0].diary_title,
+          diary_content: result[0].diary_content,
+          diary_keyword: result[0].diary_keyword,
+          diary_category_site: result[0].diary_category_site,
+          diary_emotion: result[0].diary_emotion,
+          diary_playlist: result[0].diary_playlist,
+          diary_summary: result[0].diary_summary,
+        });
+        res.end();
+      }
     }
   );
 });
