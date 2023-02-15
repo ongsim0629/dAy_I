@@ -7,7 +7,6 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 var request = require('request');
-var result = ""
 
 //date(String), title(), content, (token) 전달받음
 router.post("/", (req, res) => {
@@ -46,7 +45,6 @@ router.post("/", (req, res) => {
         });
     });
   }
-  console.log(result)
 
   ModelResult((err, {result}={})=>{
     if(err){
