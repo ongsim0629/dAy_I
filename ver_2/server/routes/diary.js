@@ -62,16 +62,18 @@ router.post("/", (req, res) => {
       (err, result) => {
         conn.release();
         console.log("실행된 SQL: " + exec.sql);
-
+        // sql 오류 시
         if (err) {
           console.log("SQL 실행 시, 오류 발생");
           console.dir(err);
           res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
           res.write("<h2>SQL 실행 실패;</h2>");
-          res.end();
           res.status(404).send("오류");
+          res.end();
           return;
         } else {
+          // sql 성공 시
+          // 하루에 일기 1개 초과 시
           if (result.length > 1) {
             console.log("하루에 일기 1개 초과 (2개 이상)");
             console.dir(err);
@@ -79,24 +81,22 @@ router.post("/", (req, res) => {
             res.write(
               "<h2>일기 날짜 중복;하루에 일기 1개 초과 (2개 이상)</h2>"
             );
-            res.end();
             res.status(404).send("오류");
+            res.end();
             return;
           }
+          /*
+          res. 메소드 모음
+          - res.writeHead: response 객체의 메소드에서 헤더 정보를 응담에 작성해서 내보내기
+          - res.write(''): Header 정보 다음 Body 내용 작성
+          - res.end(): 응답종료(내보내기 완료)
+          +) res.status
+          */
+
+          //오류가 없을 경우
           console.log("쿼리문 성공");
-          console.dir(result);
-          res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
-          res.send({
-            diary_writer_id: result[0].diary_writer_id,
-            diary_write_date: result[0].diary_write_date,
-            diary_title: result[0].diary_title,
-            diary_content: result[0].diary_content,
-            diary_keyword: result[0].diary_keyword,
-            diary_category_site: result[0].diary_category_site,
-            diary_emotion: result[0].diary_emotion,
-            diary_playlist: result[0].diary_playlist,
-            diary_summary: result[0].diary_summary,
-          });
+          console.dir(result[0]);
+          res.send(result[0]);
           res.end();
         }
       }
