@@ -88,4 +88,8 @@ user_id랑 날짜 이용해서 diary 정보 받아옴
     content 받아와서 뿌려줌
 2) diary table에 해당 날짜 일기 X
     빈 페이지
+
+- emotion list -> 1위 뽑아서 diary_emotion에 넣기 -> playlist 받아와서 랜덤하게 하나 뽑아서 diary_playlist에 넣기
+- keyword list -> keyword 하나씩 keyword table에 있는지 확인 -> 걸릴 경우, site에 넣기 (없을 경우 NULL로 남겨두기)
+- summary
 */
