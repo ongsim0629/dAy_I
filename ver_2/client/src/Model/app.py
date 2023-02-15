@@ -11,10 +11,10 @@ def writetest():
     raw_text = request.args['text']
     oneLine_text = text_oneLine(raw_text)
     summ = summary_model(oneLine_text)
-    emo_list = emo_model(summ)
+    emotion = emo_model(summ)
     key_list = keyword_model(raw_text)
     return jsonify({
-        'emo_list': emo_list,
+        'emotion': emotion,
         'summ': summ,
         'key_list': key_list
     })

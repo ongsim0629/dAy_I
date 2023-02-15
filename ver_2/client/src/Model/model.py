@@ -13,11 +13,6 @@ model_emo = AutoModelForSequenceClassification.from_pretrained('./model/emmo')
 sum_model = AutoModelForSeq2SeqLM.from_pretrained('./model/summ')
 sum_tokenizer = AutoTokenizer.from_pretrained('./model/summ')
 
-#키워드 추출 모델
-# min_count = 2   # 단어의 최소 출현 빈도수 (그래프 생성 시)
-# max_length = 10 # 단어의 최대 길이
-
-
 def summary_model(text): # 요약 모델
     nltk.download('punkt')
     prefix = "summarize: "
@@ -35,12 +30,16 @@ def emo_model(temp): # 감정 추출 모델
     with torch.no_grad():
         tokens = tokenizer_emo.encode(temp, return_tensors='pt')
         output = model_emo(tokens)
-    
+    arr = output.logits.tolist()[0]
+    emotion = ['중립','행복','당황','분노','불안','슬픔','혐오']
+    max_val = max(arr)  # get the maximum value in the array
+    max_index = arr.index(max_val)  # get the index of the maximum value in the array
+    first= emotion[max_index]
     #전처리
-    return output.logits.tolist()[0]
+    return first
 
 def keyword_model(text): #키워드 추출 모델
-    wordrank_extractor = KRWordRank(min_count=2, max_length=6)
+    wordrank_extractor = KRWordRank(min_count=2, max_length=6) # min_count는 최소 등장 횟수 max_length는 추출된 키워드의 최대 길이 입니다.
     beta = 0.85    # PageRank의 decaying factor beta
     max_iter = 10
     texts = []

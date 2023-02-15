@@ -7,7 +7,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 var request = require('request');
-
+var emotion = "";
 //date(String), title(), content, (token) 전달받음
 router.post("/", (req, res) => {
   console.log("/members/test/write 호출됨");
@@ -57,8 +57,17 @@ router.post("/", (req, res) => {
 
     let json = JSON.parse(result);
 
-    console.log(json);
+    console.log(json.emotion);
+    emotion = json.emotion;
+    db.query("SELECT PLAYLIST_URL, PLAYLIST_TITLE FROM playlist WHERE PLAYLIST_EMOTION = ? ORDER BY RAND() LIMIT 1;",emotion, function (error, results, fields) {
+      if (error) throw error;
+    // let query_json = JSON.parse(results);
+    console.log('records: ', results[0].PLAYLIST_URL);
+    console.log('records: ', results[0].PLAYLIST_TITLE);
+    });
 })
+
+
 
   db.query(query, (err, data) => {
     if (!err) {
@@ -88,8 +97,4 @@ user_id랑 날짜 이용해서 diary 정보 받아옴
     content 받아와서 뿌려줌
 2) diary table에 해당 날짜 일기 X
     빈 페이지
-
-- emotion list -> 1위 뽑아서 diary_emotion에 넣기 -> playlist 받아와서 랜덤하게 하나 뽑아서 diary_playlist에 넣기
-- keyword list -> keyword 하나씩 keyword table에 있는지 확인 -> 걸릴 경우, site에 넣기 (없을 경우 NULL로 남겨두기)
-- summary
 */
