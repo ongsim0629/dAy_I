@@ -7,7 +7,7 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 var request = require('request');
-var emotion = "";
+
 //date(String), title(), content, (token) 전달받음
 router.post("/", (req, res) => {
   console.log("/members/test/write 호출됨");
@@ -57,17 +57,37 @@ router.post("/", (req, res) => {
 
     let json = JSON.parse(result);
 
-    console.log(json.emotion);
-    emotion = json.emotion;
-    db.query("SELECT PLAYLIST_URL, PLAYLIST_TITLE FROM playlist WHERE PLAYLIST_EMOTION = ? ORDER BY RAND() LIMIT 1;",emotion, function (error, results, fields) {
+    console.log(json.key_list);
+
+    //플레이리스트 id추출
+    let emotion = json.emotion;
+    db.query("SELECT PLAYLIST_ID, PLAYLIST_TITLE FROM playlist WHERE PLAYLIST_EMOTION = ? ORDER BY RAND() LIMIT 1;",emotion, function (error, results, fields) {
       if (error) throw error;
-    // let query_json = JSON.parse(results);
-    console.log('records: ', results[0].PLAYLIST_URL);
-    console.log('records: ', results[0].PLAYLIST_TITLE);
+    // console.log('records: ', results[0].PLAYLIST_ID);
     });
-})
 
-
+    //키워드에 대한 카테고리 추출
+    let key_arr = [];
+    let key_arr2 = [];
+    key_arr = json.key_list;
+    var len = 10 - key_arr.length
+    for(var i = 0; i < len; i++){
+      key_arr.push('0');
+    } 
+    // console.log(key_arr[1]);
+    let cate = "";
+    key_arr2 = key_arr.concat(key_arr)
+    db.query("SELECT CATEGORY FROM keyword where keyword in (?,?,?,?,?,?,?,?,?,?) ORDER BY FIELD(keyword,?,?,?,?,?,?,?,?,?,?) limit 1;",key_arr2,function (error, results) {
+      if (error) throw error;
+      if (results.length > 0) {
+        cate = results[0].CATEGORY
+        console.log('cate:'+ cate)
+      } else {
+        console.log('No records found.');
+      }
+    });
+    }
+  )
 
   db.query(query, (err, data) => {
     if (!err) {
