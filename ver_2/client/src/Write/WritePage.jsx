@@ -139,11 +139,19 @@ function WritePage() {
       .then(function (response) {
         console.log(response);
         alert("일기 제출 정상 작동");
-        navigate("/members/home");
+        navigate("/diaries/id/date");
       })
       .catch(function (error) {
         console.log(error);
       });
+    
+      //추후에 db에 저장된 추천 관련 데이터를 diary페이지에서 보여줘야 하기에 token, date 넘겨주는 코드 작성해야 함
+    // axios.get("" {
+    //   .then({
+    //     //token, date 넘겨주기
+    //     navigate("/diaries/test");
+    //   })
+    // })
   };
 
   return (

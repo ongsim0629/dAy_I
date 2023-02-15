@@ -6,6 +6,9 @@ const db = require("../../server/config/db.js");
 router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
+var request = require('request');
+var result = ""
+
 //date(String), title(), content, (token) 전달받음
 router.post("/", (req, res) => {
   console.log("/members/test/write 호출됨");
@@ -27,6 +30,37 @@ router.post("/", (req, res) => {
   console.log("date", date);
   console.log("title", title);
   console.log("content", content);
+
+  // FLASK로 일기 내용 보내기
+  const ModelResult  = (callback)=>{
+    const options = {
+        method: 'POST',
+        uri: "http://127.0.0.1:4000/sendmodeltext",
+        qs: {
+            text: content
+        }
+    }
+    request(options, function (err, res, body) {
+        callback(undefined, {
+            result:body
+        });
+    });
+  }
+  console.log(result)
+
+  ModelResult((err, {result}={})=>{
+    if(err){
+        console.log("error!!!!");
+        res.send({
+            message: "fail",
+            status: "fail"
+        });
+    }
+
+    let json = JSON.parse(result);
+
+    console.log(json);
+})
 
   db.query(query, (err, data) => {
     if (!err) {
