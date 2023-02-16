@@ -82,14 +82,14 @@ router.post("/", (req, res) => {
         const catego = results[0].CATEGORY
         console.log('카테고리:'+ catego)
 
-        db.query("UPDATE diary SET DIARY_KEYWORD = ? WHERE DIARY_WRITER_ID = ? and DIARY_WRITE_DATE = ?;",[results[0].KEYWORD,'qwe',date], function (error, results, fields) {
+        db.query("UPDATE diary SET DIARY_KEYWORD = ? WHERE DIARY_WRITER_ID = ? and DIARY_WRITE_DATE = ?;",[results[0].KEYWORD,check.user_id,date], function (error, results, fields) {
           if (error) throw error;
         });
 
         db.query("SELECT SITE_URL FROM categorysite where SITE_CATEGORY = ?;",[results[0].CATEGORY], function (error, results, fields) {
           if (error) throw error;
-          
-          db.query("UPDATE diary SET DIARY_CATEGORY_SITE = ? WHERE DIARY_WRITER_ID = ? and DIARY_WRITE_DATE = ?;",[results[0].SITE_URL,'qwe',date], function (error, results, fields) {
+
+          db.query("UPDATE diary SET DIARY_CATEGORY_SITE = ? WHERE DIARY_WRITER_ID = ? and DIARY_WRITE_DATE = ?;",[results[0].SITE_URL,check.user_id,date], function (error, results, fields) {
             if (error) throw error;
           });
         });
