@@ -54,6 +54,13 @@ function HomePage() {
   const [startDate, setStartDate] = useState(new window.Date());
   const dateList = location.state.dateList;
 
+  const dataList = [];
+
+ for (let i = 0; i< dateList.length; i++){
+                      dataList.push(new Date(dateList[i].diary_write_date));
+                    };
+
+  console.log(dataList);
 
   axios
     .get("/members/edit")
@@ -159,7 +166,7 @@ function HomePage() {
                 onChange={(date)=>onDatePickHandler(date)}
                 selected={startDate}
                 // {/* locale={ko} */}
-                highlightDates={dateList}
+                highlightDates={dataList}
                 // highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
                 // highlightDates는 Map이고 []안만 찍어보면 배열 
                 ref={calRef}

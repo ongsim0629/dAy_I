@@ -96,7 +96,7 @@ router.post("/", (req, res) => {
                     };
                     console.log(dataList);
         
-                    res.send({ userId: id, token: token, list:dataList });
+                    res.send({ userId: id, token: token, list:result });
                   }
                 }
               );
