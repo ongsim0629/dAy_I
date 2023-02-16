@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -27,13 +27,14 @@ const Layout = styled.div`
 `;
 
 const CustomButton = styled.button`
-  color: #8f8f8f;
-  background: #f5f5f5;
-  font-weight: bold;
-  border: none;
-  margin-top: 32px;
-  border-radius: 4px;
-  padding: 7px 10px;
+    color: #8F8F8F;
+    background: #F5F5F5;
+    font-weight: bold;
+    border: none;
+    margin-top: 32px;
+    margin-right: 20px;
+    border-radius: 4px;
+    padding: 7px 10px;
 
   &:hover {
     cursor: pointer;
@@ -49,6 +50,7 @@ function HomePage() {
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new window.Date());
   const navigate = useNavigate();
+  const calRef = useRef();
 
   axios
     .get("/members/edit")
@@ -75,13 +77,25 @@ function HomePage() {
       console.log(error);
     });
 
+    const result = axios.post("/members/home", {
+      id : id})
+      .then(response => {
+        console.log(response.data)
+      // response  
+    }).catch(error => {
+     // 오류발생시 실행
+    }).then(() => {
+     // 항상 실행
+    });
+
   // 로그아웃
   const onLogoutButtonHandler = () => {
     let token = localStorage.getItem("token");
     localStorage.clear();
+    navigate('/');
   };
 
-  //문자열 변환
+  //서버 전달용: 영문식 달력에서 온 date를 한국 스타일의 string 형식(연-월-일)으로 변환
   const dateToString = () => {
     const year = startDate.getFullYear();
     const month = startDate.getMonth() + 1;
@@ -91,22 +105,40 @@ function HomePage() {
     }`;
   };
 
+  //검색용: highlighted인 날짜를 찾기 위해 highlighted에 저장되는 날짜 형식인 (월.일.연도)로 변환
+  const dateToStringForSearch = (d) => {
+    const year = d.getFullYear();
+    const month = d.getMonth() + 1;
+    const date = d.getDate();
+    return `${month >= 10 ? month : "0" + month}.${date >= 10 ? date : "0"+date}.${year}`;
+  };
+
   const onDatePickHandler = async (date) => {
     setStartDate(date);
+    const highlightDates = calRef.current.state.highlightDates;
 
-    //diary 있는 경우로 조건 달아줘야 함
-    //diary로 이동 시 URL로 date, user_id 전달해야 함
-    await axios
-      .post("/diaries/test/id", {
-        id: id,
-        date: dateToString(startDate),
-      })
-      .then((res) => {
-        console.log("서버로 date와 id가 전달되었습니다.");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // <작성한 내용이 있으면 읽기 페이지로, 없으면 쓰기 페이지로> 
+    // 이 페이지가 렌더링될 때 서버에서 일기가 있는 페이지 정보를 받아오면
+    // 그 정보를 DatePicker의 highlighted에 넣어 일기가 있는 페이지의 날짜는 회색 동그라미가 그려짐
+    // 이를 이용해 날짜를 highlighted map에서 검색했을 때 날짜가 존재하면 일기가 있는 날짜로 간주함
+
+    if(highlightDates.has(dateToStringForSearch(date))===true){ //선택한 날짜가 highlighted 상태 
+      //diary로 이동 시 URL로 date, user_id 전달
+        await axios
+        .post("/diaries/test/id", {
+          id: id,
+          date: dateToString(startDate),
+        })
+        .then((res) => {
+          console.log("서버로 date와 id가 전달되었습니다.");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+        navigate("/diaries/id/date");
+    }else{
+      navigate("/members/test/write", {state: {selectedDate: date}});
+    }
 
     // await axios({
     //   method: 'get',
@@ -116,47 +148,34 @@ function HomePage() {
     //     date: date
     //   }
     // })
-
-    //작성한 내용이 있으면 읽기 페이지로, 없으면 쓰기 페이지로 가야 하지만
-    //일단 선택한 날짜의 읽기 페이지로 가도록 함
-    navigate("/members/test/write", { state: { selectedDate: date } });
   };
+
+  const onMypageButtonHandler = () =>{
+    navigate('/members/test/mypage');
+  }
+
   return (
     <>
       <Header>
-        <Link to="/">
-          <CustomButton
-            onClick={onLogoutButtonHandler}
-            style={{ marginLeft: "1320px" }}
-          >
-            로그아웃
-          </CustomButton>
-        </Link>
-        <Link to="/members/test/mypage">
-          <CustomButton type="button" style={{ marginLeft: "20px" }}>
-            마이페이지
-          </CustomButton>
-        </Link>
+          <CustomButton onClick={onLogoutButtonHandler} style={{marginLeft:'1270px'}}>로그아웃</CustomButton>
+          <CustomButton onClick={onMypageButtonHandler}>마이페이지</CustomButton>
       </Header>
-      <Layout>
-        {/* <h4>{id}님 환영합니다</h4>
-            <Link to="/diaries/id/date">
-              <h5>10일</h5>
-            </Link> */}
-        <h2 style={{ color: "#AEAEAE", fontFamily: "AbeeZee" }}>
-          당신의 소중한 하루를 기록해보세요.
-        </h2>
-        <br />
-        <DatePicker
-          onChange={(date) => onDatePickHandler(date)}
-          selected={startDate}
-          // {/* locale={ko} */}
-          //  {/* highlightDates={[]} */}
-          className="datePicker"
-          inline
-        ></DatePicker>
-      </Layout>
+      <Layout> 
+            {/* <h4>{id}님 환영합니다</h4>*/}
+            <h2 style={{color:'#AEAEAE', fontFamily:'AbeeZee'}}>당신의 소중한 하루를 기록해보세요.</h2><br/>
+            <DatePicker 
+                onChange={(date)=>onDatePickHandler(date)}
+                selected={startDate}
+                // {/* locale={ko} */}
+                highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
+                // highlightDates는 Map이고 []안만 찍어보면 배열 
+                ref={calRef}
+                inline
+                >         
+            </DatePicker> 
+      </Layout> 
     </>
+    
   );
 }
 
