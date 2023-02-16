@@ -81,6 +81,7 @@ function HomePage() {
   const onLogoutButtonHandler = () => {
     let token = localStorage.getItem("token");
     localStorage.clear();
+    navigate('/');
   };
 
   //서버 전달용: 영문식 달력에서 온 date를 한국 스타일의 string 형식(연-월-일)으로 변환
