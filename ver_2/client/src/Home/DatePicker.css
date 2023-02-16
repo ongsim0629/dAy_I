@@ -43,28 +43,29 @@
     margin: 15px 0px;
 }
 
-.react-datepicker__day-names:nth-child(1){
-    color:red;
-}
-.react-datepicker__day-names:nth-child(7){
-    color:rgb(58, 58, 249);
-}
-
-/* 날짜까지 색을 주고 싶은 경우 */
+/* day: 주말 날짜 */
 .react-datepicker__day:nth-child(1){
-    color: #FF5555;
+    color:red;
 }
 .react-datepicker__day:nth-child(7){
     color:#8685FF;
 }
 
+/* day-name:요일 */
+.react-datepicker__day-name:nth-child(1){
+    color: #FF5555;
+}
+.react-datepicker__day-name:nth-child(7){
+    color:#8685FF;
+}
+
+/* 일반 날짜 */
 .react-datepicker__day{
     margin: 25px 30px;
     font-weight:400;
     color: rgb(39, 38, 38);
 }
 
-/*일단 필요한건 day--selected만*/
 .react-datepicker__day--selected,
 .react-datepicker__day--range-end,
 .react-datepicker__day--in-selecting-range,
@@ -80,32 +81,40 @@
 
 
 /* 회색 동그라미 버전 */
-.react-datepicker__day--highlighted{
+/* .react-datepicker__day--highlighted{
     background-color: #e0dfdf;
     color:white;
     font-weight:500;
     padding:8px;
     margin: 15px 22px;
     border-radius: 50%;
-}
+} */
 
 /* 동그라미 제거 버전(미완) */
-/* .react-datepicker__day--highlighted{
+.react-datepicker__day--highlighted{
     color:black;
     background-color: white;
     font-weight:500;
     padding:8px;
     margin: 15px 22px;
     border-radius: 50%;
-} */
+}
 
 .react-datepicker__day:hover,
     .react-datepicker__month-text:hover,
     .react-datepicker__quarter-text:hover,
     .react-datepicker__year-text:hover {
         border-radius: 50%;
-        background: gainsboro;
+        background: #d6d5fb;
         padding:8px;
         margin: 15px 22px;
         border-radius: 50%;
     }
+
+/* 달력 이동시 오늘 날짜와 달이 다르고 날짜는 같을 때  */
+.react-datepicker__day--keyboard-selected{
+        background: #dfdef8;
+        padding:8px;
+        margin: 15px 22px;
+        border-radius: 50%;
+}

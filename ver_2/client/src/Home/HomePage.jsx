@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , useLocation } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "./DatePicker.css";
@@ -47,10 +47,13 @@ const CustomButton = styled.button`
 // 응답(항상 실행)
 
 function HomePage() {
-  const [id, setId] = useState("");
-  const [startDate, setStartDate] = useState(new window.Date());
+  const location = useLocation();
   const navigate = useNavigate();
   const calRef = useRef();
+  const [id, setId] = useState("");
+  const [startDate, setStartDate] = useState(new window.Date());
+  const dateList = location.state.dateList;
+
 
   axios
     .get("/members/edit")
@@ -156,7 +159,8 @@ function HomePage() {
                 onChange={(date)=>onDatePickHandler(date)}
                 selected={startDate}
                 // {/* locale={ko} */}
-                highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
+                highlightDates={dateList}
+                // highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
                 // highlightDates는 Map이고 []안만 찍어보면 배열 
                 ref={calRef}
                 inline
