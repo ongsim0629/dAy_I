@@ -132,6 +132,7 @@ function LoginPage(props) {
           const dateList = res.data.list; //서버에서 온 날짜 리스트 저장
           //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
           localStorage.setItem("token", res.data.token);
+          console.log(dateList)
           navigate("/members/home", {state: {dateList: dateList}});
           //sessionStorage.setItem('user_id', id) //참고로 적어둠
         }

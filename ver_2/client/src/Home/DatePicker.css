@@ -81,17 +81,17 @@
 
 
 /* 회색 동그라미 버전 */
-/* .react-datepicker__day--highlighted{
+ .react-datepicker__day--highlighted{
     background-color: #e0dfdf;
     color:white;
     font-weight:500;
     padding:8px;
     margin: 15px 22px;
     border-radius: 50%;
-} */
+} 
 
 /* 동그라미 제거 버전(미완) */
-.react-datepicker__day--highlighted{
+/*.react-datepicker__day--highlighted{
     color:black;
     background-color: white;
     font-weight:500;
@@ -99,7 +99,7 @@
     margin: 15px 22px;
     border-radius: 50%;
 }
-
+*/
 .react-datepicker__day:hover,
     .react-datepicker__month-text:hover,
     .react-datepicker__quarter-text:hover,
