@@ -77,17 +77,6 @@ function HomePage() {
       console.log(error);
     });
 
-    const result = axios.post("/members/home", {
-      id : id})
-      .then(response => {
-        console.log(response.data)
-      // response  
-    }).catch(error => {
-     // 오류발생시 실행
-    }).then(() => {
-     // 항상 실행
-    });
-
   // 로그아웃
   const onLogoutButtonHandler = () => {
     let token = localStorage.getItem("token");
