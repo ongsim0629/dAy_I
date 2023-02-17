@@ -131,12 +131,11 @@ function HomePage() {
       //diary로 이동 시 URL로 date, user_id 전달
         await axios
         .post("/diaries", {
-          id: id,
+          token: localStorage.getItem("token"),
           date: dateToString(tempDate) //클릭한 날짜로 바꿔야됨
         })
         .then((res) => {
           console.log("서버로 date와 id가 전달되었습니다.");
-          console.log(">>>>>>>>>>>> res.data : ", res.data)
           navigate("/diaries", {state: {dailyData: res.data}}); //diary.js로부터 받은 일기 데이터를 DiaryPage.jsx로 넘김
         })
         .catch((error) => {
