@@ -53,6 +53,9 @@ function HomePage() {
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new window.Date());
   const dateList = location.state.dateList;
+  //const id = location.state.id;
+  let [dailyData, setDailyData] = useState([]);
+  let tempDate;
 
   const dataList = [];
 
@@ -95,10 +98,10 @@ function HomePage() {
   };
 
   //서버 전달용: 영문식 달력에서 온 date를 한국 스타일의 string 형식(연-월-일)으로 변환
-  const dateToString = () => {
-    const year = startDate.getFullYear();
-    const month = startDate.getMonth() + 1;
-    const date = startDate.getDate();
+  const dateToString = (tempData) => {
+    const year = tempData.getFullYear();
+    const month = tempData.getMonth() + 1;
+    const date = tempData.getDate();
     return `${year}-${month >= 10 ? month : "0" + month}-${
       date >= 10 ? date : "0" + date
     }`;
@@ -113,7 +116,12 @@ function HomePage() {
   };
 
   const onDatePickHandler = async (date) => {
-    setStartDate(date);
+    tempDate = date;
+    console.log(">>>>tempDate : ", tempDate)
+
+    setStartDate(date); //*** 얘로 console 찍으면 당일 날짜 나옴 ***
+    console.log(">>>>startDate : ", startDate)
+
     const highlightDates = calRef.current.state.highlightDates;
 
     // <작성한 내용이 있으면 읽기 페이지로, 없으면 쓰기 페이지로> 
@@ -121,21 +129,26 @@ function HomePage() {
     // 그 정보를 DatePicker의 highlighted에 넣어 일기가 있는 페이지의 날짜는 회색 동그라미가 그려짐
     // 이를 이용해 날짜를 highlighted map에서 검색했을 때 날짜가 존재하면 일기가 있는 날짜로 간주함
 
-    if(highlightDates.has(dateToStringForSearch(date))===true){ //선택한 날짜가 highlighted 상태 
+    if(highlightDates.has(dateToStringForSearch(tempDate))===true){ //선택한 날짜가 highlighted 상태 
       //diary로 이동 시 URL로 date, user_id 전달
         await axios
-        .post("/diaries/test/id", {
+        .post("/diaries", {
           id: id,
-          date: dateToString(startDate),
+          date: dateToString(tempDate) //클릭한 날짜로 바꿔야됨
         })
         .then((res) => {
           console.log("서버로 date와 id가 전달되었습니다.");
+          
+          console.log(">>>>>>>>>>>> res.data : ", res.data)
+          navigate("/diaries", {state: {dailyData: res.data}}); //diary.js로부터 받은 일기 데이터를 DiaryPage.jsx로 넘김
         })
         .catch((error) => {
           console.log(error);
+          alert('일기 정보를 가져오는데 실패했습니다.')
         });
-        navigate("/diaries/id/date");
-    }else{
+        //navigate("/diaries", {state: {dailyData: dailyData}});
+    }
+    else{ 
       navigate("/members/test/write", {state: {selectedDate: date}});
     }
 
