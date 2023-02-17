@@ -7,8 +7,18 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 router.post("/", (req, res) => {
-  const id = req.body.id;
+  //const id = req.body.id;
+  const token = req.body.token;
   const date = req.body.date;
+
+  try {
+    var check = jwt.verify(token, "secretKey");
+    if (check) {
+      console.log("token 검증", check.user_id);
+    }
+  } catch {
+    console.log("token 검증 오류");
+  }
 
   db.getConnection((err, conn) => {
     //db 연결 실패 시,
@@ -25,7 +35,7 @@ router.post("/", (req, res) => {
 
     const exec = conn.query(
       "delete from diary where diary_writer_id = ? AND diary_write_date = ?;",
-      [id, date],
+      [check.user_id, date],
       (err, result) => {
         conn.release();
         console.log("실행된 SQL: " + exec.sql);
