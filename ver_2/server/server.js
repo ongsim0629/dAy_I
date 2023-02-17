@@ -1,6 +1,5 @@
 var express = require("express");
 
-var usersRouter = require("./routes/users");
 var registerRouter = require("./routes/register");
 var loginRouter = require("./routes/login");
 var editRouter = require("./routes/edit");
@@ -11,7 +10,6 @@ var mypageRouter = require("./routes/myPage");
 
 var app = express();
 
-app.use("/users", usersRouter);
 app.use("/members/new", registerRouter);
 app.use("/members/login", loginRouter);
 app.use("/members/edit", editRouter);
