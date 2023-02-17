@@ -31,7 +31,7 @@ def emo_model(temp): # 감정 추출 모델
         tokens = tokenizer_emo.encode(temp, return_tensors='pt')
         output = model_emo(tokens)
     arr = output.logits.tolist()[0]
-    emotion = ['중립','행복','당황','분노','불안','슬픔','혐오']
+    emotion = ['중립','기쁨','당황','분노','불안','슬픔','혐오']
     max_val = max(arr)  # get the maximum value in the array
     max_index = arr.index(max_val)  # get the index of the maximum value in the array
     first= emotion[max_index]
