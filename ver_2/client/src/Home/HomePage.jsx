@@ -87,21 +87,6 @@ function HomePage() {
       console.log(error);
     });
 
-<<<<<<< HEAD
-    //일기 유무 날짜 데이터 요청
-    const result = axios.post("/members/home", {
-      id : id})
-      .then(response => {
-        console.log(response.data)
-      // response  
-    }).catch(error => {
-     // 오류발생시 실행
-    }).then(() => {
-     // 항상 실행
-    });
-
-=======
->>>>>>> bb512a3f48b30cea6a5ddf100b49b9646f501857
   // 로그아웃
   const onLogoutButtonHandler = () => {
     let token = localStorage.getItem("token");

@@ -103,6 +103,7 @@ router.post("/", (req, res) => {
   db.query(query, (err, data) => {
     if (!err) {
       console.log("오류X");
+      
     } else {
       console.log("오류");
     }

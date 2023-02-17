@@ -29,20 +29,6 @@ router.post("/", (req, res) => {
   const id = req.body.id;
   const date = req.body.date;
 
-  /* 
-  try {
-    var check = jwt.verify(token, "secretKey");
-    if (check) {
-      console.log("token 검증", check.user_id);
-    }
-  } catch {
-    console.log("token 검증 오류");
-  }
-  //check.user_id로 user_id 받아왔음
-  */
-
-  //var query = "select * from diary where = ?";
-
   db.getConnection((err, conn) => {
     //db 연결 실패 시,
     if (err) {
@@ -57,10 +43,9 @@ router.post("/", (req, res) => {
     console.log("데이터베이스 conn");
 
     const exec = conn.query(
-      "select * from diary where diary_writer_id = ? AND diary_write_date = ?;",
+      "select * from diary where diary_writer_id = ? AND diary_write_date = '2023-02-15';",
       [id, date],
       (err, result) => {
-        conn.release();
         console.log("실행된 SQL: " + exec.sql);
         // sql 오류 시
         if (err) {
@@ -94,10 +79,54 @@ router.post("/", (req, res) => {
           */
 
           //오류가 없을 경우
-          console.log("쿼리문 성공");
-          console.dir(result[0]);
-          res.send(result[0]);
-          res.end();
+          //console.log("쿼리문 성공");
+          //console.dir(result[0]);
+
+          var json = {};   //front로 res 보내줄 data
+          json.diary_writer_id = result[0].DIARY_WRITER_ID;
+          json.diary_write_date = result[0].DIARY_WRITE_DATE;
+          json.diary_title = result[0].DIARY_TITLE;
+          json.diary_content = result[0].DIARY_CONTENT;
+          json.diary_keyword = result[0].DIARY_KEYWORD;
+          json.diary_category_site = result[0].DIARY_CATEGORY_SITE;
+          json.diary_emotion = result[0].DIARY_EMOTION;
+          json.diary_playlist = result[0].DIARY_PLAYLIST;
+          json.diary_summary = result[0].DIARY_SUMMARY;
+
+
+          const exec = conn.query(
+            "select PLAYLIST_URL, PLAYLIST_TITLE from playlist where playlist_id ='" + result[0].DIARY_PLAYLIST + "';",
+            (err, result) => {
+              conn.release();
+              // sql 오류 시
+              if (err) {
+                console.log("SQL 실행 시, 오류 발생");
+                console.dir(err);
+                res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+                res.write("<h2>SQL 실행 실패;</h2>");
+                res.status(404).send("오류");
+                res.end();
+                return;
+              } else {
+                // sql 성공 시
+                // 하루에 일기 1개 초과 시
+                let playlist_url = result[0].PLAYLIST_URL;
+                let thumbnail = playlist_url.substring(32);
+                thumbnail = "https://img.youtube.com/vi/" + thumbnail +"/maxresdefault.jpg"
+                let playlist_title = result[0].PLAYLIST_TITLE;
+                //console.log("다이어리 내용은 : " +first_result[0])
+                //console.log("썸네일 주소는 : " + thumbnail);
+                //console.log("플레이리스트 url은 : " + playlist_url);
+                //console.log("플레이리스트 제목은 : " + playlist_title);
+                json.playlistTitle = playlist_title;
+                json.playlistURL = playlist_url;
+                json.thumbnailURL = thumbnail;
+                console.log(json);
+                res.send(json);
+                res.end();
+              }
+            }
+          );
         }
       }
     );
