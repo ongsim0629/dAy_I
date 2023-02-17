@@ -77,6 +77,7 @@ function HomePage() {
       console.log(error);
     });
 
+    //일기 유무 날짜 데이터 요청
     const result = axios.post("/members/home", {
       id : id})
       .then(response => {
