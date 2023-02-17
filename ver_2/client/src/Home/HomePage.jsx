@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import styled from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate , useLocation } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "./DatePicker.css";
@@ -47,10 +47,20 @@ const CustomButton = styled.button`
 // 응답(항상 실행)
 
 function HomePage() {
-  const [id, setId] = useState("");
-  const [startDate, setStartDate] = useState(new window.Date());
+  const location = useLocation();
   const navigate = useNavigate();
   const calRef = useRef();
+  const [id, setId] = useState("");
+  const [startDate, setStartDate] = useState(new window.Date());
+  const dateList = location.state.dateList;
+
+  const dataList = [];
+
+ for (let i = 0; i< dateList.length; i++){
+                      dataList.push(new Date(dateList[i].diary_write_date));
+                    };
+
+  console.log(dataList);
 
   axios
     .get("/members/edit")
@@ -77,6 +87,7 @@ function HomePage() {
       console.log(error);
     });
 
+<<<<<<< HEAD
     //일기 유무 날짜 데이터 요청
     const result = axios.post("/members/home", {
       id : id})
@@ -89,6 +100,8 @@ function HomePage() {
      // 항상 실행
     });
 
+=======
+>>>>>>> bb512a3f48b30cea6a5ddf100b49b9646f501857
   // 로그아웃
   const onLogoutButtonHandler = () => {
     let token = localStorage.getItem("token");
@@ -168,7 +181,8 @@ function HomePage() {
                 onChange={(date)=>onDatePickHandler(date)}
                 selected={startDate}
                 // {/* locale={ko} */}
-                highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
+                highlightDates={dataList}
+                // highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
                 // highlightDates는 Map이고 []안만 찍어보면 배열 
                 ref={calRef}
                 inline

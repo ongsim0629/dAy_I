@@ -8,7 +8,6 @@ var writeRouter = require("./routes/write");
 var diaryRouter = require("./routes/diary");
 var diaryDeleteRouter = require("./routes/diary_delete");
 var mypageRouter = require("./routes/myPage");
-var homeRouter = require("./routes/home");
 
 var app = express();
 
@@ -21,6 +20,5 @@ app.use("/diaries/test/id", diaryRouter); //GET이기에 콜론 작성 (token은
 ///members/diary/:id/:date
 app.use("/members/delete", diaryDeleteRouter);
 app.use("/members/mypage", mypageRouter);
-app.use("/members/home", homeRouter);
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Listening on port ${port}`));
