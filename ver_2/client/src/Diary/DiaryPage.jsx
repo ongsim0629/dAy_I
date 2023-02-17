@@ -59,6 +59,7 @@ const Bar = styled.div`
 `;
 
 function DiaryPage() {
+    const navigate = useNavigate();
     const location = useLocation();
     const dailyData = location.state.dailyData;
 
@@ -66,11 +67,12 @@ function DiaryPage() {
         event.preventDefault();
 
         await axios.post("/members/delete", {
-          id: dailyData.diary_write_id,
+          id: dailyData.diary_writer_id,
           date: dailyData.diary_write_date
         })
         .then((res) => {
           alert('일기가 삭제되었습니다.')
+          navigate("/members/home");
         })
         .catch((error) => {
           console.log(error);
@@ -113,7 +115,7 @@ function DiaryPage() {
                 </DiaryBack>
             </Left>
             <Right>
-                <center><h1 style={{marginTop: '50px', height: '100%'}}>분석 결과</h1></center>
+                <br /><br /><center><h1 style={{marginTop: '50px', height: '100%'}}>분석 결과</h1></center><br />
                 <div>
                     <center><Bar>오늘의 감정 키워드</Bar></center><br />
                     <center><a style={{fontSize: '20px'}}>{dailyData.diary_emotion}</a></center><br /><br />
@@ -121,14 +123,14 @@ function DiaryPage() {
                 </div>
                 <div>
                     <center><Bar>당신의 하루에 맞는 음악</Bar></center>
-                    <center><a href={dailyData.playlistURL} target='_blank'><img alt="thumbnail_img" src={dailyData.thumbnailURL} style={{width: '67%', borderRadius: '7px', marginTop: '15px'}}/></a></center>
+                    <center><a href={dailyData.playlistURL} target='_blank'><img alt="thumbnail_img" src={dailyData.thumbnailURL} style={{width: '67%', borderRadius: '7px', marginTop: '30px'}}/></a></center><br />
                     <center><a href={dailyData.playlistURL} target='_blank' style={{fontSize: '20px', fontWeight: 'bold', textDecoration: 'none', color: 'black'}}>{dailyData.playlistTitle}</a></center><br /><br />
                     <hr style={{width: '80%', border: 'none', backgroundColor: '#C4C4C4', height: '1px'}}></hr>
                 </div>
                 <div>
-                    <center><Bar>당신의 하루가 불러온 사이트</Bar></center><br />
-                    <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', fontWeight: 'bold', color: 'black'}}>사이트 타이틀</a></center>
-                    <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', color: 'blue'}}>{dailyData.diary_category_site}</a></center>
+                    <center><Bar>당신의 하루가 불러온 사이트</Bar></center><br /><br />
+                    <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', fontSize: '20px', fontWeight: 'bold', color: 'black'}}>사이트 타이틀</a></center><br />
+                    <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', fontSize: '17px', color: 'blue'}}>{dailyData.diary_category_site}</a></center>
                 </div>
             </Right>
         </div>
