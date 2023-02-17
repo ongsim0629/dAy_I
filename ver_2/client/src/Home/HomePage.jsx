@@ -53,8 +53,6 @@ function HomePage() {
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new window.Date());
   const dateList = location.state.dateList;
-  //const id = location.state.id;
-  let [dailyData, setDailyData] = useState([]);
   let tempDate;
 
   const dataList = [];
@@ -119,8 +117,8 @@ function HomePage() {
     tempDate = date;
     console.log(">>>>tempDate : ", tempDate)
 
-    setStartDate(date); //*** 얘로 console 찍으면 당일 날짜 나옴 ***
-    console.log(">>>>startDate : ", startDate)
+    //setStartDate(date); //*** 얘로 console 찍으면 당일 날짜 나옴 ***
+    //console.log(">>>>startDate : ", startDate)
 
     const highlightDates = calRef.current.state.highlightDates;
 
@@ -138,7 +136,6 @@ function HomePage() {
         })
         .then((res) => {
           console.log("서버로 date와 id가 전달되었습니다.");
-          
           console.log(">>>>>>>>>>>> res.data : ", res.data)
           navigate("/diaries", {state: {dailyData: res.data}}); //diary.js로부터 받은 일기 데이터를 DiaryPage.jsx로 넘김
         })
@@ -146,20 +143,10 @@ function HomePage() {
           console.log(error);
           alert('일기 정보를 가져오는데 실패했습니다.')
         });
-        //navigate("/diaries", {state: {dailyData: dailyData}});
     }
     else{ 
       navigate("/members/test/write", {state: {selectedDate: date}});
     }
-
-    // await axios({
-    //   method: 'get',
-    //   url: '/diaries',
-    //   params: {
-    //     id: id,
-    //     date: date
-    //   }
-    // })
   };
 
   const onMypageButtonHandler = () =>{
