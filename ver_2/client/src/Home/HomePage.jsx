@@ -52,13 +52,13 @@ function HomePage() {
   const calRef = useRef();
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new window.Date());
-//   const dateList = location.state.dateList;
+  const dateList = location.state.dateList;
 
   const dataList = [];
 
-//  for (let i = 0; i< dateList.length; i++){
-//                       dataList.push(new Date(dateList[i].diary_write_date));
-//                     };
+ for (let i = 0; i< dateList.length; i++){
+                      dataList.push(new Date(dateList[i].diary_write_date));
+                    };
 
   console.log(dataList);
 
@@ -85,18 +85,6 @@ function HomePage() {
     // 응답(실패)
     .catch(function (error) {
       console.log(error);
-    });
-
-    //일기 유무 날짜 데이터 요청
-    const result = axios.post("/members/home", {
-      id : id})
-      .then(response => {
-        console.log(response.data)
-      // response  
-    }).catch(error => {
-     // 오류발생시 실행
-    }).then(() => {
-     // 항상 실행
     });
 
   // 로그아웃
