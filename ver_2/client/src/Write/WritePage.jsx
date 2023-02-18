@@ -128,6 +128,29 @@ function WritePage() {
     }`;
   };
 
+  const onBackHandler = async (event) => {
+    event.preventDefault();
+
+    console.log("이전 버튼 클릭!");
+
+    const result = await axios
+      .post("/members/tohome", {
+        //서버로 id, password 전달
+        token: localStorage.getItem("token"),
+      })
+      .then((res) => {
+        console.log(res);
+
+        const dateList = res.data.list; //서버에서 온 날짜 리스트 저장
+        //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
+        localStorage.setItem("token", res.data.token);
+        console.log(dateList);
+        navigate("/members/home", { state: { dateList: dateList } });
+        //sessionStorage.setItem('user_id', id) //참고로 적어둠
+        console.log("Submit Button Click"); //확인용
+      });
+  };
+
   const onSaveButtonHandler = () => {
     //임시 post 함수
     axios
@@ -145,8 +168,8 @@ function WritePage() {
       .catch(function (error) {
         console.log(error);
       });
-    
-      //추후에 db에 저장된 추천 관련 데이터를 diary페이지에서 보여줘야 하기에 token, date 넘겨주는 코드 작성해야 함
+
+    //추후에 db에 저장된 추천 관련 데이터를 diary페이지에서 보여줘야 하기에 token, date 넘겨주는 코드 작성해야 함
     // axios.get("" {
     //   .then({
     //     //token, date 넘겨주기
@@ -158,9 +181,7 @@ function WritePage() {
   return (
     <>
       <Header>
-        <Link to="/members/home">
-          <BackButton>이전</BackButton>
-        </Link>
+        <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
         <SaveButton onClick={onSaveButtonHandler}>저장</SaveButton>
         <hr style={{ marginTop: "0px" }} />
       </Header>
