@@ -44,6 +44,7 @@ const DiaryBack = styled.div`
     height: 70%;
     border-radius: 20px;
     position : relative;
+    overflow-y: scroll;
 `;
 
 const Bar = styled.div`
@@ -58,6 +59,7 @@ const Bar = styled.div`
     font-size: 20px;
 `;
 
+
 function DiaryPage() {
     const navigate = useNavigate();
     const location = useLocation();
@@ -66,6 +68,7 @@ function DiaryPage() {
     const onClickDelete = async(event) => {
         event.preventDefault();
 
+        //if (localStorage.getItem('token') == postData.post_user_id) { //수정 필요
         await axios.post("/members/delete", {
             token: localStorage.getItem("token"),
             date: dailyData.diary_write_date
@@ -78,20 +81,6 @@ function DiaryPage() {
             console.log(error);
             alert('일기 정보를 가져오는데 실패했습니다.')
         });
-        //if (sessionStorage.getItem('user_id') == postData.post_user_id) {
-        // if (localStorage.getItem('token') == postData.post_user_id) {
-        //     axios.post('/diaries/{id}/delete', {
-        //         username: 글쓴이 닉네임,
-        //         post_id: 게시글id
-        //     })
-        //     .then((response) => {
-        //         console.log(response);
-        //         alert("게시글이 삭제되었습니다.");
-        //         navigate("/home");
-        //     })
-        //     .catch((error) => {
-        //         console.log(error.response);
-        //     });
         // }
         // else {
         //     alert('작성자만 삭제 및 수정이 가능합니다.')
@@ -111,7 +100,7 @@ function DiaryPage() {
                     {/* <Link to="/diaries/test/write"><a style={{float: 'right', marginRight: '30px', color: '#AEAEAE'}}>수정</a></Link> */}
                 </div>
                 <DiaryBack>
-                    <center><div style={{position : 'absolute', left:'50%', top: '50%', transform: 'translate(-50%,-50%)'}}>{dailyData.diary_content}</div></center>
+                    <div style={{position : 'absolute', left:'50%', top: '50%', transform: 'translate(-50%,-50%)'}}>{dailyData.diary_content}</div>
                 </DiaryBack>
             </Left>
             <Right>
