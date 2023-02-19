@@ -28,7 +28,7 @@ function App(){
             <Route path="/members/test/write" element={<WritePage/>}/>
             <Route path="/members/home" element={<HomePage/>}/>
             <Route path ="/diaries" element={<DiaryPage/>}/>
-            <Route path ="/members/test/mypage" element={<Mypage/>}/>
+            <Route path ="/members/mypage" element={<Mypage/>}/>
             {/* flask-node-react 연결 테스트 페이지 */}
             <Route path="/writetest" element={<WriteTestPage/>}/>
             {/* 일단 /{id} 대신 /test 사용 */}
