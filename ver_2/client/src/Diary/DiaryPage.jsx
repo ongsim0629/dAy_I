@@ -67,16 +67,16 @@ function DiaryPage() {
         event.preventDefault();
 
         await axios.post("/members/delete", {
-          id: dailyData.diary_writer_id,
-          date: dailyData.diary_write_date
+            token: localStorage.getItem("token"),
+            date: dailyData.diary_write_date
         })
         .then((res) => {
-          alert('일기가 삭제되었습니다.')
-          navigate("/members/home");
+            alert('일기가 삭제되었습니다.')
+            navigate("/members/home");
         })
         .catch((error) => {
-          console.log(error);
-          alert('일기 정보를 가져오는데 실패했습니다.')
+            console.log(error);
+            alert('일기 정보를 가져오는데 실패했습니다.')
         });
         //if (sessionStorage.getItem('user_id') == postData.post_user_id) {
         // if (localStorage.getItem('token') == postData.post_user_id) {
