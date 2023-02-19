@@ -54,6 +54,7 @@ const Right = styled.div`
     float: right;
     background: #F5F5F5;
     text-align: center;
+    overflow-y:scroll;
 `;
 
 function Mypage(){
@@ -111,9 +112,15 @@ function Mypage(){
             <h3>이번 달 추천 플레이리스트 기록</h3>
             <div>
                 {playlist.map((value, index) => (
+                    // 링크 연결X 버전
                     <p key={index}>
                         {value}
                     </p>
+
+                    // 링크 연결 버전
+                    // <a href="https://www.youtube.com/watch?v=dP95z1QgnXk" key={index}>
+                    //     {value}<br /><br />
+                    // </a>
                 ))}
             </div>
         </Right>
