@@ -26,8 +26,18 @@ router.use(express.urlencoded({ extended: false }));
 //date, token 받음
 router.post("/", (req, res) => {
   //GET 메소드라, body X; params O;
-  const id = req.body.id;
+  //const id = req.body.id;
+  const token = req.body.token;
   const date = req.body.date;
+
+  try {
+    var check = jwt.verify(token, "secretKey");
+    if (check) {
+      console.log("token 검증", check.user_id);
+    }
+  } catch {
+    console.log("token 검증 오류");
+  }
 
   db.getConnection((err, conn) => {
     //db 연결 실패 시,
@@ -44,7 +54,7 @@ router.post("/", (req, res) => {
 
     const exec = conn.query(
       "select * from diary where diary_writer_id = ? AND diary_write_date = '2023-02-15';",
-      [id, date],
+      [check.user_id, date],
       (err, result) => {
         console.log("실행된 SQL: " + exec.sql);
         // sql 오류 시
@@ -82,7 +92,7 @@ router.post("/", (req, res) => {
           //console.log("쿼리문 성공");
           //console.dir(result[0]);
 
-          var json = {};   //front로 res 보내줄 data
+          var json = {}; //front로 res 보내줄 data
           json.diary_writer_id = result[0].DIARY_WRITER_ID;
           json.diary_write_date = result[0].DIARY_WRITE_DATE;
           json.diary_title = result[0].DIARY_TITLE;
@@ -93,16 +103,19 @@ router.post("/", (req, res) => {
           json.diary_playlist = result[0].DIARY_PLAYLIST;
           json.diary_summary = result[0].DIARY_SUMMARY;
 
-
           const exec = conn.query(
-            "select PLAYLIST_URL, PLAYLIST_TITLE from playlist where playlist_id ='" + result[0].DIARY_PLAYLIST + "';",
+            "select PLAYLIST_URL, PLAYLIST_TITLE from playlist where playlist_id ='" +
+              result[0].DIARY_PLAYLIST +
+              "';",
             (err, result) => {
               conn.release();
               // sql 오류 시
               if (err) {
                 console.log("SQL 실행 시, 오류 발생");
                 console.dir(err);
-                res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+                res.writeHead("200", {
+                  "content-Type": "text/html; charset=utf8",
+                });
                 res.write("<h2>SQL 실행 실패;</h2>");
                 res.status(404).send("오류");
                 res.end();
@@ -112,7 +125,10 @@ router.post("/", (req, res) => {
                 // 하루에 일기 1개 초과 시
                 let playlist_url = result[0].PLAYLIST_URL;
                 let thumbnail = playlist_url.substring(32);
-                thumbnail = "https://img.youtube.com/vi/" + thumbnail +"/maxresdefault.jpg"
+                thumbnail =
+                  "https://img.youtube.com/vi/" +
+                  thumbnail +
+                  "/maxresdefault.jpg";
                 let playlist_title = result[0].PLAYLIST_TITLE;
                 //console.log("다이어리 내용은 : " +first_result[0])
                 //console.log("썸네일 주소는 : " + thumbnail);

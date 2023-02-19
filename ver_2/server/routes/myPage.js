@@ -26,10 +26,23 @@ router.use(express.json());
 router.use(express.urlencoded({ extended: false }));
 
 router.post("/", (req, res) => {
-  const id = req.body.id;
+  const token = req.body.token;
   const date = req.body.date; //현재 날짜 (오늘 날짜)
   const yearMonth = date.substring(0, 8) + "__"; //연월   2023-02-13
 
+
+  try {
+    var check = jwt.verify(token, "secretKey");
+    if (check) {
+      console.log("token 검증", check.user_id);
+    }
+  } catch {
+    console.log("token 검증 오류");
+  }
+
+  const id = check.user_id;
+
+  
   db.getConnection((err, conn) => {
     //db 연결 실패 시,
     if (err) {
