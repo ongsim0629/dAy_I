@@ -53,7 +53,7 @@ router.post("/", (req, res) => {
     console.log("데이터베이스 conn");
 
     const exec = conn.query(
-      "select * from diary where diary_writer_id = ? AND diary_write_date = '2023-02-15';",
+      "select * from diary where diary_writer_id = ? AND diary_write_date = ?;",
       [check.user_id, date],
       (err, result) => {
         console.log("실행된 SQL: " + exec.sql);
