@@ -148,8 +148,21 @@ function HomePage() {
     }
   };
 
-  const onMypageButtonHandler = () =>{
-    navigate('/members/test/mypage');
+  const onMypageButtonHandler = (event) =>{
+
+       axios.post("/members/mypage", {
+          token: localStorage.getItem("token"),
+          date: dateToString(new window.Date())
+      })
+      .then((res) => {
+        console.log(">>>>>>>>", localStorage.getItem("token"), " >>>", dateToString(new window.Date()))
+        console.log(res.data)
+        navigate("/members/mypage", {state: {myData: res.data}});
+      })
+      .catch((error) => {
+        console.log(error);
+        alert('마이페이지를 여는 데 문제가 생겼습니다.')
+      });
   }
 
   return (
