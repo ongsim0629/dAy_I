@@ -1,5 +1,5 @@
 # 사용 방법
-<img width="1267" alt="image" src="https://user-images.githubusercontent.com/87406080/218004061-74898bc5-e254-4524-9764-204339d16ab0.png">
+<img width="1267" alt="image" src="https://user-images.githubusercontent.com/99964694/219996111-7308d9b9-363f-467f-a593-f9d2f5aef50c.png">
 
 실행 <br>
 yarn.exe 설치 필요 <br>
