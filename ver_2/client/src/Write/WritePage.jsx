@@ -137,16 +137,14 @@ function WritePage() {
       .post("/members/tohome", {
         //서버로 id, password 전달
         token: localStorage.getItem("token"),
-        
+        date: dateToString(startDate)
       })
       .then((res) => {
-        console.log(res);
-
-        const dateList = res.data.list; //서버에서 온 날짜 리스트 저장
+        console.log(dateToString(startDate));
+        //console.log(res);
         //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
         localStorage.setItem("token", res.data.token);
-        console.log(dateList);
-        navigate("/members/home", { state: { dateList: dateList } });
+        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
         //sessionStorage.setItem('user_id', id) //참고로 적어둠
         console.log("Submit Button Click"); //확인용
       });
