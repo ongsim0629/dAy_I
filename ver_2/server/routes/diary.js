@@ -143,34 +143,41 @@ router.post("/", (req, res) => {
                 //res.send(json);
                 //res.end();
 
-                //diary_category_site(site_url) 참고해서 site_title 주기
-                const exec = conn.query(
-                  "select SITE_TITLE FROM CATEGORYSITE WHERE SITE_URL = ?;",
-                  [site_url],
-                  (err, siteResult) => {
-                    console.log("실행된 SQL: " + exec.sql);
-                    //sql 오류 시
-                    if (err) {
-                      console.log("SQL 실행 시, 오류 발생");
-                      console.dir(err);
-                      res.writeHead("200", {
-                        "content-Type": "text/html; charset=utf8",
-                      });
-                      res.write("<h2>SQL 실행 실패;</h2>");
-                      res.status(404).send("오류");
-                      res.end();
-                      return;
-                    } else {
-                      // sql 성공 시
-                      //오류가 없을 경우
-                      console.log("사이트 쿼리문 성공");
-                      json.site_title = siteResult[0].SITE_TITLE;
-                      console.log(json);
-                      res.send(json);
-                      res.end();
+                //diary 키워드 부재로 site 추천이 안된 경우 (DB NULL)
+                if (site_url == null) {
+                  json.site_title = "추천된 사이트가 없습니다.";
+                  res.send(json);
+                  res.end();
+                } else {
+                  //diary_category_site(site_url) 참고해서 site_title 주기
+                  const exec = conn.query(
+                    "select SITE_TITLE FROM CATEGORYSITE WHERE SITE_URL = ?;",
+                    [site_url],
+                    (err, siteResult) => {
+                      console.log("실행된 SQL: " + exec.sql);
+                      //sql 오류 시
+                      if (err) {
+                        console.log("SQL 실행 시, 오류 발생");
+                        console.dir(err);
+                        res.writeHead("200", {
+                          "content-Type": "text/html; charset=utf8",
+                        });
+                        res.write("<h2>SQL 실행 실패;</h2>");
+                        res.status(404).send("오류");
+                        res.end();
+                        return;
+                      } else {
+                        // sql 성공 시
+                        //오류가 없을 경우
+                        console.log("사이트 쿼리문 성공");
+                        json.site_title = siteResult[0].SITE_TITLE;
+                        console.log(json);
+                        res.send(json);
+                        res.end();
+                      }
                     }
-                  }
-                );
+                  );
+                }
               }
             }
           );
