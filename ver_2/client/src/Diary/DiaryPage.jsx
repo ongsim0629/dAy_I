@@ -35,16 +35,27 @@ const BackButton = styled.button`
 `;
 
 const DiaryBack = styled.div`
-    background: #F5F5F5;
-    margin-top: 20px;
-    margin-left: 50px;
-    border: none;
-    borderRadius: 7px;
-    width: 88%;
-    height: 70%;
+  background: #f5f5f5;
+  margin-top: 20px;
+  margin-left: 50px;
+  border: none;
+  border-radius: 7px;
+  width: 88%;
+  height: 70%;
+  border-radius: 20px;
+  position: relative;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    max-width: 90%;
+    max-height: 90%;
+    overflow-y: auto;
+    padding: 20px;
     border-radius: 20px;
-    position : relative;
-    overflow-y: scroll;
+  }
 `;
 
 const Bar = styled.div`
@@ -124,7 +135,9 @@ function DiaryPage() {
                     {/* <Link to="/diaries/test/write"><a style={{float: 'right', marginRight: '30px', color: '#AEAEAE'}}>수정</a></Link> */}
                 </div>
                 <DiaryBack>
-                    <div style={{position : 'absolute', left:'50%', top: '50%', transform: 'translate(-50%,-50%)'}}>{dailyData.diary_content}</div>
+                    <div>
+                        {dailyData.diary_content}
+                    </div>
                 </DiaryBack>
             </Left>
             <Right>
