@@ -142,7 +142,7 @@ function DiaryPage() {
                 </div>
                 <div>
                     <center><Bar>당신의 하루가 불러온 사이트</Bar></center><br /><br />
-                    <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', fontSize: '20px', fontWeight: 'bold', color: 'black'}}>사이트 타이틀</a></center><br />
+                    <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', fontSize: '20px', fontWeight: 'bold', color: 'black'}}>{dailyData.site_title}</a></center><br />
                     <center><a href="http://jobkorea.co.kr" target='_blank' style={{textDecoration: 'none', fontSize: '17px', color: 'blue'}}>{dailyData.diary_category_site}</a></center>
                 </div>
             </Right>
