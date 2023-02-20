@@ -29,7 +29,8 @@ router.post("/", (req, res) => {
   const token = req.body.token;
   const date = req.body.date; //현재 날짜 (오늘 날짜)
   const yearMonth = date.substring(0, 8) + "__"; //연월   2023-02-13
-
+  const justDate_string = date.substring(8, 10);
+  const justDate = Number(justDate_string);
 
   try {
     var check = jwt.verify(token, "secretKey");
@@ -42,7 +43,6 @@ router.post("/", (req, res) => {
 
   const id = check.user_id;
 
-  
   db.getConnection((err, conn) => {
     //db 연결 실패 시,
     if (err) {
@@ -126,17 +126,47 @@ router.post("/", (req, res) => {
                   emo_count_arr.push(result[0].COUNT);
                   console.log("내부 emo_count_arr", emo_count_arr);
                   if (emo_count_arr.length == 7) {
-                    conn.release();
+                    //conn.release();
                     console.log("emo_count_arr", emo_count_arr);
                     json.emo_count_arr = emo_count_arr;
                     console.log("json:", json);
-                    res.send(json);
-                    res.end();
+                    //res.send(json);
+                    //res.end();
                   }
                 }
               }
             );
           }
+
+          //3) 월 별 출석률
+          const exec = conn.query(
+            "select count(*) as write_count from diary where diary_writer_id = ? and diary_write_date like ?;",
+            [id, yearMonth],
+            (err, result) => {
+              conn.release();
+              // sql 오류 시
+              if (err) {
+                console.log("SQL 실행 시, 오류 발생");
+                console.dir(err);
+                res.writeHead("200", {
+                  "content-Type": "text/html; charset=utf8",
+                });
+                res.write("<h2>SQL 실행 실패;</h2>");
+                res.status(404).send("오류");
+                res.end();
+                return;
+              } else {
+                // sql 성공 시
+                conn.release;
+                const write_count = Number(result[0].write_count);
+                var attendance = (write_count / justDate) * 100;
+                json.attendance_rate = attendance;
+                console.log(json);
+                res.send(json);
+                res.end();
+              }
+            }
+          );
         }
       }
     );
