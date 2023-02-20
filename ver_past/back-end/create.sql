@@ -3,9 +3,9 @@ create table user(
 	user_id varchar(30) primary key,
     user_password varchar(300) NOT NULL,
     salt bigint NOT NULL,
-	user_point INT NOT NULL,
-	user_age INT NOT NULL,
-	user_sex CHAR(10) NOT NULL
+	user_point INT NULL,  -- 원래 NOT NULL (front 개발 전이기에 일단 NULL)
+	user_age INT NULL,  -- 원래 NOT NULL (front 개발 전이기에 일단 NULL)
+	user_sex CHAR(10) NULL  -- 원래 NOT NULL (front 개발 전이기에 일단 NULL)
 );
 /* +) primary key는 애초에 not null인데 명시가 필요한가?
 	user_point의 경우 default는 0
