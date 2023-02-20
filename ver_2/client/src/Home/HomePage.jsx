@@ -5,7 +5,8 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "./DatePicker.css";
 import "react-datepicker/dist/react-datepicker.css";
-//import ko from 'date-fns/locale/ko';
+import ko from 'date-fns/locale/ko';
+import TodayLines from "./TodayLines";
 
 const Header = styled.header`
   top: 0;
@@ -22,19 +23,20 @@ const Layout = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
 `;
 
 const CustomButton = styled.button`
     color: #8F8F8F;
     background: #F5F5F5;
     font-weight: bold;
+    font-size: 17px;
     border: none;
     margin-top: 32px;
+    margin-bottom: 30px;
     margin-right: 20px;
     border-radius: 4px;
-    padding: 7px 10px;
+    padding: 10px 13px;
 
   &:hover {
     cursor: pointer;
@@ -44,7 +46,6 @@ const CustomButton = styled.button`
   }
 `;
 
-// 응답(항상 실행)
 
 function HomePage() {
   const location = useLocation();
@@ -58,9 +59,9 @@ function HomePage() {
 
   const dataList = [];
 
- for (let i = 0; i< dateList.length; i++){
-                      dataList.push(new Date(dateList[i]));
-                    };
+  for (let i = 0; i< dateList.length; i++){
+    dataList.push(new Date(dateList[i]));
+  };
 
   console.log(dataList)
 
@@ -111,7 +112,9 @@ function HomePage() {
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
     const date = d.getDate();
-    return `${month >= 10 ? month : "0" + month}.${date >= 10 ? date : "0"+date}.${year}`;
+    return  `${year}.${month >= 10 ? month : "0" + month}.${
+      date >= 10 ? date : "0" + date
+    }`;
   };
 
   const onDatePickHandler = async (date) => {
@@ -147,7 +150,7 @@ function HomePage() {
     else{ 
       navigate("/members/test/write", {state: {selectedDate: date}});
     }
-  };
+      };
 
   const onMypageButtonHandler = (event) =>{
 
@@ -169,23 +172,25 @@ function HomePage() {
   return (
     <>
       <Header>
-          <CustomButton onClick={onLogoutButtonHandler} style={{marginLeft:'1270px'}}>로그아웃</CustomButton>
+          <CustomButton onClick={onLogoutButtonHandler} style={{marginLeft:'82%'}}>로그아웃</CustomButton>
           <CustomButton onClick={onMypageButtonHandler}>마이페이지</CustomButton>
       </Header>
       <Layout> 
             {/* <h4>{id}님 환영합니다</h4>*/}
-            <h2 style={{color:'#AEAEAE', fontFamily:'AbeeZee'}}>당신의 소중한 하루를 기록해보세요.</h2><br/>
+            {/* <h2 style={{color:'#AEAEAE', fontFamily:'AbeeZee'}}>당신의 소중한 하루를 기록해보세요.</h2><br/> */}
             <DatePicker 
                 onChange={(date)=>onDatePickHandler(date)}
                 selected={startDate}
-                // {/* locale={ko} */}
+                locale={ko} 
                 highlightDates={dataList}
-                // highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
+                //highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
                 // highlightDates는 Map이고 []안만 찍어보면 배열 
                 ref={calRef}
                 inline
                 >         
             </DatePicker> 
+            <TodayLines ref={calRef}>
+            </TodayLines>
       </Layout> 
     </>
     
