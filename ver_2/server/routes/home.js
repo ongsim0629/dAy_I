@@ -24,6 +24,20 @@ router.post("/", (req, res) => {
       }
     
       const id = check.user_id;
+
+      var token_2 = jwt.sign(
+        {
+          user_id: id, //Private Claim 자리 (키: 데이터)
+        },
+        "secretKey", //Signature (비밀키가 들어갈 자리)
+        {
+          subject: "gyeongInLine jwtToken", //Public Claim 자리 (부가정보 자리)
+          expiresIn: "60m",
+          issuer: "gyeongInLine",
+        }
+      );
+
+      console.log("토큰 생성", token);
     
   
     db.getConnection((err, conn) => {
@@ -54,7 +68,7 @@ router.post("/", (req, res) => {
                       return;
                     } else {
                       // sql 성공 시
-                      res.send({  list:result });
+                      res.send({  list:result , token: token_2});
                     }
                   }
                 );

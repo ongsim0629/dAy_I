@@ -65,6 +65,29 @@ function DiaryPage() {
     const location = useLocation();
     const dailyData = location.state.dailyData;
 
+    const onBackHandler = async (event) => {
+        event.preventDefault();
+    
+        console.log("이전 버튼 클릭!");
+    
+        const result = await axios
+          .post("/members/tohome", {
+            //서버로 id, password 전달
+            token: localStorage.getItem("token"),
+          })
+          .then((res) => {
+            console.log(res);
+    
+            const dateList = res.data.list; //서버에서 온 날짜 리스트 저장
+            //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
+            localStorage.setItem("token", res.data.token);
+            console.log(dateList);
+            navigate("/members/home", { state: { dateList: dateList } });
+            //sessionStorage.setItem('user_id', id) //참고로 적어둠
+            console.log("Submit Button Click"); //확인용
+          });
+      };
+
     const onClickDelete = async(event) => {
         event.preventDefault();
 
@@ -85,14 +108,15 @@ function DiaryPage() {
         // else {
         //     alert('작성자만 삭제 및 수정이 가능합니다.')
         // }
+
+    
     }
 
     return(
         <div style={{width: '100%', display: 'flex', height: '100vh'}}>
             <Left>
-                <Link to="/members/home"><br /><br />
-                    <BackButton>이전</BackButton>
-                </Link>
+                <br /><br />
+                <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
                 <div>
                     <h4 style={{marginLeft : '50px', color: '#AEAEAE', fontWeight: 'normal'}}>{dailyData.diary_write_date}</h4>
                     <a style={{marginLeft: '50px', fontWeight: 'bold', fontSize: '1.5rem'}}>{dailyData.diary_title}</a>
