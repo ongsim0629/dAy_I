@@ -12,8 +12,9 @@ router.post("/", (req, res) => {
   //변수 설정
   console.log("/members/home 호출됨");
   const token = req.body.token;
-  //const date = req.body.date;
-  //const yearMonth = date.substring(0, 8) + "__"; //연월   2023-02-13
+  //req로 date 받아온다는 가정하에 개발
+  const date = req.body.date;
+  const yearMonth = date.substring(0, 8) + "__"; //연월   2023-02-13
   console.log("토큰확인입니다:" + token);
 
   try {
@@ -41,7 +42,8 @@ router.post("/", (req, res) => {
     console.log("데이터베이스 conn");
 
     const exec = conn.query(
-      "select diary_write_date from diary where diary_writer_id ='" + id + "';",
+      "select diary_write_date, diary_summary from diary where diary_writer_id = ? and diary_write_date like ?;",
+      [id, yearMonth],
       (err, result) => {
         conn.release();
         // sql 오류 시
