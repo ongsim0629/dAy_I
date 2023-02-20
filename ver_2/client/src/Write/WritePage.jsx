@@ -141,7 +141,7 @@ function WritePage() {
       })
       .then((res) => {
         console.log(dateToString(startDate));
-        //console.log(res);
+        console.log(res);
         //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
         localStorage.setItem("token", res.data.token);
         navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
@@ -159,10 +159,10 @@ function WritePage() {
         content: content,
         token: token,
       })
-      .then(function (response) {
-        console.log(response);
+      .then(function (res) {
+        console.log(res);
         alert("일기가 저장되었습니다:D");
-        navigate("/members/home");
+        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
       })
       .catch(function (error) {
         console.log(error);
