@@ -54,14 +54,15 @@ function HomePage() {
   const [startDate, setStartDate] = useState(new window.Date());
   const dateList = location.state.dateList;
   let tempDate;
+  console.log(dateList[0]);
 
   const dataList = [];
 
  for (let i = 0; i< dateList.length; i++){
-                      dataList.push(new Date(dateList[i].diary_write_date));
+                      dataList.push(new Date(dateList[i]));
                     };
 
-  console.log(dataList);
+  console.log(dataList)
 
   axios
     .get("/members/edit")

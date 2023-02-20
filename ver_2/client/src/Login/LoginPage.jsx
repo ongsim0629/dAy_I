@@ -109,12 +109,12 @@ function LoginPage(props) {
       })
       .then((res) => {
         console.log(res);
-        console.log("res.data.userId :: ", res.data.userId);
+        console.log("res.data.userId :: ", res.data.id);
         console.log("res.data.msg :: ", res.data.msg);
 
         console.log("res.data.token", res.data.token);
 
-        if (res.data.userId === undefined) {
+        if (res.data.id === undefined) {
           // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
           console.log("======================", res.data.msg);
           alert("입력하신 id가 일치하지 않습니다.");
@@ -125,14 +125,14 @@ function LoginPage(props) {
             "입력하신 비밀번호가 일치하지 않습니다."
           );
           alert("입력하신 비밀번호가 일치하지 않습니다.");
-        } else if (res.data.userId === id) {
+        } else if (res.data.id === id) {
           // id, pw 모두 일치 userId = userId1, msg = undefined
           console.log("======================", "로그인 성공");
           
-          const dateList = res.data.list; //서버에서 온 날짜 리스트 저장
+          const dateList = res.data.dataList;
+          const summaryList = res.data.summaryList; //서버에서 온 날짜 리스트 저장
           //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
           localStorage.setItem("token", res.data.token);
-          console.log(dateList)
           navigate("/members/home", {state: {dateList: dateList}});
           //sessionStorage.setItem('user_id', id) //참고로 적어둠
         }
