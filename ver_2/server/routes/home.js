@@ -28,6 +28,9 @@ router.post("/", (req, res) => {
 
   const id = check.user_id;
 
+  var json = {};
+  json.token = token;
+
   db.getConnection((err, conn) => {
     //db 연결 실패 시,
     if (err) {
@@ -56,8 +59,20 @@ router.post("/", (req, res) => {
           res.end();
           return;
         } else {
+
+          var dataList = [];
+          for (var data of result){
+            dataList.push(new Date(data.diary_write_date));
+          };
+          var summaryList = [];
+          for (var data of result){
+            summaryList.push(data.diary_summary);
+          };
+          json.dataList = dataList;
+          json.summaryList = summaryList;
+          
           // sql 성공 시
-          res.send({ list: result, token: token });
+          res.send(json);
         }
       }
     );

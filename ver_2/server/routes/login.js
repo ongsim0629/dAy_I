@@ -113,7 +113,7 @@ router.post("/", (req, res) => {
                       summaryList.push(data.diary_summary);
                     };
                     json.dataList = dataList;
-                    json.summary = summaryList;
+                    json.summaryList = summaryList;
 
                     console.log(json);
 
