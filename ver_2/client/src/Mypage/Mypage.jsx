@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import axios from 'axios';
-import {PieChart, Pie, Tooltip, Cell} from "recharts";
+import {PieChart, Pie, Tooltip, Cell, Legend} from "recharts";
 
 const Header = styled.header`
     position: fixed;
@@ -15,9 +15,12 @@ const Layout = styled.div`
     margin-top: 120px;
     width: 100vw;
     height: 100vh;
-    display: flex;
+    display: grid;
     flex-direction: column;
     align-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: "left right";
 `;
 
 const EditButton = styled.button`
@@ -39,23 +42,55 @@ const EditButton = styled.button`
         box-shadow: 0 0 0 1px gray;
     }
 `;
-
-const Left = styled.div`
-    width: 50%;
+const TopLeft = styled.div`
+    width: 80%;
     height: 300px;
-    float: left;
-    background: #F5F5F5;
-    margin-bottom: 30px;
-    text-align: center;
-`;
-const Right = styled.div`
-    width: 50%;
-    height: 300px;
-    float: right;
+    margin: 0 auto;
     background: #F5F5F5;
     text-align: center;
-    overflow-y:scroll;
+    border-radius: 30px;
 `;
+const TopRight = styled.div`
+    width: 80%;
+    height: 300px;
+    margin: 0 auto;
+    background: #F5F5F5;
+    text-align: center;
+    border-radius: 30px;
+`;
+const BottomLeft = styled.div`
+width: 80%;
+height: 300px;
+margin: 0 auto;
+background: #F5F5F5;
+text-align: center;
+border-radius: 30px;
+overflow-y:scroll;
+`;
+const BottomRight = styled.div`
+width: 80%;
+height: 300px;
+margin: 0 auto;
+background: #F5F5F5;
+text-align: center;
+border-radius: 30px;
+`;
+// const Left = styled.div`
+//     width: 50%;
+//     height: 300px;
+//     float: left;
+//     background: #F5F5F5;
+//     margin-bottom: 30px;
+//     text-align: center;
+// `;
+// const Right = styled.div`
+//     width: 50%;
+//     height: 300px;
+//     float: right;
+//     background: #F5F5F5;
+//     text-align: center;
+//     overflow-y:scroll;
+// `;
 
 function Mypage(){
     const location = useLocation();
@@ -85,8 +120,8 @@ function Mypage(){
         </Link>
     </Header>
     <Layout>
-        <h1 style={{fontWeight: 'normal'}}>MyPage</h1>
-        <Left>
+        {/* <h1 style={{fontWeight: 'normal'}}>MyPage</h1> */}
+        <TopLeft>
             <h3>이번 달 감정 통계</h3>
             <div style={{display: 'flex', justifyContent: 'center', textItems: 'center'}}>
                 <PieChart width={300} height={300}>
@@ -94,7 +129,7 @@ function Mypage(){
                         dataKey="value"
                         isAnimationActive={false}
                         data={data}
-                        cx={150}
+                        cx={100}
                         cy={100}
                         innerRadius={40} outerRadius={80}
                         fill="#8884d8"
@@ -104,11 +139,15 @@ function Mypage(){
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
+                    <Legend verticalAlign="top" layout="vertical" align="right"/>
                     <Tooltip />
                 </PieChart>
             </div>
-        </Left>
-        <Right>
+        </TopLeft>
+        <TopRight>
+            <h3>이번 달 내가 관심있던 키워드</h3>
+        </TopRight>
+        <BottomLeft>
             <h3>이번 달 추천 플레이리스트 기록</h3>
             <div>
                 {playlist.map((value, index) => (
@@ -123,7 +162,11 @@ function Mypage(){
                     // </a>
                 ))}
             </div>
-        </Right>
+        </BottomLeft>
+        <BottomRight>
+            <h3>이번 달 나의 출석율</h3>
+        </BottomRight>
+        
         
     </Layout>
     </>
