@@ -137,6 +137,7 @@ function WritePage() {
       .post("/members/tohome", {
         //서버로 id, password 전달
         token: localStorage.getItem("token"),
+        
       })
       .then((res) => {
         console.log(res);
