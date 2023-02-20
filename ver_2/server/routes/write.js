@@ -15,6 +15,7 @@ router.post("/", (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
   const token = req.body.token;
+  const yearMonth = date.substring(0,8) + "__";
 
   try {
     var check = jwt.verify(token, "secretKey");
@@ -24,6 +25,12 @@ router.post("/", (req, res) => {
   } catch {
     console.log("token 검증 오류");
   }
+
+  const id = check.user_id;
+
+  var json = {};
+  json.token = token;
+  json.id = id;
 
   var query = "select * from diary";
   console.log("date", date);
@@ -131,8 +138,40 @@ router.post("/", (req, res) => {
   db.query(query, (err, data) => {
     if (!err) {
       console.log("오류X");
-      res.send(data);
-      res.end();
+      json.data = data;
+      console.log(data);
+      const exec = db.query(
+        "select diary_write_date, diary_summary from diary where diary_writer_id = ? and diary_write_date like ?;",
+        [id, yearMonth],
+        (err, result) => {
+          // sql 오류 시
+          if (err) {
+            console.log("SQL 실행 시, 오류 발생");
+            console.dir(err);
+            res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
+            res.write("<h2>SQL 실행 실패;</h2>");
+            res.status(404).send("오류");
+            res.end();
+            return;
+          } else {
+  
+            var dataList = [];
+            for (var data of result){
+              dataList.push(new Date(data.diary_write_date));
+            };
+            var summaryList = [];
+            for (var data of result){
+              summaryList.push(data.diary_summary);
+            };
+            json.dataList = dataList;
+            json.summaryList = summaryList;
+            
+            // sql 성공 시
+            res.send(json);
+          }
+        }
+      );
+      
     } else {
       console.log("오류");
     }
