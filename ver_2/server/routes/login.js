@@ -47,6 +47,7 @@ router.post("/", (req, res) => {
             return;
           } else {
             // 동일한 id 가 있으면 비밀번호 일치 확인
+            
             console.log(">>>아이디 있어유");
             var salt = data[0].salt;
             var password_db = data[0].user_password;
@@ -71,13 +72,26 @@ router.post("/", (req, res) => {
                   issuer: "gyeongInLine",
                 }
               );
+
+              var json = {};
+              json.id = id;
+              json.token = token;
+
+              var now = new Date();	// 현재 날짜 및 시간
+              var year = now.getFullYear();
+              var month = now.getMonth() + 1;	// 월
+              var yearmonth = year+'-'+(("00"+month.toString()).slice(-2))+"-__";
+                  
     
               console.log("토큰 생성", token);
+              console.log(id, yearmonth);
 
-              conn.query(
-                "select diary_write_date from diary where diary_writer_id ='" + id + "';",
+              const exec = conn.query(
+                "select diary_write_date, diary_summary from diary where diary_writer_id = ? and DIARY_WRITE_DATE like ?;",
+                [id, yearmonth],
                 (err, result) => {
                   conn.release();
+                  console.log("실행된 SQL: " + exec.sql);
                   // sql 오류 시
                   if (err) {
                     console.log("SQL 실행 시, 오류 발생");
@@ -94,9 +108,17 @@ router.post("/", (req, res) => {
                     for (var data of result){
                       dataList.push(new Date(data.diary_write_date));
                     };
-                    console.log(dataList);
+                    var summaryList = [];
+                    for (var data of result){
+                      summaryList.push(data.diary_summary);
+                    };
+                    json.dataList = dataList;
+                    json.summary = summaryList;
+
+                    console.log(json);
+
         
-                    res.send({ userId: id, token: token, list:result });
+                    res.send(json);
                   }
                 }
               );
