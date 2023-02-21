@@ -68,7 +68,7 @@ router.post("/", (req, res) => {
                 "secretKey", //Signature (비밀키가 들어갈 자리)
                 {
                   subject: "gyeongInLine jwtToken", //Public Claim 자리 (부가정보 자리)
-                  expiresIn: "60m",
+                  expiresIn: "7d",
                   issuer: "gyeongInLine",
                 }
               );
