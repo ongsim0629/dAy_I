@@ -6,16 +6,15 @@ import {PieChart, Pie, Tooltip, Cell, Legend} from "recharts";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 const Header = styled.header`
-  position: fixed;
   top: 0;
   width: 100%;
   height: 100px;
   background-color: #E5E0FF;
 `;
 const Layout = styled.div`
-  margin-top: 120px;
   width: 100vw;
-  height: 100vh;
+  margin-top: 30px;
+  //height: 100vh;
   display: grid;
   flex-direction: column;
   align-items: center;
@@ -44,36 +43,44 @@ const EditButton = styled.button`
   }
 `;
 const TopLeft = styled.div`
-  width: 80%;
+  width: 90%;
   height: 300px;
   margin: 0 auto;
   background: #F5F5F5;
   text-align: center;
   border-radius: 30px;
+  margin-left: 60px;
+  margin-bottom: 15px;
 `;
 const TopRight = styled.div`
-  width: 80%;
+  width: 90%;
   height: 300px;
   margin: 0 auto;
   background: #F5F5F5;
   text-align: center;
   border-radius: 30px;
+  margin-right: 60px;
+  margin-bottom: 15px;
 `;
 const BottomLeft = styled.div`
-  width: 80%;
+  width: 90%;
   height: 300px;
   margin: 0 auto;
   background: #F5F5F5;
   text-align: center;
   border-radius: 30px;
+  margin-left: 60px;
+  margin-top: 15px;
 `;
 const BottomRight = styled.div`
-  width: 80%;
+  width: 90%;
   height: 300px;
   margin: 0 auto;
   background: #F5F5F5;
   text-align: center;
   border-radius: 30px;
+  margin-right: 60px;
+  margin-top: 15px;
 `;
 
 
@@ -204,25 +211,15 @@ function Mypage(){
                     background={data.map((d) => d.img)}
                     barSize={30}
                     label={<CustomBar />}
+                    fill="gray"
                 />
             </BarChart>
         </TopRight>
         <BottomLeft>
-            <h3>이달의 플레이리스트 (월별 빈도수 1위)</h3>
+            <h3 style={{marginBottom: '0.4em'}}>이달의 플레이리스트 (월별 빈도수 1위)</h3>
             <div>
               <a href={playlist_url} target='_blank'><img alt="thumbnail_img" src={thumbnail_url} style={{width: '60%', borderRadius: '7px'}}/></a><br />
               <a href={playlist_url} target='_blank' style={{fontSize: '20px', fontWeight: 'normal', textDecoration: 'none', color: 'black'}}>{playlist_title}</a><br /><br />
-                {/* {playlist.map((value, index) => (
-                    // 링크 연결X 버전
-                    <p key={index}>
-                        {value}
-                    </p>
-
-                    // 링크 연결 버전
-                    // <a href="https://www.youtube.com/watch?v=dP95z1QgnXk" key={index}>
-                    //     {value}<br /><br />
-                    // </a>
-                ))} */}
             </div>
         </BottomLeft>
         <BottomRight>
