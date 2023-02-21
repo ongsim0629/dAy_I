@@ -16,7 +16,7 @@ const Header = styled.header`
 `;
 
 const Label = styled.label`
-    font-size: 14px;
+    font-size: 16px;
     color: #373A3C;
 `;
 
@@ -32,22 +32,6 @@ const Input = styled.input`
     text-align: left;
 `;
 
-const CheckDuplicateButton = styled.button`
-    color: #8F8F8F;
-    background: #F5F5F5;
-    font-weight: bold;
-    border: none;
-    border-radius: 4px;
-    margin-left: 30px ;
-    padding-left: 10px;
-    
-    &:hover {
-        cursor: pointer;
-    }
-    &:focus{
-        box-shadow: 0 0 0 1px gray;
-    }
-`;
 
 const SubmitButton = styled.button`
     color: white;
@@ -90,7 +74,6 @@ function RegisterPage(props) {
     const [id, setId] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    //const [usableId, setUsableId] = useState(false);
     const navigate = useNavigate();
 
     const onIdHandler = (event) => {
@@ -103,22 +86,16 @@ function RegisterPage(props) {
         setConfirmPassword(event.currentTarget.value);
     }
 
-    const dupIdCheck = (id) =>{
-        alert("수정 필요!!");
-        //수정 필요
-    }
-
-
-
     const onSubmitHandler = async(event) => {
         event.preventDefault();
 
-        if(password !== confirmPassword){
-            return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
-        }
         if(id === ''){
             return alert('아이디를 입력해주세요.');
         }
+        if(password !== confirmPassword){
+            return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
+        }
+        
 
         /*
         // SELECT TEST
@@ -151,24 +128,22 @@ function RegisterPage(props) {
             <Header></Header>
             <div>
                 <div style={{ 
-                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    width: '100%', height: '100vh'
+                    position: 'fixed', display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    width: '100%', height: '110vh'
                 }}>
                     <div>
                         <div>
-                            <h2 align="center">회원가입</h2><br />
+                            <h1 align="center">회원가입</h1><br />
                         </div>
                         <form style={{ display: 'flex', flexDirection: 'column'}} >
                             <Label>아이디</Label> 
-                            <div style={{ display:'flex', flexDirection: 'row'}}>
                             <Input type='text' size ='65' value={id} onChange={onIdHandler} placeholder='6~15자까지 영문자(소문자), 숫자 사용 가능합니다.'/>
-                            <CheckDuplicateButton onClick={dupIdCheck}> &#10004; 중복 확인</CheckDuplicateButton>
-                            </div>
                             <br/><br/>
                             <Label>비밀번호</Label>
                             <Input type='password' value={password} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br /><br />
                             <Label>비밀번호 확인</Label>
-                            <Input type='password' value={confirmPassword} onChange={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br /><br />
+                            <Input type='password' value={confirmPassword} onChange={onConfirmPasswordHandler} placeholder='비밀번호 확인을 위해 비밀번호를 한 번 더 입력하세요.'/><br /><br />
+                            <br /><br /><br />
                             <center> 
                                 <div>
                                     <SubmitButton type='submit' onClick={onSubmitHandler} formAction='members/login'>
