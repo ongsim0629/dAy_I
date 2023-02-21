@@ -66,7 +66,6 @@ const BottomLeft = styled.div`
   background: #F5F5F5;
   text-align: center;
   border-radius: 30px;
-  overflow-y:scroll;
 `;
 const BottomRight = styled.div`
   width: 80%;
@@ -77,28 +76,14 @@ const BottomRight = styled.div`
   border-radius: 30px;
 `;
 
-// const Left = styled.div`
-//     width: 50%;
-//     height: 300px;
-//     float: left;
-//     background: #F5F5F5;
-//     margin-bottom: 30px;
-//     text-align: center;
-// `;
-// const Right = styled.div`
-//     width: 50%;
-//     height: 300px;
-//     float: right;
-//     background: #F5F5F5;
-//     text-align: center;
-//     overflow-y:scroll;
-// `;
 
 function Mypage(){
     const location = useLocation();
     const myData = location.state.myData;
     let emo_count_arr = myData.emo_count_arr;
-    let playlist = myData.playlist;
+    let playlist_title = myData.playlist_title;
+    let playlist_url = myData.playlist_url;
+    let thumbnail_url = myData.thumbnail_url;
 
     //console.log(myData.playlist)
 
@@ -147,12 +132,12 @@ function Mypage(){
       <text x={x + width + 5} y={y + height / 2} dy="0.35em">
         {label}
       </text>
-      <text x={x - 5} y={y + height / 2} textAnchor="end" dy="0.35em">
+      {/* <text x={x + 5} y={y + height / 2} textAnchor="end" dy="0.35em">
         {value}
-      </text>
+      </text> */}
     </g>
   );
-  
+
   const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
       const data = payload[0].payload;
@@ -206,7 +191,7 @@ function Mypage(){
                 width={500}
                 height={250}
                 data={categoryData}
-                margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                margin={{ top: 20, right: 30, left: 90, bottom: 30 }}
                 layout="vertical"
                 >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -223,9 +208,11 @@ function Mypage(){
             </BarChart>
         </TopRight>
         <BottomLeft>
-            <h3>이번 달 추천 플레이리스트 기록</h3>
+            <h3>이달의 플레이리스트 (월별 빈도수 1위)</h3>
             <div>
-                {playlist.map((value, index) => (
+              <a href={playlist_url} target='_blank'><img alt="thumbnail_img" src={thumbnail_url} style={{width: '60%', borderRadius: '7px'}}/></a><br />
+              <a href={playlist_url} target='_blank' style={{fontSize: '20px', fontWeight: 'normal', textDecoration: 'none', color: 'black'}}>{playlist_title}</a><br /><br />
+                {/* {playlist.map((value, index) => (
                     // 링크 연결X 버전
                     <p key={index}>
                         {value}
@@ -235,7 +222,7 @@ function Mypage(){
                     // <a href="https://www.youtube.com/watch?v=dP95z1QgnXk" key={index}>
                     //     {value}<br /><br />
                     // </a>
-                ))}
+                ))} */}
             </div>
         </BottomLeft>
         <BottomRight>
