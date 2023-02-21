@@ -69,7 +69,6 @@
 
 .react-datepicker__day--selected{
     background: #bebdfc ;
-    color: white;
     padding:8px;
     margin: 15px 22px;
     border-radius: 50%;
@@ -79,7 +78,6 @@
 /* 회색 동그라미 버전 */
 .react-datepicker__day--highlighted{
     background-color: #faebeb;
-    color:white;
     font-weight:500;
     padding:8px;
     margin: 15px 22px;
