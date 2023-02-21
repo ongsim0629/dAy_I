@@ -25,32 +25,20 @@ const TodayLine = styled.div`
     }
 `;
 
-function TodayLines({summaryData}){
-  const [numOfDates, setNumOfDays] = useState('');
-  const [curDate, setCurDate] = useState(new window.Date());
-  //const arrOfDates = [1,2,3,4,5,6,7];
-  moment.locale('ko');
+function TodayLines({dateList, summaryList}){
+  const dataList = [];
 
-  //현재 날짜가 속한 달의 일수를 구함
-  const getNumOfDates = () =>{
-    setNumOfDays(moment(curDate).daysInMonth());
-  }
-  // const setTodayLines = () =>{
-  //   for(var i=0; i<numOfDates; i++){
-  //     //arrOfDates.push({date: i+1 , text: null})
-  //   }
-  //   console.log(arrOfDates);
-  // }
+  for (let i = 0; i< dateList.length; i++){
+    dataList.push(dateList[i].substring(0, 10));
+    console.log(dateList[i].substring(0, 10))
+  };
 
   return(
     <>
       <SummaryBox>
-        {summaryData.map(it =>(
-          <TodayLine>
-            <div>{it.dataList}</div>
-            <div>{it.summaryList}</div>
-          </TodayLine>
-        ))}
+        {
+          summaryList.map((summary, idx) => (<TodayLine key={idx}><h3>{dataList[idx]}</h3><div>{summary}</div></TodayLine>))
+        }
       </SummaryBox>
     </>
   );
