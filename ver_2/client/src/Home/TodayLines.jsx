@@ -25,19 +25,11 @@ const TodayLine = styled.div`
     }
 `;
 
-function TodayLines(){
-  const calRef = useRef();
+function TodayLines({summaryData}){
   const [numOfDates, setNumOfDays] = useState('');
   const [curDate, setCurDate] = useState(new window.Date());
-  const arrOfDates = [1,2,3,4,5,6,7];
+  //const arrOfDates = [1,2,3,4,5,6,7];
   moment.locale('ko');
-
-    const onBeforeBtnHandler = () =>{
-        if(calRef.current.focus()===true){
-            alert('click')
-        }
-    }
-
 
   //현재 날짜가 속한 달의 일수를 구함
   const getNumOfDates = () =>{
@@ -53,8 +45,11 @@ function TodayLines(){
   return(
     <>
       <SummaryBox>
-        {arrOfDates.map(date=>(
-          <TodayLine>{date}</TodayLine>
+        {summaryData.map(it =>(
+          <TodayLine>
+            <div>{it.dataList}</div>
+            <div>{it.summaryList}</div>
+          </TodayLine>
         ))}
       </SummaryBox>
     </>

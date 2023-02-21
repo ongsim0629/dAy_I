@@ -77,8 +77,8 @@
 
 
 /* 회색 동그라미 버전 */
- .react-datepicker__day--highlighted{
-    background-color: #e0dfdf;
+.react-datepicker__day--highlighted{
+    background-color: #faebeb;
     color:white;
     font-weight:500;
     padding:8px;
