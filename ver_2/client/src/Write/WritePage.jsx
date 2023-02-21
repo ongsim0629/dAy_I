@@ -112,9 +112,8 @@ const Content = styled.textarea`
 function WritePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  // const token = localStorage.getItem("token");
-  //const [startDate, setStartDate] = useState(location.state.selectedDate);
-  const [startDate, setStartDate] = useState(new window.Date());
+  const token = localStorage.getItem("token");
+  const [startDate, setStartDate] = useState(location.state.selectedDate);
   const [title, setTitle] = useState("제목");
   const [content, setContent] = useState("");
 
@@ -136,43 +135,43 @@ function WritePage() {
   };
 
   const onBackHandler = async (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
-    // console.log("이전 버튼 클릭!");
+    console.log("이전 버튼 클릭!");
 
-    // const result = await axios
-    //   .post("/members/tohome", {
-    //     //서버로 id, password 전달
-    //     token: localStorage.getItem("token"),
-    //     date: dateToString(startDate)
-    //   })
-    //   .then((res) => {
-    //     console.log(dateToString(startDate));
-    //     console.log(res);
-    //     //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
-    //     localStorage.setItem("token", res.data.token);
-    //     navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
-    //     //sessionStorage.setItem('user_id', id) //참고로 적어둠
-    //     console.log("Submit Button Click"); //확인용
-    //   });
+    const result = await axios
+      .post("/members/tohome", {
+        //서버로 id, password 전달
+        token: localStorage.getItem("token"),
+        date: dateToString(startDate)
+      })
+      .then((res) => {
+        console.log(dateToString(startDate));
+        console.log(res);
+        //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
+        localStorage.setItem("token", res.data.token);
+        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
+        //sessionStorage.setItem('user_id', id) //참고로 적어둠
+        console.log("Submit Button Click"); //확인용
+      });
   };
 
   const onSaveButtonHandler = () => {
-    // axios
-    //   .post("/members/test/write", {
-    //     date: dateToString(startDate),
-    //     title: title,
-    //     content: content,
-    //     token: token,
-    //   })
-    //   .then(function (res) {
-    //     console.log(res);
-    //     alert("일기가 저장되었습니다:D");
-    //     navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    axios
+      .post("/members/test/write", {
+        date: dateToString(startDate),
+        title: title,
+        content: content,
+        token: token,
+      })
+      .then(function (res) {
+        console.log(res);
+        alert("일기가 저장되었습니다:D");
+        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -180,9 +179,7 @@ function WritePage() {
       <Header>
         <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
         <SaveButton onClick={onSaveButtonHandler}>저장</SaveButton>
-
       </Header>
-
       <Layout>
           <DateInput
               showIcon
@@ -193,8 +190,6 @@ function WritePage() {
           />
           <Title defaultValue="제목" onChange={onTitleHandler}></Title>
           <hr />
-          {/* 데이터 확인용 버튼 */}
-          {/* <button onClick={()=>{ console.log(location.state.selectedDate); }} />  */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Content onChange={onContentHandler}>{content}</Content>
           </div>
