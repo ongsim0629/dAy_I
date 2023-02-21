@@ -112,7 +112,8 @@ const Content = styled.textarea`
 function WritePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
+
   const [startDate, setStartDate] = useState(location.state.selectedDate);
   const [title, setTitle] = useState("제목");
   const [content, setContent] = useState("");
@@ -142,14 +143,13 @@ function WritePage() {
     const result = await axios
       .post("/members/tohome", {
         //서버로 id, password 전달
-        token: localStorage.getItem("token"),
+        token: sessionStorage.getItem("token"),
         date: dateToString(startDate)
       })
       .then((res) => {
         console.log(dateToString(startDate));
         console.log(res);
         //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
-        localStorage.setItem("token", res.data.token);
         navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList } });
         //sessionStorage.setItem('user_id', id) //참고로 적어둠
         console.log("Submit Button Click"); //확인용
@@ -162,11 +162,11 @@ function WritePage() {
         date: dateToString(startDate),
         title: title,
         content: content,
-        token: token,
+        token: sessionStorage.getItem("token")
       })
       .then(function (res) {
         console.log(res);
-        alert("일기가 저장되었습니다:D");
+        alert("일기가 저장되었습니다:D"); 
         navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
       })
       .catch(function (error) {

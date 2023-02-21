@@ -80,7 +80,7 @@ function HomePage() {
   axios
     .get("/members/edit")
     .then(function () {
-      const token = localStorage.getItem("token");
+      const token = sessionStorage.getItem("token");
       var base64Url = token.split(".")[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
       var base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
       var result = JSON.parse(
@@ -104,8 +104,8 @@ function HomePage() {
 
   // 로그아웃
   const onLogoutButtonHandler = () => {
-    let token = localStorage.getItem("token");
-    localStorage.clear();
+    let token = sessionStorage.getItem("token");
+    sessionStorage.clear();
     navigate('/');
   };
 
@@ -149,7 +149,7 @@ function HomePage() {
       //diary로 이동 시 URL로 date, user_id 전달
         await axios
         .post("/diaries", {
-          token: localStorage.getItem("token"),
+          token: sessionStorage.getItem("token"),
           date: dateToString(tempDate) //클릭한 날짜로 바꿔야됨
         })
         .then((res) => {
@@ -169,7 +169,7 @@ function HomePage() {
   const onMypageButtonHandler = (event) =>{
 
        axios.post("/members/mypage", {
-          token: localStorage.getItem("token"),
+          token: sessionStorage.getItem("token"),
           date: dateToString(new window.Date())
       })
       .then((res) => {

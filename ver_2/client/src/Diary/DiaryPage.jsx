@@ -85,13 +85,12 @@ function DiaryPage() {
         const result = await axios
           .post("/members/tohome", {
             //서버로 id, password 전달
-            token: localStorage.getItem("token"),
+            token: sessionStorage.getItem("token"),
             date : submitDate
           })
           .then((res) => {
             console.log(res);
             //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
-            localStorage.setItem("token", res.data.token);
             console.log("DiaryPage에서 이전 버튼 누름- dataList : ",res.data.dataList, ", summaryList : ", res.data.summaryList);
             navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList }  });
             //sessionStorage.setItem('user_id', id) //참고로 적어둠
@@ -104,7 +103,7 @@ function DiaryPage() {
 
         //if (localStorage.getItem('token') == postData.post_user_id) { //수정 필요
         await axios.post("/members/delete", {
-            token: localStorage.getItem("token"),
+            token: sessionStorage.getItem("token"),
             date: dailyData.diary_write_date
         })
         .then((res) => {
