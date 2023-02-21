@@ -10,8 +10,6 @@ const Header = styled.header`
   top: 0;
   left: 0;
   width: 100%;
-
-  display: flex;
   flex-direction: row;
   background-color: #e5e0ff;
 `;
@@ -21,7 +19,6 @@ const Layout = styled.div`
   margin-top: 4%;
   width: 90vw;
   height: 100vh;
-  display: "flex";
   flexdirection: "column";
   alignitems: "center";
   position: fixed;
@@ -48,13 +45,16 @@ const BackButton = styled.button`
 `;
 
 const SaveButton = styled.button`
-  color: black;
+  color: white;
   font-size: 17px;
   font: AbeeZee;
+  background: #93B5C6;
   font-weight: bold;
   border: none;
   border-radius: 4px;
-  margin: 20px 20px 20px 1400px;
+  float: right;
+  margin: 1px 20px 20px;
+  
   padding: 10px 27px;
 
   &:hover {
@@ -93,7 +93,7 @@ const Content = styled.textarea`
   padding: 40px;
   margin-top: 20px;
   margin-bottom: 20px;
-  height: 50vh;
+  height: 45vh;
   width: 100%;
   max-width: 100%;
   font-size: 16px;
@@ -175,10 +175,10 @@ function WritePage() {
   };
 
   return (
-    <>
+    <div style={{weight: '100vw'}}>
       <Header>
         <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
-        <SaveButton onClick={onSaveButtonHandler}>저장</SaveButton>
+        
       </Header>
       <Layout>
           <DateInput
@@ -193,9 +193,9 @@ function WritePage() {
           <div style={{ display: "flex", alignItems: "center" }}>
             <Content onChange={onContentHandler}>{content}</Content>
           </div>
-
+          <SaveButton onClick={onSaveButtonHandler}>저장</SaveButton>
       </Layout>
-    </>
+    </div>
   );
 }
 
