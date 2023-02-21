@@ -106,9 +106,9 @@ router.post("/", (req, res) => {
           var site_url = result[0].DIARY_CATEGORY_SITE;
           var playlist_url = result[0].DIARY_PLAYLIST;
           if (playlist_url == null) {
-            json.playlistTitle = "데이터없음";
-            json.playlistURL = "데이터없음";
-            json.thumbnailURL = "데이터없음";
+            json.playlistTitle = "로딩 중입니다. 3초 후 새로고침을 눌러주세요.";
+            json.playlistURL = "데이터없음playlistURL";
+            json.thumbnailURL = "데이터없음thumbnailURL";
             res.send(json);
             res.end();
           } else {

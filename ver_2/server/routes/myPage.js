@@ -149,13 +149,27 @@ router.post("/", (req, res) => {
                 let category_count_arr = [];
                 //console.log("카테고리임0", result[0]);
                 //console.log("카테고리임", result[0].CATEGORY);
+
+                for (var n = 0; n < 5; n++) {
+                  if (n < result.length) {
+                    category_arr.push(result[n].CATEGORY);
+                    category_count_arr.push(result[n].count);
+                  } else {
+                    category_arr.push("취미");
+                    category_count_arr.push(0);
+                  }
+                }
+
+                //
+                /*
                 for (var x = 0; x < result.length; x++) {
                   // 상위 5개 카테고리
                   category_arr.push(result[x].CATEGORY);
                   category_count_arr.push(result[x].count);
-                }
+                }*/
                 json.category_arr = category_arr;
                 json.category_count_arr = category_count_arr;
+                //
 
                 // 4) 이달의 플레이 리스트(1위)
                 const exec = conn.query(
