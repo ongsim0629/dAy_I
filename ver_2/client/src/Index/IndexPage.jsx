@@ -61,7 +61,7 @@ function IndexPage(){
                     </div>  
                 </Header>
                 
-                <SideNav />
+                {/* <SideNav /> */}
                 
                 <Layout style={{display:'flex'}}>
                     <div style={{width:'50%'}}>
