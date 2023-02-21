@@ -131,15 +131,14 @@ function LoginPage(props) {
         } else if (res.data.id === id) {
           // id, pw 모두 일치 userId = userId1, msg = undefined
           console.log("======================", "로그인 성공");
-          
+          sessionStorage.setItem("token", res.data.token);
           //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
-          localStorage.setItem("token", res.data.token);
+          //localStorage.setItem("token", res.data.token);
 
           dataList = res.data.dataList;
           summaryList = res.data.summaryList;
           console.log(res.data.dataList, ">>> ", res.data.summaryList)
           navigate("/members/home", {state: {dataList: res.data.dataList, summaryList: res.data.summaryList}});
-          //sessionStorage.setItem('user_id', id) //참고로 적어둠
         }
       })
       .catch((error) => {
