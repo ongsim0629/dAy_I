@@ -202,8 +202,11 @@ function HomePage() {
                 inline
                 >         
             </DatePicker> 
-            <TodayLines ref={calRef}>
-            </TodayLines>
+            {/* <TodayLines ref={calRef}>
+            </TodayLines> */}
+            {
+              summaryList.map((summary, idx) => (<h3 key={idx}>{summary}</h3>))
+            }
       </Layout> 
     </>
     
