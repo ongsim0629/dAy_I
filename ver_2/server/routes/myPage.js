@@ -203,9 +203,38 @@ router.post("/", (req, res) => {
                       json.playlist_title = result[0].playlist_title;
                       json.playlist_url = result[0].playlist_url;
                       json.thumbnail_url = thumbnail;
-                      console.log("json:", json);
-                      res.send(json); //프론트로 보내기
-                      res.end();
+                      //console.log("json:", json);
+                      //res.send(json); //프론트로 보내기
+                      //res.end();
+
+                      const exec = conn.query(
+                        "select count(*) as cnt from diary where diary_writer_id = ?",
+                        [id],
+                        (err, result) => {
+                          console.log("실행된 SQL: ", exec.sql);
+                          // sql 오류 시
+                          if (err) {
+                            console.log("SQL 실행 시, 오류 발생");
+                            console.dir(err);
+                            res.writeHead("200", {
+                              "content-Type": "text/html; charset=utf8",
+                            });
+                            res.write("<h2>SQL 실행 실패;</h2>");
+                            res.status(404).send("오류");
+                            res.end();
+                            return;
+                          } else {
+                            // sql 성공 시
+                            //오류가 없을 경우
+                            console.log("쿼리문 성공");
+                            console.log(result[0].cnt);
+                            json.diary_count = result[0].cnt;
+                            console.log("json:", json);
+                            res.send(json); //프론트로 보내기
+                            res.end();
+                          }
+                        }
+                      );
                     }
                   }
                 );
