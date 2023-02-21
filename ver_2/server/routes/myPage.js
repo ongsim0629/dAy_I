@@ -2,19 +2,15 @@
 [통계 기능 정리]
 1) 월별 감정 개수 (연월% diary_write_date를 가진 행을 뽑아내서 diary_emotion 종류에 따라 count -> Json 형식 or list 형식으로 저장 -> res)
 2) 플리 추천 기록
-
 [req 항목]
 - 현재 연월 정보
 - token(user_id)
-
 +) 월별 감정 개수 관련 쿼리: select count(diary_emotion) from diary where DIARY_WRITER_ID = "(사용자 아이디)" and diary_emotion="(감정 키워드)";    //아직 날짜 정보 대입 X
 +) 월별 감정 개수 관련 쿼리: select count(diary_emotion) from diary where DIARY_WRITER_ID = "hello" and diary_write_date like "2023-02-__" and diary_emotion="분노";     //날짜 정보 대입 O
 +) 플리 기록 관련 쿼리: SELECT playlist_title FROM playlist where playlist_id IN (SELECT distinct diary_playlist FROM diary where diary_writer_id = ?);
-
 1) 월별 감정 개수 구현 방법
 - 감정 키워드 7개 저장하는 리스트 생성
 - 감정 키워드 리스트를 하나씩 돌면서 (for) 각 감정 키워드에 따른 일기 개수 세기
-
 */
 
 var express = require("express");
@@ -129,7 +125,7 @@ router.post("/", (req, res) => {
 
           // 3) 월별 카테고리 순위(아직 미완)
           const exec = conn.query(
-            "select category, count(category) as count from (select * from keyword where keyword IN (select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null)) A group by category order by count(category) desc limit 5;",
+            "select n.count, k.category from keyword as k join (select diary_keyword, count(diary_keyword) as count from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null group by diary_keyword order by count(diary_keyword) desc) as n ON k.keyword = n.diary_keyword group by n.diary_keyword order by n.count desc limit 5;",
             [id, yearMonth],
             (err, result) => {
               // sql 오류 시
@@ -155,7 +151,7 @@ router.post("/", (req, res) => {
                     category_arr.push(result[n].CATEGORY);
                     category_count_arr.push(result[n].count);
                   } else {
-                    category_arr.push("취미");
+                    category_arr.push("");
                     category_count_arr.push(0);
                   }
                 }
