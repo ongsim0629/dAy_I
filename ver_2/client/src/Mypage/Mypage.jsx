@@ -205,7 +205,7 @@ function Mypage(){
             </div>
         </TopLeft>
         <TopRight>
-            <h3>이번 달 내가 관심있던 키워드</h3>
+            <h3>이번 달 일기 키워드 순위</h3>
             <BarChart
                 width={500}
                 height={250}
@@ -223,7 +223,7 @@ function Mypage(){
                     background={data.map((d) => d.img)}
                     barSize={18}
                     label={<CustomBar />}
-                    fill="gray"
+                    fill="#93B5C6"
                 />
             </BarChart>
         </TopRight>
