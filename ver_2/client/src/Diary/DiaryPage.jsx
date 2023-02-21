@@ -90,12 +90,10 @@ function DiaryPage() {
           })
           .then((res) => {
             console.log(res);
-    
-            const dateList = res.data.list; //서버에서 온 날짜 리스트 저장
             //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
             localStorage.setItem("token", res.data.token);
-            console.log(dateList);
-            navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList }  });
+            console.log("DiaryPage에서 이전 버튼 누름- dataList : ",res.data.dataList, ", summaryList : ", res.data.summaryList);
+            navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList }  });
             //sessionStorage.setItem('user_id', id) //참고로 적어둠
             console.log("Submit Button Click"); //확인용
           });
@@ -143,10 +141,10 @@ function DiaryPage() {
                 </DiaryBack>
             </Left>
             <Right>
-                <br /><br /><center><h1 style={{marginTop: '50px', height: '100%'}}>분석 결과</h1></center><br />
+                <center><h1 style={{marginTop: '50px', height: '100%'}}>분석 결과</h1></center>
                 <div>
                     <center><Bar>오늘의 감정 키워드</Bar></center><br />
-                    <center><a style={{fontSize: '20px'}}>{dailyData.diary_emotion}</a></center><br /><br />
+                    <center><a style={{fontSize: '20px'}}>{dailyData.diary_emotion}</a></center><br />
                     <hr style={{width: '80%', border: 'none', backgroundColor: '#C4C4C4', height: '1px'}}></hr>
                 </div>
                 <div>
@@ -156,7 +154,7 @@ function DiaryPage() {
                     <hr style={{width: '80%', border: 'none', backgroundColor: '#C4C4C4', height: '1px'}}></hr>
                 </div>
                 <div>
-                    <center><Bar>당신의 하루가 불러온 사이트</Bar></center><br /><br />
+                    <center><Bar>당신의 하루가 불러온 사이트</Bar></center><br />
                     <center><a href={dailyData.diary_category_site} target='_blank' style={{textDecoration: 'none', fontSize: '20px', fontWeight: 'bold', color: 'black'}}>{dailyData.site_title}</a></center><br />
                     <center><a href={dailyData.diary_category_site} target='_blank' style={{textDecoration: 'none', fontSize: '17px', color: 'blue'}}>{dailyData.diary_category_site}</a></center>
                 </div>
