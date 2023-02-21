@@ -132,6 +132,16 @@ function EditPage(props) {
         return data.replace(/\s/g, "");
     }
 
+    const dateToString = (tempData) => {
+        const year = tempData.getFullYear();
+        const month = tempData.getMonth() + 1;
+        const date = tempData.getDate();
+    
+        return `${year}-${month >= 10 ? month : "0" + month}-${
+          date >= 10 ? date : "0" + date
+        }`;
+      };
+
     const onPasswordHandler = (event) => {
         setPassword(delSpace(event.currentTarget.value));
     }
@@ -139,6 +149,25 @@ function EditPage(props) {
     const onConfirmPasswordHandler = (event) => {
         setConfirmPassword(event.currentTarget.value);
     }
+
+    const onBackButtonHandler = async (event) =>{
+        event.preventDefault();
+
+        axios.post("/members/mypage", {
+           token: token,
+           date: dateToString(new window.Date())
+       })
+       .then((res) => {
+         console.log(">>>>>>>>", localStorage.getItem("token"), " >>>", dateToString(new window.Date()))
+         console.log(res.data)
+         navigate("/members/mypage", {state: {myData: res.data}});
+       })
+       .catch((error) => {
+         console.log(error);
+         alert('마이페이지를 여는 데 문제가 생겼습니다.')
+
+       });
+   }
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
@@ -215,12 +244,7 @@ function EditPage(props) {
                                 {/* 완료 클릭 이후 Mypage로 가야 함.  */}
                                 </SubmitButton>
                                 <br></br>
-                                <Link to="/members/test/mypage">
-                                    {/*  테스트용. 원래 Mypage로 가야 함 */}
-                                    <CancelButton>
-                                        취소
-                                    </CancelButton>
-                                </Link>
+                                <CancelButton onClick={onBackButtonHandler}>취소</CancelButton>
                             </div>
                         </form>
                     </div>
