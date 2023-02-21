@@ -129,7 +129,7 @@ router.post("/", (req, res) => {
 
           // 3) 월별 카테고리 순위(아직 미완)
           const exec = conn.query(
-            "select category, count(category) as count from (select * from keyword where keyword IN (select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null)) A group by category order by count(category) desc limit 5;",
+            "select n.count, k.category from keyword as k join (select diary_keyword, count(diary_keyword) as count from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null group by diary_keyword order by count(diary_keyword) desc) as n ON k.keyword = n.diary_keyword group by n.diary_keyword order by n.count desc limit 5;",
             [id, yearMonth],
             (err, result) => {
               // sql 오류 시
@@ -155,7 +155,7 @@ router.post("/", (req, res) => {
                     category_arr.push(result[n].CATEGORY);
                     category_count_arr.push(result[n].count);
                   } else {
-                    category_arr.push("취미");
+                    category_arr.push("");
                     category_count_arr.push(0);
                   }
                 }
