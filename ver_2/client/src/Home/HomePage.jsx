@@ -173,8 +173,7 @@ function HomePage() {
           date: dateToString(new window.Date())
       })
       .then((res) => {
-        console.log(">>>>>>>>", localStorage.getItem("token"), " >>>", dateToString(new window.Date()))
-        console.log(res.data)
+        console.log("하이>>>>", res.data)
         navigate("/members/mypage", {state: {myData: res.data}});
       })
       .catch((error) => {
