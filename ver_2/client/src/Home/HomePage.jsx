@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import { Link, useNavigate , useLocation } from "react-router-dom";
 import axios from "axios";
@@ -53,7 +53,8 @@ function HomePage() {
   const calRef = useRef();
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new window.Date());
-  const dateList = location.state.dateList;
+  const dateList = location.state.dataList;
+  const summaryList = location.state.summaryList;
   let tempDate;
 
   const dataList = [];
@@ -62,7 +63,19 @@ function HomePage() {
     dataList.push(new Date(dateList[i]));
   };
 
-  console.log(dataList)
+  console.log("1....",dateList, "length: ", dateList.length)
+  console.log("2....",dataList, "length: ", dataList.length)
+
+  useEffect(()=>{
+    function click(event){
+      window.alert("클릭");
+    }
+
+    const btnPrev = document.querySelector(".react-datepicker__navigation--previous");
+    btnPrev.addEventListener("click", click);
+    const btnNext = document.querySelector(".react-datepicker__navigation--next");
+    btnNext.addEventListener("click", click); 
+  },[])
 
   axios
     .get("/members/edit")
