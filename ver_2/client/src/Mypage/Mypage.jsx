@@ -96,6 +96,7 @@ function Mypage(){
     //category
     let category_arr = myData.category_arr;
     let category_count_arr = myData.category_count_arr;
+    let diary_count = myData.diary_count;
 
     console.log(myData)
 
@@ -116,31 +117,31 @@ function Mypage(){
       name: category_arr[0],
       value: category_count_arr[0],
       img: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fcdn.icon-icons.com%2Ficons2%2F2806%2FPNG%2F512%2Fhappy_emoji_emo_emoticon_icon_178898.png&imgrefurl=https%3A%2F%2Ficon-icons.com%2Fko%2F%25EC%2595%2584%25EC%259D%25B4%25EC%25BD%2598%2F%25ED%2596%2589%25EB%25B3%25B5-%25EC%259D%25B4%25EB%25AA%25A8%25ED%258B%25B0%25EC%25BD%2598-emo-%25EC%259D%25B4%25EB%25AA%25A8%25ED%258B%25B0%25EC%25BD%2598%2F178898&tbnid=_0DJCKOXzkNanM&vet=12ahUKEwiD-fqI0qP9AhX6p1YBHSWAC0gQMygAegUIARDCAQ..i&docid=n5a4JKDVg9EFtM&w=512&h=512&q=%ED%96%89%EB%B3%B5%20%EC%9D%B4%EB%AA%A8%EC%A7%80&ved=2ahUKEwiD-fqI0qP9AhX6p1YBHSWAC0gQMygAegUIARDCAQ',
-      ratio: '25%', //바뀔 예정
+      ratio: Math.ceil(category_count_arr[0]/diary_count*100), //28 부분 바뀔 예정
     },
     {
       name: category_arr[1],
       value: category_count_arr[1],
       img: 'https://via.placeholder.com/50',
-      ratio: '17%',
+      ratio: Math.ceil(category_count_arr[1]/diary_count*100),
     },
     {
       name: category_arr[2],
       value: category_count_arr[2],
       img: 'https://via.placeholder.com/50',
-      ratio: '33%',
+      ratio: Math.ceil(category_count_arr[2]/diary_count*100),
     },
     {
       name: category_arr[3],
       value: category_count_arr[3],
       img: 'https://via.placeholder.com/50',
-      ratio: '8%',
+      ratio: Math.ceil(category_count_arr[3]/diary_count*100),
     },
     {
       name: category_arr[4],
       value: category_count_arr[4],
       img: 'https://via.placeholder.com/50',
-      ratio: '8%',
+      ratio: Math.ceil(category_count_arr[4]/diary_count*100),
     },
   ];
 
