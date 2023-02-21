@@ -39,7 +39,7 @@ function TodayLines({dateList, summaryList}){
     <>
       <SummaryBox>
         {
-          summaryList.map((summary, idx) => (<TodayLine key={idx}><h3>{dataList[idx]}</h3><div>{summary}</div></TodayLine>))
+          summaryList.map((summary, idx) => (<TodayLine key={idx}><h3 style={{marginTop: '0px', marginBottom: '7px'}}>{dataList[idx]}</h3><div>{summary}</div></TodayLine>))
         }
       </SummaryBox>
     </>
