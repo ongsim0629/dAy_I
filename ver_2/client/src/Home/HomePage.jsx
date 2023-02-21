@@ -55,7 +55,6 @@ function HomePage() {
   const [startDate, setStartDate] = useState(new window.Date());
   const dateList = location.state.dateList;
   let tempDate;
-  console.log(dateList[0]);
 
   const dataList = [];
 
@@ -102,6 +101,7 @@ function HomePage() {
     const year = tempData.getFullYear();
     const month = tempData.getMonth() + 1;
     const date = tempData.getDate();
+
     return `${year}-${month >= 10 ? month : "0" + month}-${
       date >= 10 ? date : "0" + date
     }`;
@@ -112,13 +112,14 @@ function HomePage() {
     const year = d.getFullYear();
     const month = d.getMonth() + 1;
     const date = d.getDate();
-    return  `${year}.${month >= 10 ? month : "0" + month}.${
+    return  `${month >= 10 ? month : "0" + month}.${
       date >= 10 ? date : "0" + date
-    }`;
+    }.${year}`;
   };
 
   const onDatePickHandler = async (date) => {
     tempDate = date;
+
     console.log(">>>>tempDate : ", tempDate)
 
     //setStartDate(date); //*** 얘로 console 찍으면 당일 날짜 나옴 ***
