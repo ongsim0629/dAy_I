@@ -56,6 +56,7 @@ router.post("/", (req, res) => {
     // db 연결 성공 시
     console.log("데이터베이스 conn");
 
+    /*
     // 1) playlist 관련 쿼리
     const exec = conn.query(
       "SELECT playlist_title FROM playlist where playlist_id IN (SELECT distinct diary_playlist FROM diary where diary_writer_id = ?);",
@@ -84,63 +85,82 @@ router.post("/", (req, res) => {
           }
           console.log(playlist_arr);
           json.playlist = playlist_arr;
+          */
 
-          // 2) 월별 감정 개수 관련 쿼리
-          //이슈사항1) emotion 별로 쿼리문을 날려야됨 (emotion 종류: 중립, 기쁨, 당황, 분노, 혐오, 슬픔, 불안)
-          let emo_arr = [
-            "중립",
-            "기쁨",
-            "당황",
-            "분노",
-            "혐오",
-            "슬픔",
-            "불안",
-          ];
-          let emo_count_arr = [];
+    // 2) 월별 감정 개수 관련 쿼리
+    //이슈사항1) emotion 별로 쿼리문을 날려야됨 (emotion 종류: 중립, 기쁨, 당황, 분노, 혐오, 슬픔, 불안)
+    var json = {}; //front res로 보내줄 data
+    let emo_arr = ["중립", "기쁨", "당황", "분노", "혐오", "슬픔", "불안"];
+    let emo_count_arr = [];
 
-          console.log(emo_arr);
+    console.log(emo_arr);
 
-          for (var i = 0; i < emo_arr.length; i++) {
-            const exec = conn.query(
-              "select count(diary_emotion) as COUNT from diary where DIARY_WRITER_ID = ? and diary_write_date like ? and diary_emotion=?;",
-              [id, yearMonth, emo_arr[i]],
-              (err, result) => {
-                console.log("실행된 SQL: " + exec.sql);
-                // sql 오류 시
-                if (err) {
-                  console.log("SQL 실행 시, 오류 발생");
-                  console.dir(err);
-                  res.writeHead("200", {
-                    "content-Type": "text/html; charset=utf8",
-                  });
-                  res.write("<h2>SQL 실행 실패;</h2>");
-                  res.status(404).send("오류");
-                  res.end();
-                  return;
-                } else {
-                  // sql 성공 시
-                  //오류가 없을 경우
-                  console.log("쿼리문 성공");
-                  console.log("result: ", result[0].COUNT);
-                  console.dir(result[0].COUNT);
-                  emo_count_arr.push(result[0].COUNT);
-                  console.log("내부 emo_count_arr", emo_count_arr);
-                  if (emo_count_arr.length == 7) {
-                    //conn.release();
-                    console.log("emo_count_arr", emo_count_arr);
-                    json.emo_count_arr = emo_count_arr;
-                    //console.log("json:", json);
-                    //res.send(json);
-                    //res.end();
-                  }
-                }
-              }
-            );
+    for (var i = 0; i < emo_arr.length; i++) {
+      const exec = conn.query(
+        "select count(diary_emotion) as COUNT from diary where DIARY_WRITER_ID = ? and diary_write_date like ? and diary_emotion=?;",
+        [id, yearMonth, emo_arr[i]],
+        (err, result) => {
+          console.log("실행된 SQL: " + exec.sql);
+          // sql 오류 시
+          if (err) {
+            console.log("SQL 실행 시, 오류 발생");
+            console.dir(err);
+            res.writeHead("200", {
+              "content-Type": "text/html; charset=utf8",
+            });
+            res.write("<h2>SQL 실행 실패;</h2>");
+            res.status(404).send("오류");
+            res.end();
+            return;
+          } else {
+            // sql 성공 시
+            //오류가 없을 경우
+            console.log("쿼리문 성공");
+            console.log("result: ", result[0].COUNT);
+            console.dir(result[0].COUNT);
+            emo_count_arr.push(result[0].COUNT);
+            console.log("내부 emo_count_arr", emo_count_arr);
+            if (emo_count_arr.length == 7) {
+              //conn.release();
+              console.log("emo_count_arr", emo_count_arr);
+              json.emo_count_arr = emo_count_arr;
+              //console.log("json:", json);
+              //res.send(json);
+              //res.end();
+            }
           }
+        }
+      );
+    }
 
-          //3) 월 별 출석률
+    //3) 월 별 출석률
+    const exec = conn.query(
+      "select count(*) as write_count from diary where diary_writer_id = ? and diary_write_date like ?;",
+      [id, yearMonth],
+      (err, result) => {
+        // sql 오류 시
+        if (err) {
+          console.log("SQL 실행 시, 오류 발생");
+          console.dir(err);
+          res.writeHead("200", {
+            "content-Type": "text/html; charset=utf8",
+          });
+          res.write("<h2>SQL 실행 실패;</h2>");
+          res.status(404).send("오류");
+          res.end();
+          return;
+        } else {
+          // sql 성공 시
+          const write_count = Number(result[0].write_count);
+          var attendance = (write_count / justDate) * 100;
+          json.attendance_rate = attendance;
+          console.log(json);
+          //res.send(json);
+          //res.end();
+
+          //4) 월별 카테고리 순위(아직 미완)
           const exec = conn.query(
-            "select count(*) as write_count from diary where diary_writer_id = ? and diary_write_date like ?;",
+            "select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null;",
             [id, yearMonth],
             (err, result) => {
               // sql 오류 시
@@ -156,18 +176,56 @@ router.post("/", (req, res) => {
                 return;
               } else {
                 // sql 성공 시
-                const write_count = Number(result[0].write_count);
-                var attendance = (write_count / justDate) * 100;
-                json.attendance_rate = attendance;
-                console.log(json);
-                //res.send(json);
-                //res.end();
+                var keywordList = [];
+                for (var data of result) {
+                  keywordList.push(data.diary_keyword);
+                }
 
-                //4) 월별 카테고리 순위(아직 미완)
+                for (var i = 0; i < keywordList.length; i++) {
+                  var categoryList = [];
+
+                  const exec = conn.query(
+                    "select category from keyword where keyword = ?;",
+                    [keywordList[i]],
+                    (err, result) => {
+                      console.log("실행된 SQL: " + exec.sql);
+                      // sql 오류 시
+                      if (err) {
+                        console.log("SQL 실행 시, 오류 발생");
+                        console.dir(err);
+                        res.writeHead("200", {
+                          "content-Type": "text/html; charset=utf8",
+                        });
+                        res.write("<h2>SQL 실행 실패;</h2>");
+                        res.status(404).send("오류");
+                        res.end();
+                        return;
+                      } else {
+                        // sql 성공 시
+                        //오류가 없을 경우
+                        categoryList.push(result[0].category);
+                        console.log(categoryList);
+                        console.log(json);
+                        json.categoryList = categoryList;
+                        /*
+                            if (categoryList.length == keywordList.length)
+                            {
+                              res.send(json);
+                              res.end();
+
+                            }
+                            */
+                      }
+                    }
+                  );
+                }
+
+                //5) 이달의 플레이 리스트(1위)
                 const exec = conn.query(
-                  "select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ?;",
+                  "SELECT playlist_title, playlist_url FROM playlist where playlist_id IN (select diary_playlist from (SELECT diary_playlist, count(diary_playlist) FROM diary where diary_writer_id = ? AND diary_write_date like ? group by diary_playlist order by count(diary_playlist) desc limit 1) A);",
                   [id, yearMonth],
                   (err, result) => {
+                    console.log("실행된 SQL: " + exec.sql);
                     // sql 오류 시
                     if (err) {
                       console.log("SQL 실행 시, 오류 발생");
@@ -181,90 +239,22 @@ router.post("/", (req, res) => {
                       return;
                     } else {
                       // sql 성공 시
-                      var keywordList = [];
-                      for (var data of result) {
-                        keywordList.push(data.diary_keyword);
-                      }
+                      //오류가 없을 경우
+                      console.log("쿼리문 성공");
 
-                      for (var i = 0; i < keywordList.length; i++) {
-                        var categoryList = [];
+                      let playlist_url = result[0].playlist_url;
+                      let thumbnail = playlist_url.substring(32);
+                      thumbnail =
+                        "https://img.youtube.com/vi/" +
+                        thumbnail +
+                        "/maxresdefault.jpg";
 
-                        const exec = conn.query(
-                          "select category from keyword where keyword = ?;",
-                          [keywordList[i]],
-                          (err, result) => {
-                            console.log("실행된 SQL: " + exec.sql);
-                            // sql 오류 시
-                            if (err) {
-                              console.log("SQL 실행 시, 오류 발생");
-                              console.dir(err);
-                              res.writeHead("200", {
-                                "content-Type": "text/html; charset=utf8",
-                              });
-                              res.write("<h2>SQL 실행 실패;</h2>");
-                              res.status(404).send("오류");
-                              res.end();
-                              return;
-                            } else {
-                              // sql 성공 시
-                              //오류가 없을 경우
-                              categoryList.push(result[0].category);
-                              console.log(categoryList);
-                              console.log(json);
-                              json.categoryList = categoryList;
-                              /*
-                            if (categoryList.length == keywordList.length)
-                            {
-                              res.send(json);
-                              res.end();
-
-                            }
-                            */
-                            }
-                          }
-                        );
-                      }
-
-                      //5) 이달의 플레이 리스트(1위)
-                      const exec = conn.query(
-                        "SELECT playlist_title, playlist_url FROM playlist where playlist_id IN (select diary_playlist from (SELECT diary_playlist, count(diary_playlist) FROM diary where diary_writer_id = ? AND diary_write_date like ? group by diary_playlist order by count(diary_playlist) desc limit 1) A);",
-                        [id, yearMonth],
-                        (err, result) => {
-                          console.log("실행된 SQL: " + exec.sql);
-                          // sql 오류 시
-                          if (err) {
-                            console.log("SQL 실행 시, 오류 발생");
-                            console.dir(err);
-                            res.writeHead("200", {
-                              "content-Type": "text/html; charset=utf8",
-                            });
-                            res.write("<h2>SQL 실행 실패;</h2>");
-                            res.status(404).send("오류");
-                            res.end();
-                            return;
-                          } else {
-                            // sql 성공 시
-                            //오류가 없을 경우
-                            console.log("쿼리문 성공");
-                            console.log(
-                              "result: ",
-                              result[0].playlist_title,
-                              result[0].playlist_url
-                            );
-                            console.dir(
-                              result[0].playlist_title,
-                              result[0].playlist_url
-                            );
-                            //playlist_title.push(result[0].playlist_title);
-                            //playlist_url.push(result[0].playlist_url);
-                            json.playlist_title = playlist_title;
-                            json.playlist_url = playlist_url;
-                            console.log("json:", json);
-                            res.send(json); //프론트로 보내기
-                            res.end();
-                          }
-                        }
-                      );
+                      json.playlist_title = result[0].playlist_title;
+                      json.playlist_url = result[0].playlist_url;
+                      json.thumbnail_url = thumbnail;
+                      console.log("json:", json);
+                      res.send(json); //프론트로 보내기
+                      res.end();
                     }
                   }
                 );
