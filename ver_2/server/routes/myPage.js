@@ -129,7 +129,7 @@ router.post("/", (req, res) => {
                     //conn.release();
                     console.log("emo_count_arr", emo_count_arr);
                     json.emo_count_arr = emo_count_arr;
-                    console.log("json:", json);
+                    //console.log("json:", json);
                     //res.send(json);
                     //res.end();
                   }
@@ -143,7 +143,6 @@ router.post("/", (req, res) => {
             "select count(*) as write_count from diary where diary_writer_id = ? and diary_write_date like ?;",
             [id, yearMonth],
             (err, result) => {
-              conn.release();
               // sql 오류 시
               if (err) {
                 console.log("SQL 실행 시, 오류 발생");
@@ -157,16 +156,88 @@ router.post("/", (req, res) => {
                 return;
               } else {
                 // sql 성공 시
-                conn.release;
                 const write_count = Number(result[0].write_count);
                 var attendance = (write_count / justDate) * 100;
                 json.attendance_rate = attendance;
                 console.log(json);
-                res.send(json);
-                res.end();
+                //res.send(json);
+                //res.end();
+
+                const exec = conn.query(
+                  "select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ?;",
+                  [id, yearMonth],
+                  (err, result) => {
+                    // sql 오류 시
+                    if (err) {
+                      console.log("SQL 실행 시, 오류 발생");
+                      console.dir(err);
+                      res.writeHead("200", {
+                        "content-Type": "text/html; charset=utf8",
+                      });
+                      res.write("<h2>SQL 실행 실패;</h2>");
+                      res.status(404).send("오류");
+                      res.end();
+                      return;
+                    } else {
+                      // sql 성공 시
+                      var keywordList = [];
+                      for (var data of result){
+                      keywordList.push(data.diary_keyword);
+                    };
+
+                    for (var i = 0; i < keywordList.length; i++) {
+                      var categoryList = [];
+
+                      const exec = conn.query(
+                        "select category from keyword where keyword = ?;",
+                        [keywordList[i]],
+                        (err, result) => {
+                          console.log("실행된 SQL: " + exec.sql);
+                          // sql 오류 시
+                          if (err) {
+                            console.log("SQL 실행 시, 오류 발생");
+                            console.dir(err);
+                            res.writeHead("200", {
+                              "content-Type": "text/html; charset=utf8",
+                            });
+                            res.write("<h2>SQL 실행 실패;</h2>");
+                            res.status(404).send("오류");
+                            res.end();
+                            return;
+                          } else {
+                            // sql 성공 시
+                            //오류가 없을 경우
+                            categoryList.push(result[0].category);
+                            console.log(categoryList);
+                            console.log(json)
+                            json.categoryList = categoryList;
+
+                            if (categoryList.length == keywordList.length)
+                            {
+                              res.send(json);
+                              res.end();
+
+                            }
+
+                        
+                            
+                          }
+                        }
+                      
+                      );
+
+
+                    }
+                  
+
+
+                    }
+                  }
+                );
               }
             }
           );
+          
         }
       }
     );
