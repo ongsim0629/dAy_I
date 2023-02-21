@@ -6,35 +6,39 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
 
-const Header = styled.div`
-  position: fixed;
-  left: 0;
+const Header = styled.header`
   top: 0;
+  left: 0;
   width: 100%;
-  height: 10%;
-  position: fixed;
+
+  display: flex;
+  flex-direction: row;
+  background-color: #e5e0ff;
 `;
 
+
 const Layout = styled.div`
-  margin-top: 7%;
-  width: 100vw;
+  margin-top: 4%;
+  width: 90vw;
   height: 100vh;
   display: "flex";
   flexdirection: "column";
   alignitems: "center";
   position: fixed;
-  padding-left: 10px;
+  padding-left: 80px;
   margin-right: 100px;
 `;
 
 const BackButton = styled.button`
-  color: #aeaeae;
+  color: #9F9F9F;
+  font-size: 17px;
   background: #f5f5f5;
   font: AbeeZee;
   border: none;
   border-radius: 4px;
   margin: 20px;
-  padding: 10px 15px;
+  margin-left: 45px;
+  padding: 10px 27px;
   &:hover {
     cursor: pointer;
   }
@@ -45,12 +49,13 @@ const BackButton = styled.button`
 
 const SaveButton = styled.button`
   color: black;
-  background: #e5e0ff;
+  font-size: 17px;
+  font: AbeeZee;
   font-weight: bold;
   border: none;
   border-radius: 4px;
-  margin: 20px 20px 20px 1350px;
-  padding: 10px 15px;
+  margin: 20px 20px 20px 1400px;
+  padding: 10px 27px;
 
   &:hover {
     cursor: pointer;
@@ -64,7 +69,7 @@ const SaveButton = styled.button`
 const DateInput = styled(DatePicker)`
   margin-bottom: 10px;
   border: none;
-  font-size: 15px;
+  font-size: 16px;
   color: #aeaeae;
 
   &:focus {
@@ -87,6 +92,7 @@ const Content = styled.textarea`
   background: #f5f5f5;
   padding: 40px;
   margin-top: 20px;
+  margin-bottom: 20px;
   height: 50vh;
   width: 100%;
   max-width: 100%;
@@ -106,8 +112,9 @@ const Content = styled.textarea`
 function WritePage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const [startDate, setStartDate] = useState(location.state.selectedDate);
+  // const token = localStorage.getItem("token");
+  //const [startDate, setStartDate] = useState(location.state.selectedDate);
+  const [startDate, setStartDate] = useState(new window.Date());
   const [title, setTitle] = useState("제목");
   const [content, setContent] = useState("");
 
@@ -129,44 +136,43 @@ function WritePage() {
   };
 
   const onBackHandler = async (event) => {
-    event.preventDefault();
+    // event.preventDefault();
 
-    console.log("이전 버튼 클릭!");
+    // console.log("이전 버튼 클릭!");
 
-    const result = await axios
-      .post("/members/tohome", {
-        //서버로 id, password 전달
-        token: localStorage.getItem("token"),
-        date: dateToString(startDate)
-      })
-      .then((res) => {
-        console.log(dateToString(startDate));
-        console.log(res);
-        //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
-        localStorage.setItem("token", res.data.token);
-        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
-        //sessionStorage.setItem('user_id', id) //참고로 적어둠
-        console.log("Submit Button Click"); //확인용
-      });
+    // const result = await axios
+    //   .post("/members/tohome", {
+    //     //서버로 id, password 전달
+    //     token: localStorage.getItem("token"),
+    //     date: dateToString(startDate)
+    //   })
+    //   .then((res) => {
+    //     console.log(dateToString(startDate));
+    //     console.log(res);
+    //     //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
+    //     localStorage.setItem("token", res.data.token);
+    //     navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
+    //     //sessionStorage.setItem('user_id', id) //참고로 적어둠
+    //     console.log("Submit Button Click"); //확인용
+    //   });
   };
 
   const onSaveButtonHandler = () => {
-    //임시 post 함수
-    axios
-      .post("/members/test/write", {
-        date: dateToString(startDate),
-        title: title,
-        content: content,
-        token: token,
-      })
-      .then(function (res) {
-        console.log(res);
-        alert("일기가 저장되었습니다:D");
-        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    // axios
+    //   .post("/members/test/write", {
+    //     date: dateToString(startDate),
+    //     title: title,
+    //     content: content,
+    //     token: token,
+    //   })
+    //   .then(function (res) {
+    //     console.log(res);
+    //     alert("일기가 저장되었습니다:D");
+    //     navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
 
   return (
@@ -174,41 +180,25 @@ function WritePage() {
       <Header>
         <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
         <SaveButton onClick={onSaveButtonHandler}>저장</SaveButton>
-        <hr style={{ marginTop: "0px" }} />
+
       </Header>
 
       <Layout>
-        <div
-          style={{
-            position: "absolute",
-            height: "100%",
-            width: "90%",
-            margin: "0px 50px",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-start",
-            }}
-          >
-            <DateInput
+          <DateInput
               showIcon
               selected={startDate}
               onChange={(date) => setStartDate(date)}
               dateFormat="yyyy/MM/dd &#128198;"
               locale={ko}
-            />
-            <Title defaultValue="제목" onChange={onTitleHandler}></Title>
-          </div>
+          />
+          <Title defaultValue="제목" onChange={onTitleHandler}></Title>
           <hr />
           {/* 데이터 확인용 버튼 */}
           {/* <button onClick={()=>{ console.log(location.state.selectedDate); }} />  */}
           <div style={{ display: "flex", alignItems: "center" }}>
             <Content onChange={onContentHandler}>{content}</Content>
           </div>
-        </div>
+
       </Layout>
     </>
   );
