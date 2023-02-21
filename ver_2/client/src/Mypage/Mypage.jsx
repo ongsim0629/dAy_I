@@ -77,6 +77,23 @@ const BottomRight = styled.div`
   border-radius: 30px;
 `;
 
+// const Left = styled.div`
+//     width: 50%;
+//     height: 300px;
+//     float: left;
+//     background: #F5F5F5;
+//     margin-bottom: 30px;
+//     text-align: center;
+// `;
+// const Right = styled.div`
+//     width: 50%;
+//     height: 300px;
+//     float: right;
+//     background: #F5F5F5;
+//     text-align: center;
+//     overflow-y:scroll;
+// `;
+
 function Mypage(){
     const location = useLocation();
     const myData = location.state.myData;
