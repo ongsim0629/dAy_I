@@ -56,38 +56,7 @@ router.post("/", (req, res) => {
     // db 연결 성공 시
     console.log("데이터베이스 conn");
 
-    /*
-    // 1) playlist 관련 쿼리
-    const exec = conn.query(
-      "SELECT playlist_title FROM playlist where playlist_id IN (SELECT distinct diary_playlist FROM diary where diary_writer_id = ?);",
-      [id],
-      (err, playResult) => {
-        console.log("실행된 SQL: " + exec.sql);
-        // sql 오류 시
-        if (err) {
-          console.log("SQL 실행 시, 오류 발생");
-          console.dir(err);
-          res.writeHead("200", { "content-Type": "text/html; charset=utf8" });
-          res.write("<h2>SQL 실행 실패;</h2>");
-          res.status(404).send("오류");
-          res.end();
-          return;
-        } else {
-          // sql 성공 시
-          //오류가 없을 경우
-          console.log("쿼리문 성공");
-
-          var json = {}; //front res로 보내줄 data
-
-          let playlist_arr = [];
-          for (var x = 0; x < playResult.length; x++) {
-            playlist_arr.push(playResult[x].playlist_title);
-          }
-          console.log(playlist_arr);
-          json.playlist = playlist_arr;
-          */
-
-    // 2) 월별 감정 개수 관련 쿼리
+    // 1) 월별 감정 개수 관련 쿼리
     //이슈사항1) emotion 별로 쿼리문을 날려야됨 (emotion 종류: 중립, 기쁨, 당황, 분노, 혐오, 슬픔, 불안)
     var json = {}; //front res로 보내줄 data
     let emo_arr = ["중립", "기쁨", "당황", "분노", "혐오", "슬픔", "불안"];
@@ -133,7 +102,7 @@ router.post("/", (req, res) => {
       );
     }
 
-    //3) 월 별 출석률
+    // 2) 월 별 출석률
     const exec = conn.query(
       "select count(*) as write_count from diary where diary_writer_id = ? and diary_write_date like ?;",
       [id, yearMonth],
@@ -158,9 +127,9 @@ router.post("/", (req, res) => {
           //res.send(json);
           //res.end();
 
-          //4) 월별 카테고리 순위(아직 미완)
+          // 3) 월별 카테고리 순위(아직 미완)
           const exec = conn.query(
-            "select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null;",
+            "select category, count(category) as count from (select * from keyword where keyword IN (select diary_keyword from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null)) A group by category order by count(category) desc limit 5;",
             [id, yearMonth],
             (err, result) => {
               // sql 오류 시
@@ -176,51 +145,19 @@ router.post("/", (req, res) => {
                 return;
               } else {
                 // sql 성공 시
-                var keywordList = [];
-                for (var data of result) {
-                  keywordList.push(data.diary_keyword);
+                let category_arr = [];
+                let category_count_arr = [];
+                //console.log("카테고리임0", result[0]);
+                //console.log("카테고리임", result[0].CATEGORY);
+                for (var x = 0; x < result.length; x++) {
+                  // 상위 5개 카테고리
+                  category_arr.push(result[x].CATEGORY);
+                  category_count_arr.push(result[x].count);
                 }
+                json.category_arr = category_arr;
+                json.category_count_arr = category_count_arr;
 
-                for (var i = 0; i < keywordList.length; i++) {
-                  var categoryList = [];
-
-                  const exec = conn.query(
-                    "select category from keyword where keyword = ?;",
-                    [keywordList[i]],
-                    (err, result) => {
-                      console.log("실행된 SQL: " + exec.sql);
-                      // sql 오류 시
-                      if (err) {
-                        console.log("SQL 실행 시, 오류 발생");
-                        console.dir(err);
-                        res.writeHead("200", {
-                          "content-Type": "text/html; charset=utf8",
-                        });
-                        res.write("<h2>SQL 실행 실패;</h2>");
-                        res.status(404).send("오류");
-                        res.end();
-                        return;
-                      } else {
-                        // sql 성공 시
-                        //오류가 없을 경우
-                        categoryList.push(result[0].category);
-                        console.log(categoryList);
-                        console.log(json);
-                        json.categoryList = categoryList;
-                        /*
-                            if (categoryList.length == keywordList.length)
-                            {
-                              res.send(json);
-                              res.end();
-
-                            }
-                            */
-                      }
-                    }
-                  );
-                }
-
-                //5) 이달의 플레이 리스트(1위)
+                // 4) 이달의 플레이 리스트(1위)
                 const exec = conn.query(
                   "SELECT playlist_title, playlist_url FROM playlist where playlist_id IN (select diary_playlist from (SELECT diary_playlist, count(diary_playlist) FROM diary where diary_writer_id = ? AND diary_write_date like ? group by diary_playlist order by count(diary_playlist) desc limit 1) A);",
                   [id, yearMonth],
