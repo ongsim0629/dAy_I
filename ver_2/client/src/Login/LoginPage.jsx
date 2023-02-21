@@ -85,6 +85,10 @@ function LoginPage(props) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  let dataList;
+  let summaryList;
+
+
   const onIdHandler = (event) => {
     setId(event.currentTarget.value);
   };
@@ -109,10 +113,9 @@ function LoginPage(props) {
       })
       .then((res) => {
         console.log(res);
-        console.log("res.data.userId :: ", res.data.id);
-        console.log("res.data.msg :: ", res.data.msg);
-
-        console.log("res.data.token", res.data.token);
+        // console.log("res.data.userId :: ", res.data.id);
+        // console.log("res.data.msg :: ", res.data.msg);
+        // console.log("res.data.token", res.data.token);
 
         if (res.data.id === undefined) {
           // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
@@ -129,11 +132,13 @@ function LoginPage(props) {
           // id, pw 모두 일치 userId = userId1, msg = undefined
           console.log("======================", "로그인 성공");
           
-          const dateList = res.data.dataList;
-          const summaryList = res.data.summaryList; //서버에서 온 날짜 리스트 저장
           //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
           localStorage.setItem("token", res.data.token);
-          navigate("/members/home", {state: {dateList: dateList, summaryList: res.data.summaryList}});
+
+          dataList = res.data.dataList;
+          summaryList = res.data.summaryList;
+          console.log(res.data.dataList, ">>> ", res.data.summaryList)
+          navigate("/members/home", {state: {dataList: res.data.dataList, summaryList: res.data.summaryList}});
           //sessionStorage.setItem('user_id', id) //참고로 적어둠
         }
       })
@@ -146,14 +151,15 @@ function LoginPage(props) {
     console.log("Submit Button Click"); //확인용
   };
   //로그인 하고 로그인페이지 돌아오면 다시 홈으로 가도록 하는 기능 구현. (): 받아올 변수, {}: 실행할 코드, []: []에 들어있는 조건이 해당될 때만 렌더링 이외의 다른 정보를 다시 reload 하겠다!
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      //위의 setItem으로 이미 localStorage에 저장해두었음
-      //로그인 이미 한 경우
-      navigate("/members/home"); //페이지 이동 => home으로 바꿔야댐!!!!
-    }
+  // useEffect(() => {
+  //   if (localStorage.getItem("token")) {
+  //     //위의 setItem으로 이미 localStorage에 저장해두었음
+  //     //로그인 이미 한 경우
+  //     console.log("useEffect>>> dataList : ", dataList, " summaryList : ", summaryList)
+  //     navigate("/members/home", {state: {dataList: dataList, summaryList: summaryList}}); //페이지 이동 => home으로 바꿔야댐!!!!
+  //   }
     
-  }, []);
+  // }, []);
 
   return (
     <div>
