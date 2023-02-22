@@ -52,8 +52,14 @@ function HomePage() {
   const calRef = useRef();
   const [id, setId] = useState("");
   const [startDate, setStartDate] = useState(new window.Date());
-  const dateList = location.state.dataList;
-  const summaryList = location.state.summaryList;
+
+  const [dateList, setDateList] = useState(location.state.dataList);
+  const [summaryList, setSummaryList] = useState(location.state.summaryList);
+
+  // let dateList = location.state.dataList;
+  // let summaryList = location.state.summaryList;
+  // const dateList = location.state.dataList;
+  // const summaryList = location.state.summaryList;
   let tempDate;
 
   const dataList = [];
@@ -62,16 +68,114 @@ function HomePage() {
     dataList.push(new Date(dateList[i]));
   };
 
-  useEffect(()=>{
-    function click(event){
-      window.alert("클릭");
+  //달에 따른 요약문 변경을 위해 서버에 보내는 틀 맞춤
+  const innerHtmlToString = (d) =>{
+    const rmBlank = d.split(' ');
+    const month = rmBlank[0].split('월')[0];
+    const year = rmBlank[1].split('월')[0];
+    // const year = rmBlank[0].split('년')[0];
+    // const month = rmBlank[1].split('월')[0];
+    return `${year}-${month>= 10 ? month : "0" + month}-${"01"}`;
+  }
+
+  //왼쪽
+  const innerHtmlToStringPrev = (d) =>{
+    const rmBlank = d.split(' ');
+    let month = parseInt(rmBlank[0].split('월')[0]);
+    let year = parseInt(rmBlank[1].split('월')[0]);
+
+    if (month == 1) {
+      month = 12;
+      year = year - 1;
+    }
+    else {
+      month = month - 1;
     }
 
+    return `${year}-${month>= 10 ? month : "0" + month}-${"01"}`;
+  }
+  //오른쪽
+  const innerHtmlToStringNext = (d) =>{
+    const rmBlank = d.split(' ');
+    let month = parseInt(rmBlank[0].split('월')[0]);
+    let year = parseInt(rmBlank[1].split('월')[0]);
+    console.log(year, month)
+    if (month == 12) {
+      month = 1;
+      year = year + 1;
+    }
+    else {
+      month = month + 1;
+    }
+    console.log(year, month)
+    return `${year}-${month>= 10 ? month : "0" + month}-${"01"}`;
+  }
+
+  useEffect(()=>{
+		//prevMonth: < 눌렀을때 실행할 콜백함수
+    const prevMonth = async()=>{
+      var nowDate = document.querySelector(".react-datepicker__current-month").innerHTML; //왼쪽 버튼 눌러도 일단 이 값은 누르기 전의 값임. (2월에서 왼쪽 눌러도 이 값은 2임)
+      console.log("nowDate: ", nowDate);
+      console.log("서버로 전달되는 날짜:",innerHtmlToStringPrev(nowDate))
+      await axios.post('/members/tohome',{
+          //서버로 토큰과 날짜 전달
+          token: sessionStorage.getItem("token"),
+          date: innerHtmlToStringPrev(nowDate)
+        })
+        .then((res) => {
+          console.log("1월꺼", res)
+          setDateList(res.data.dataList);
+          setSummaryList(res.data.summaryList);
+          //dateList = res.data.dataList;
+          //summaryList = res.data.summaryList;
+          console.log("어랍쇼?",dateList, summaryList)
+        })
+        .catch((error) => {
+        });
+      //window.alert("<버튼 클릭"); //eventListner 제대로 동작하는지 확인하는 용도
+    }
+
+		//nextMonth: > 눌렀을때 실행할 콜백함수
+    const nextMonth = async()=>{
+      var nowDate = document.querySelector(".react-datepicker__current-month").innerHTML;
+      console.log("nowDate: ", nowDate);
+      console.log("서버로 전달되는 날짜:",innerHtmlToStringNext(nowDate))
+      await axios.post('/members/tohome',{
+          //서버로 토큰과 날짜 전달
+          token: sessionStorage.getItem("token"),
+          date: innerHtmlToStringNext(nowDate)
+        })
+        .then((res) => {
+          console.log("Next 실행", res)
+          setDateList(res.data.dataList);
+          setSummaryList(res.data.summaryList);
+          //dateList = res.data.dataList;
+          //summaryList = res.data.summaryList;
+        })
+        .catch((error) => {
+        });
+      //window.alert("> 클릭");
+    }
+		
+		//DOM에서 날짜 버튼들 가져오기
     const btnPrev = document.querySelector(".react-datepicker__navigation--previous");
-    btnPrev.addEventListener("click", click);
     const btnNext = document.querySelector(".react-datepicker__navigation--next");
-    btnNext.addEventListener("click", click); 
-  },[])
+    //해당 버튼에 클릭했을 때의 이벤트 리스너를 달아줌
+		btnPrev.addEventListener("click", prevMonth);
+    btnNext.addEventListener("click", nextMonth); 
+  },[]) //자원을 아끼기 위해 처음 렌더링됐을때만 리스너를 달아주도록 빈 배열을 줌
+
+
+  // useEffect(()=>{
+  //   function click(event){
+  //     window.alert("클릭");
+  //   }
+
+  //   const btnPrev = document.querySelector(".react-datepicker__navigation--previous");
+  //   btnPrev.addEventListener("click", click);
+  //   const btnNext = document.querySelector(".react-datepicker__navigation--next");
+  //   btnNext.addEventListener("click", click); 
+  // },[])
 
   axios
     .get("/members/edit")
