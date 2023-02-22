@@ -231,7 +231,7 @@ function Mypage(){
         <BottomLeft>
             <h3 style={{marginBottom: '0.4em'}}>이달의 플레이리스트 (월별 빈도수 1위)</h3>
             <div>
-              <a href={playlist_url} target='_blank'><img alt="thumbnail_img" src={thumbnail_url} style={{width: '60%', borderRadius: '7px'}}/></a><br />
+            <a href={playlist_url} target='_blank'><img src={thumbnail_url} onerror="this.src='http://www.hanbit.co.kr/images/common/logo_hanbit.png'" style={{width: '60%', borderRadius: '7px'}}/></a><br />
               <a href={playlist_url} target='_blank' style={{fontSize: '20px', fontWeight: 'normal', textDecoration: 'none', color: 'black'}}>{playlist_title}</a><br /><br />
             </div>
         </BottomLeft>
