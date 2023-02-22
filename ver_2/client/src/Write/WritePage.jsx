@@ -157,6 +157,14 @@ function WritePage() {
   };
 
   const onSaveButtonHandler = () => {
+    if (title === "제목") {
+      alert("오늘 하루를 나타내는 일기의 제목을 지어주세요 :D");
+      return;
+    }
+    if (content === "") {
+      alert("일기 내용을 작성해주세요 :D");
+      return;
+    }
     axios
       .post("/members/test/write", {
         date: dateToString(startDate),
