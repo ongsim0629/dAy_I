@@ -104,7 +104,7 @@
 
 /* 달력 이동시 오늘 날짜와 달이 다르고 날짜는 같을 때  */
 .react-datepicker__day--keyboard-selected{
-        background: #dfdef8;
+        background: none;
         padding:8px;
         margin: 15px 22px;
         border-radius: 50%;
