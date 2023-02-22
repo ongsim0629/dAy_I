@@ -103,6 +103,7 @@ function EditPage(props) {
     //edit 저장 누르면 토큰 없애고 navigate로 로그인 화면으로
         axios.get('/members/edit')
         .then(function () {
+            let token = sessionStorage.getItem('token');
             var base64Url = token.split('.')[1]; //value 0 -> header, 1 -> payload, 2 -> VERIFY SIGNATURE
             var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/'); 
             var result = JSON.parse(decodeURIComponent(atob(base64).split('').map(function(c) {
