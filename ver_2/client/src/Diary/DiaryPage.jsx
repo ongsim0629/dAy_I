@@ -107,8 +107,9 @@ function DiaryPage() {
             date: dailyData.diary_write_date
         })
         .then((res) => {
+            console.log(res)
             alert('일기가 삭제되었습니다.')
-            navigate("/members/home");
+            navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList }  });
         })
         .catch((error) => {
             console.log(error);
