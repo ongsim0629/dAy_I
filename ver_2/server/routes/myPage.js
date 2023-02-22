@@ -147,8 +147,9 @@ router.post("/", (req, res) => {
                 // sql 성공 시
                 let category_arr = [];
                 let category_count_arr = [];
-                console.log("카테고리임0", result[0]);
-                console.log("카테고리임", result[0].category);
+                //console.log("카테고리임0", result[0]);
+                //console.log("카테고리임", result[0].category);
+                console.log(result.length);
 
                 for (var n = 0; n < 5; n++) {
                   if (n < result.length) {
@@ -193,19 +194,27 @@ router.post("/", (req, res) => {
                       //오류가 없을 경우
                       console.log("쿼리문 성공");
 
-                      let playlist_url = result[0].playlist_url;
-                      let thumbnail = playlist_url.substring(32);
-                      thumbnail =
-                        "https://img.youtube.com/vi/" +
-                        thumbnail +
-                        "/maxresdefault.jpg";
+                      console.log("플리 관련 result 길이", result.length);
+                      if (result.length <= 0) {
+                        json.playlist_title =
+                          "이번 달 플리 추천 기록이 없습니다.";
+                        json.playlist_url = "";
+                        json.thumbnail_url = "";
+                      } else {
+                        let playlist_url = result[0].playlist_url;
+                        let thumbnail = playlist_url.substring(32);
+                        thumbnail =
+                          "https://img.youtube.com/vi/" +
+                          thumbnail +
+                          "/maxresdefault.jpg";
 
-                      json.playlist_title = result[0].playlist_title;
-                      json.playlist_url = result[0].playlist_url;
-                      json.thumbnail_url = thumbnail;
-                      //console.log("json:", json);
-                      //res.send(json); //프론트로 보내기
-                      //res.end();
+                        json.playlist_title = result[0].playlist_title;
+                        json.playlist_url = result[0].playlist_url;
+                        json.thumbnail_url = thumbnail;
+                        //console.log("json:", json);
+                        //res.send(json); //프론트로 보내기
+                        //res.end();
+                      }
 
                       const exec = conn.query(
                         "select count(*) as cnt from diary where diary_writer_id = ?",
