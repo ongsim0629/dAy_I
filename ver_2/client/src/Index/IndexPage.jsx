@@ -1,24 +1,44 @@
-import React from 'react';
+import {React, useRef} from 'react';
 import styled from "styled-components";
-//import IndexImage from "./IndexImage.png"; //사진 배경 하얀 버전 (화질 좋음, 어색함)
 import Test from "./test.png"; //사진 배경에 보라색 포함된 버전 (화질낮음, 자연스러움)
 import { Link } from "react-router-dom";
-import SideNav from "../SideNav";
+// import TopBar from './Topbar';
+import DiaryIntroduction from './DiaryIntroduction';
+import IndexLogo from "./IndexLogo.jpg";
+import AnchorLink from 'react-anchor-link-smooth-scroll';
+import './Index.css';
 
-const Header = styled.header`
+const TopBarContainer = styled.div`
     position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top:0;
+    height: 80px;
+    width:100%;
     background-color: white;
+    padding: 0 20px;
 `;
 
-const Layout = styled.div`
-    padding-top: 100px;
-    width: 100vw;
-    height: 100vh;
-    background-color: #E5E0FF;
+const LeftContents = styled.div`
+  display: flex;
+`;
+const Title = styled.img`
+    margin:40px;
+    width: 17%;
+    margin-top: 46px;
+    height: 55px;
+    color:#A27CB9;
+`;
+const Content = styled.div`
+    margin: 60px;
+    margin-right: 3px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #A27CB9;
+    &:hover{
+        color:orange;
+    }
 `;
 
 const LoginButton = styled.button`
@@ -26,9 +46,11 @@ const LoginButton = styled.button`
     background: #F5F5F5;
     font-weight: bold;
     border: none;
+    font-size: 16px;
     border-radius: 4px;
     margin-left: 30px ;
-    padding-left: 10px;
+    margin-right: 50px;
+    padding: 8px 16px;
     height: 50px;
     &:hover {
         cursor: pointer;
@@ -37,49 +59,67 @@ const LoginButton = styled.button`
         box-shadow: 0 0 0 1px gray;
     }
 `;
+// const Wrapper = styled.div`
+//     display: flex;
+//     flex-direction: column;
+//     margin-top: 80px;
+//     align-items: center;
+//     height: 100vh;
+//     :nth-child(2n){
+//         background-color: #E5E0FF;
+//     }
+// `;
 
+const ProductTitle = styled.h1`
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 45px;
+`;
 
-const Layout2 = styled.div`
-  display: flex;
-  justify-content: space-between;
-  padding: 32px 0;
-  color: #a7a9be;
-  font-size: 1.5rem;
-  font-family: sans-serif;
+const ProductDescription = styled.p`
+  max-width: 600px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 20px;
+  font-family: AbeeZee;
+`;
+
+const ProductImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
 `;
 
 function IndexPage(){
+    const idxRef = useRef(null);
+
     return(
-        <div>
-            <div style={{position:'fixed', width:'1250px'}}>
-                <Header >
-                    <div style={{display:'flex', flexDirection:'row'}}>
-                        <h1 style={{width:'90%', color:'#A27CB9', marginLeft:'25px'}}> &#128393; 사이트 제목 </h1>
-                        <Link to="/members/login">
-                            <LoginButton style={{marginTop:'20px', padding:'5px 20px', fontSize:'15px', fontFamily:'AbeeZee'}}>로그인</LoginButton>
-                        </Link>
-                    </div>  
-                </Header>
-                
+        <>
+            <TopBarContainer>
+                <LeftContents >
+                    <Title className="LogoImage" alt="IndexImage" src={IndexLogo} />
+                    <AnchorLink href="#section1"><Content class="section">플레이리스트 제공</Content></AnchorLink>
+                    <AnchorLink href="#section2"><Content class="section">한 달의 일기 분석</Content></AnchorLink>
+                    <AnchorLink href="#section3"><Content class="section">월별 일기 요약</Content></AnchorLink> 
+                </LeftContents>
+                <Link to="/members/login">
+                    <LoginButton>로그인</LoginButton>
+                </Link>
+            </TopBarContainer>
                 {/* <SideNav /> */}
-                
-                <Layout style={{display:'flex'}}>
+                {/* <Layout style={{display:'flex'}}>
                     <div style={{width:'50%'}}>
                             <div style={{margin: '200px', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'center'}}>
                                 <h1 style={{fontSize:'40px'}}>사이트 제목</h1>
                                 <p style={{marginTop:'0px',color:"#6D6D6D", fontFamily:'AbeeZee'}}>노래부터 관련 사이트까지, 일기와 함께해요. <br></br>
                                     상호작용하는 일기를 써보아요. </p>
                             </div>
-                            
-                            
                     </div>
-                    <div >
-                        {/* <img className="phoneImage" alt="IndexImage" src={IndexImage}  /> */}
-                        <img style={{margin:'30px'}}alt="IndexImage" src={Test}  />
-                    </div>
-                </Layout>
-            </div>
-        </div>
+                </Layout> */}
+                <section id="section1"><DiaryIntroduction/></section> 
+                <section id= "section2"><DiaryIntroduction/></section>
+                <section id= "section3"><DiaryIntroduction/></section> 
+            </>
     );
 }
 

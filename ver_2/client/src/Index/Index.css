@@ -1,0 +1,18 @@
+section{
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    align-items: center;
+    height: 100vh;
+
+}
+
+section:nth-child(2n){
+    background-color: #E5E0FF;
+}
+
+a {
+    text-decoration-line: none;
+    transition: color .3s;
+}
+
