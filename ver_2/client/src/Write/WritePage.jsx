@@ -175,7 +175,7 @@ function WritePage() {
       .then(function (res) {
         console.log(res);
         alert("일기가 저장되었습니다:D"); 
-        navigate("/members/home", { state: { dateList: res.data.dataList, summaryList: res.data.summaryList } });
+        navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList } });
       })
       .catch(function (error) {
         console.log(error);
