@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useref } from 'react';
 import styled from "styled-components";
 import { Link, useLocation } from "react-router-dom";
 import axios from 'axios';
 import {PieChart, Pie, Tooltip, Cell, Legend} from "recharts";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import MyAttendance from "./MyAttendance";
 
 const Header = styled.header`
   top: 0;
@@ -236,10 +237,9 @@ function Mypage(){
         </BottomLeft>
         <BottomRight>
             <h3>이번 달 나의 출석율</h3>
-            <h3>{attendance_rate}</h3>
+            <br></br>
+            <MyAttendance rate = {attendance_rate}/>
         </BottomRight>
-        
-        
     </Layout>
     </>
     );

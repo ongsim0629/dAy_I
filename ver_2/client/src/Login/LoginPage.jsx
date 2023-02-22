@@ -71,7 +71,6 @@ const LoginButton = styled.button`
   font-weight: bold;
   border: none;
   border-radius: 7px;
-
   &:hover {
     cursor: pointer;
   }
@@ -85,9 +84,18 @@ function LoginPage(props) {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  let dataList;
+  const [dataList, setDataList] = useState([]);
   let summaryList;
 
+  const dateToString = (tempData) => {
+    const year = tempData.getFullYear();
+    const month = tempData.getMonth() + 1;
+    const date = tempData.getDate();
+
+    return `${year}-${month >= 10 ? month : "0" + month}-${
+      date >= 10 ? date : "0" + date
+    }`;
+  };
 
   const onIdHandler = (event) => {
     setId(event.currentTarget.value);
@@ -135,7 +143,7 @@ function LoginPage(props) {
           //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
           //localStorage.setItem("token", res.data.token);
 
-          dataList = res.data.dataList;
+          setDataList(res.data.dataList);
           summaryList = res.data.summaryList;
           console.log(res.data.dataList, ">>> ", res.data.summaryList)
           navigate("/members/home", {state: {dataList: res.data.dataList, summaryList: res.data.summaryList}});
@@ -150,15 +158,18 @@ function LoginPage(props) {
     console.log("Submit Button Click"); //확인용
   };
   //로그인 하고 로그인페이지 돌아오면 다시 홈으로 가도록 하는 기능 구현. (): 받아올 변수, {}: 실행할 코드, []: []에 들어있는 조건이 해당될 때만 렌더링 이외의 다른 정보를 다시 reload 하겠다!
-  // useEffect(() => {
-  //   if (localStorage.getItem("token")) {
-  //     //위의 setItem으로 이미 localStorage에 저장해두었음
-  //     //로그인 이미 한 경우
-  //     console.log("useEffect>>> dataList : ", dataList, " summaryList : ", summaryList)
-  //     navigate("/members/home", {state: {dataList: dataList, summaryList: summaryList}}); //페이지 이동 => home으로 바꿔야댐!!!!
-  //   }
-    
-  // }, []);
+  useEffect(() => {
+    if (sessionStorage.getItem("token")) {
+      axios.post("/members/tohome", {
+        token: sessionStorage.getItem("token"),
+        date: dateToString(new window.Date())
+      })
+      .then((res) => {
+        console.log(res.data.dataList, " / ", res.data.summaryList)
+        navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList } });
+      });
+    }
+  }, []);
 
   return (
     <div>

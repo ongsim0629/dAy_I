@@ -37,7 +37,6 @@ const CustomButton = styled.button`
     margin-right: 20px;
     border-radius: 4px;
     padding: 10px 13px;
-
   &:hover {
     cursor: pointer;
   }
@@ -62,9 +61,6 @@ function HomePage() {
   for (let i = 0; i< dateList.length; i++){
     dataList.push(new Date(dateList[i]));
   };
-
-  console.log("1....",dateList, "length: ", dateList.length)
-  console.log("2....",dataList, "length: ", dataList.length)
 
   useEffect(()=>{
     function click(event){
