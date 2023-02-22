@@ -125,18 +125,21 @@ function LoginPage(props) {
         // console.log("res.data.msg :: ", res.data.msg);
         // console.log("res.data.token", res.data.token);
 
-        if (res.data.id === undefined) {
-          // id 일치하지 않는 경우 userId = undefined, msg = '입력하신 id 가 일치하지 않습니다.'
-          console.log("======================", res.data.msg);
-          alert("입력하신 id가 일치하지 않습니다.");
-        } else if (res.data.userId === null) {
+        if (res.data.code === 402) {
           // id는 있지만, pw 는 다른 경우 userId = null , msg = undefined
           console.log(
             "======================",
             "입력하신 비밀번호가 일치하지 않습니다."
           );
-          alert("입력하신 비밀번호가 일치하지 않습니다.");
-        } else if (res.data.id === id) {
+          alert("틀린 비밀번호입니다. 다시 시도해주세요.");
+        } else if (res.data.code === 401) {
+          // id가 아예 없는 경우
+          console.log(
+            "======================",
+            "가입된 id가 아닙니다. 회원가입을 진행해주세요."
+          );
+          alert("가입된 id가 아닙니다. 회원가입을 진행해주세요.");
+        } else if (res.data.code === 200) {
           // id, pw 모두 일치 userId = userId1, msg = undefined
           console.log("======================", "로그인 성공");
           sessionStorage.setItem("token", res.data.token);
@@ -149,9 +152,9 @@ function LoginPage(props) {
           navigate("/members/home", {state: {dataList: res.data.dataList, summaryList: res.data.summaryList}});
         }
       })
-      .catch((error) => {
+      .catch((error) => {//404
         alert(
-          "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요."
+          "DataBase 연결 실패."
         );
         console.log("로그인 에러 발생", error.response);
       });
