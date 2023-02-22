@@ -15,7 +15,7 @@ const Header = styled.header`
 const Layout = styled.div`
   width: 100vw;
   margin-top: 30px;
-  //height: 100vh;
+  height: 80vh;
   display: grid;
   flex-direction: column;
   align-items: center;
@@ -185,7 +185,7 @@ function Mypage(){
         <TopLeft>
             <h3>이번 달 감정 통계</h3>
             <div style={{display: 'flex', justifyContent: 'center', textItems: 'center'}}>
-                <PieChart width={300} height={300}>
+                <PieChart width={300} height={230}>
                     <Pie
                         dataKey="value"
                         isAnimationActive={false}
@@ -200,18 +200,19 @@ function Mypage(){
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
-                    <Legend verticalAlign="top" layout="vertical" align="right"/>
+                    <Legend verticalAlign="middle" layout="vertical" align="right"/>
                     <Tooltip />
                 </PieChart>
             </div>
         </TopLeft>
         <TopRight>
             <h3>이번 달 일기 키워드 순위</h3>
+            <div style={{display: 'flex', justifyContent: 'center', textItems: 'center'}}>
             <BarChart
                 width={500}
                 height={250}
                 data={categoryData}
-                margin={{ top: 20, right: 30, left: 90, bottom: 30 }}
+                margin={{ top: 20, right: 30, left: 30, bottom: 30 }}
                 layout="vertical"
                 >
                 <CartesianGrid strokeDasharray="3 3" />
@@ -227,11 +228,12 @@ function Mypage(){
                     fill="#93B5C6"
                 />
             </BarChart>
+            </div>
         </TopRight>
         <BottomLeft>
             <h3 style={{marginBottom: '0.4em'}}>이달의 플레이리스트 (월별 빈도수 1위)</h3>
             <div>
-            <a href={playlist_url} target='_blank'><img src={thumbnail_url} onerror="this.src='http://www.hanbit.co.kr/images/common/logo_hanbit.png'" style={{width: '60%', borderRadius: '7px'}}/></a><br />
+            <a href={playlist_url} target='_blank'><img src={thumbnail_url} onerror="this.src='http://www.hanbit.co.kr/images/common/logo_hanbit.png'" style={{height: '200px', borderRadius: '7px'}}/></a><br />
               <a href={playlist_url} target='_blank' style={{fontSize: '20px', fontWeight: 'normal', textDecoration: 'none', color: 'black'}}>{playlist_title}</a><br /><br />
             </div>
         </BottomLeft>
