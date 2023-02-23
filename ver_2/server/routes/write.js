@@ -15,7 +15,7 @@ router.post("/", (req, res) => {
   const title = req.body.title;
   const content = req.body.content;
   const token = req.body.token;
-  const yearMonth = date.substring(0,8) + "__";
+  const yearMonth = date.substring(0, 8) + "__";
 
   try {
     var check = jwt.verify(token, "secretKey");
@@ -154,24 +154,23 @@ router.post("/", (req, res) => {
             res.end();
             return;
           } else {
-  
             var dataList = [];
-            for (var data of result){
+            for (var data of result) {
               dataList.push(new Date(data.diary_write_date));
-            };
+            }
             var summaryList = [];
-            for (var data of result){
+            for (var data of result) {
               summaryList.push(data.diary_summary);
-            };
+            }
             json.dataList = dataList;
             json.summaryList = summaryList;
-            
+
             // sql 성공 시
             res.send(json);
+            res.end();
           }
         }
       );
-      
     } else {
       console.log("오류");
     }
