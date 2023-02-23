@@ -7,13 +7,12 @@ import "./DatePicker.css";
 import "react-datepicker/dist/react-datepicker.css";
 import ko from 'date-fns/locale/ko';
 import TodayLines from "./TodayLines";
+import Logo from "../Image/Logo.png";
 
 const Header = styled.header`
   top: 0;
-  left: 0;
-  width: 100%;
+  width: 100vw;
   height: 100px;
-  display: flex;
   flex-direction: row;
   background-color: #e5e0ff;
 `;
@@ -27,21 +26,22 @@ const Layout = styled.div`
 `;
 
 const CustomButton = styled.button`
-    color: #8F8F8F;
-    background: #F5F5F5;
-    font-weight: bold;
-    font-size: 17px;
-    border: none;
-    margin-top: 32px;
-    margin-bottom: 30px;
-    margin-right: 20px;
-    border-radius: 4px;
-    padding: 10px 13px;
+  color: #8F8F8F;
+  background: #F5F5F5;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 15px;
+  margin-top: 30px;
+  float: right;
+  height: 40px;
+  padding: 10px 20px;
   &:hover {
-    cursor: pointer;
+      cursor: pointer;
   }
-  &:focus {
-    box-shadow: 0 0 0 1px gray;
+  &:focus{
+      box-shadow: 0 0 0 1px gray;
   }
 `;
 
@@ -128,7 +128,6 @@ function HomePage() {
           setSummaryList(res.data.summaryList);
           //dateList = res.data.dataList;
           //summaryList = res.data.summaryList;
-          console.log("어랍쇼?",dateList, summaryList)
         })
         .catch((error) => {
         });
@@ -269,45 +268,47 @@ function HomePage() {
   const onMypageButtonHandler = (event) =>{
     var nowDate = dateToString(new window.Date())
 
-       axios.post("/members/mypage", {
-          token: sessionStorage.getItem("token"),
-          date: nowDate
-      })
-      .then((res) => {
-        console.log("하이>>>>", res.data)
-        console.log("nowDate: ", nowDate)
-        navigate("/members/mypage", {state: {myData: res.data, nowDate: nowDate}});
-      })
-      .catch((error) => {
-        console.log(error);
-        alert('마이페이지를 여는 데 문제가 생겼습니다.')
-      });
+    axios.post("/members/mypage", {
+      token: sessionStorage.getItem("token"),
+      date: nowDate
+    })
+    .then((res) => {
+      console.log("하이>>>>", res.data)
+      console.log("nowDate: ", nowDate)
+      navigate("/members/mypage", {state: {myData: res.data, nowDate: nowDate}});
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('마이페이지를 여는 데 문제가 생겼습니다.')
+    });
   }
 
   return (
     <>
       <Header>
-          <CustomButton onClick={onLogoutButtonHandler} style={{marginLeft:'82%'}}>로그아웃</CustomButton>
+        <a href="/"><img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} /></a>
+        <div style={{float: 'right', display: 'inline-block'}}>
+          <CustomButton style={{marginRight: '40px'}} onClick={onLogoutButtonHandler} >로그아웃</CustomButton>
           <CustomButton onClick={onMypageButtonHandler}>마이페이지</CustomButton>
+        </div>
       </Header>
       <Layout> 
-            {/* <h4>{id}님 환영합니다</h4>*/}
-            {/* <h2 style={{color:'#AEAEAE', fontFamily:'AbeeZee'}}>당신의 소중한 하루를 기록해보세요.</h2><br/> */}
-            <DatePicker 
-                onChange={(date)=>onDatePickHandler(date)}
-                selected={startDate}
-                locale={ko} 
-                highlightDates={dataList}
-                //highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
-                // highlightDates는 Map이고 []안만 찍어보면 배열 
-                ref={calRef}
-                inline
-                >         
-            </DatePicker> 
-            <TodayLines dateList={dateList} summaryList={summaryList} />
+        {/* <h4>{id}님 환영합니다</h4>*/}
+        {/* <h2 style={{color:'#AEAEAE', fontFamily:'AbeeZee'}}>당신의 소중한 하루를 기록해보세요.</h2><br/> */}
+        <DatePicker 
+            onChange={(date)=>onDatePickHandler(date)}
+            selected={startDate}
+            locale={ko} 
+            highlightDates={dataList}
+            //highlightDates={[new Date('2023-02-12'), new Date('2023-02-11') ]}
+            // highlightDates는 Map이고 []안만 찍어보면 배열 
+            ref={calRef}
+            inline
+            >         
+        </DatePicker> 
+        <TodayLines dateList={dateList} summaryList={summaryList} />
       </Layout> 
     </>
-    
   );
 }
 

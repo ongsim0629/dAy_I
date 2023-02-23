@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Logo from "./Logo.png";
+import Logo from "../Image/Logo.png";
 
 const Background = styled.div`
   height: 100vh;

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Logo from "../Image/Logo.png";
 
 //1. 중복 체크시에 멘트 dp되는거
 //2. 비밀번호 유효성 검사
@@ -154,7 +155,9 @@ let isPasswordConfirm = false;
 
     return (
         <div>
-            <Header></Header>
+            <Header>
+                <a href="/"><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '30px', height: '40px' }} /></a>
+            </Header>
             <div>
                 <div style={{ 
                     position: 'fixed', display: 'flex', justifyContent: 'center', alignItems: 'center', 
