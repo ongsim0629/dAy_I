@@ -129,7 +129,7 @@ router.post("/", (req, res) => {
 
           // 3) 월별 카테고리 순위
           const exec = conn.query(
-            "select n.count, k.category from keyword as k join (select diary_keyword, count(diary_keyword) as count from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null group by diary_keyword order by count(diary_keyword) desc) as n ON k.keyword = n.diary_keyword group by n.diary_keyword order by n.count desc limit 5;",
+            "select category, sum(count) as count from (select * from keyword as k join (select diary_keyword, count(diary_keyword) as count from diary where diary_writer_id = ? and diary_write_date like ? and diary_keyword is not null group by diary_keyword) as n ON k.keyword = n.diary_keyword group by k.keyword) as a group by category order by count desc limit 5;",
             [id, yearMonth],
             (err, result) => {
               // sql 오류 시
