@@ -199,7 +199,7 @@ router.post("/", (req, res) => {
                         json.playlist_title =
                           "이번 달 플리 추천 기록이 없습니다.";
                         json.playlist_url = "";
-                        json.thumbnail_url = "";
+                        json.thumbnail_url = "https://cdn-icons-png.flaticon.com/512/2210/2210827.png";
                       } else {
                         let playlist_url = result[0].playlist_url;
                         let thumbnail = playlist_url.substring(32);
