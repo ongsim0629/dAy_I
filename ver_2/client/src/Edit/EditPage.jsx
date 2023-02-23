@@ -126,12 +126,6 @@ function EditPage(props) {
       console.log(error);
     });
   // 응답(항상 실행)
-
-  //const [id, setId] = useState(token_id);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  // <유효성 검사 여부 저장>
   let isPassword = false;
   let isPasswordConfirm = false;
 
@@ -139,6 +133,10 @@ function EditPage(props) {
   const delSpace = (data) => {
     return data.replace(/\s/g, "");
   };
+
+  //const [id, setId] = useState(token_id);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const dateToString = (tempData) => {
     const year = tempData.getFullYear();
@@ -203,7 +201,7 @@ function EditPage(props) {
     if (!isPasswordConfirm)
       return alert("비밀번호와 비밀번호 확인이 같지 않습니다.");
 
-    alert("비밀번호가 변경되어습니다. 다시 로그인해주세요!");
+    alert("비밀번호가 변경되었습니다. 다시 로그인해주세요!");
     //이제 db에 수정사항 전송
 
     const result = await axios

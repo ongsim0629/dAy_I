@@ -69,6 +69,14 @@ const CancelButton = styled.button`
         box-shadow: 0 0 0 1px gray;
     }
 `;
+// <유효성 검사 여부 저장>
+let isPassword = false;
+let isPasswordConfirm = false;
+
+// <공백 제거 함수>
+const delSpace = (data) => {
+    return data.replace(/\s/g, "");
+  };
 
 function RegisterPage(props) {
     const [id, setId] = useState("");
@@ -86,13 +94,34 @@ function RegisterPage(props) {
         setConfirmPassword(event.currentTarget.value);
     }
 
+    // 응답(항상 실행)
+let isPassword = false;
+let isPasswordConfirm = false;
+
     const onSubmitHandler = async(event) => {
         event.preventDefault();
 
         if(id === ''){
             return alert('아이디를 입력해주세요.');
         }
-        if(password !== confirmPassword){
+
+        if (password.length <= 0 || confirmPassword.length <= 0){
+        return alert("비밀번호와 비밀번호 확인을 모두 입력해주세요.");
+        }
+
+        const regExp = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$ %^&*-]).{8,40}$/;
+
+        isPassword = regExp.test(password);
+
+        if (!isPassword) {
+            return alert("형식에 맞지 않는 비밀번호입니다.");
+        }
+
+        if (password === confirmPassword) {
+            isPasswordConfirm = true;
+        }
+
+        if(!isPasswordConfirm){
             return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
         }
         
