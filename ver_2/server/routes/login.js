@@ -62,7 +62,7 @@ router.post("/", (req, res) => {
             "content-Type": "text/html; charset=utf8",
           });
           res.write("<h2>SQL 실행 실패;</h2>");
-          res.status(404);
+          //res.status(404);
           json.code = 404;
           res.send(json);
           res.end();
@@ -73,7 +73,7 @@ router.post("/", (req, res) => {
           if (data.length == 0) {
             console.log(">>>아이디 없어유(DB에 없는 id)");
             //res.send({ msg: "가입된 id가 아닙니다. 회원가입을 진행해주세요." });
-            res.status(401);
+            //res.status(401);
             json.code = 401;
             res.send(json);
             console.log(json);
