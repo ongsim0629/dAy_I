@@ -5,6 +5,7 @@ import axios from 'axios';
 import {PieChart, Pie, Tooltip, Cell, Legend} from "recharts";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import MyAttendance from "./MyAttendance";
+import IndexLogoPurple from "./IndexLogoPurple.jpg";
 
 const Header = styled.header`
   top: 0;
@@ -22,6 +23,12 @@ const Layout = styled.div`
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   grid-template-areas: "left right";
+`;
+
+const Title = styled.img`
+    margin:30px;
+    width: 140px;
+    color:#A27CB9;
 `;
 
 const EditButton = styled.button`
@@ -176,7 +183,8 @@ function Mypage(){
     <>
     <Header>
         <Link to="/">
-            <h1 style={{marginTop: '30px', color:'#A27CB9', marginLeft:'30px', display: 'inline-block', textDecoration: 'none'}}> &#128393; 사이트 제목 </h1>
+            <Title className="LogoImage" alt="IndexImage" src={IndexLogoPurple} />
+            {/* <h1 style={{marginTop: '30px', color:'#A27CB9', marginLeft:'30px', display: 'inline-block', textDecoration: 'none'}}> &#128393; 사이트 제목 </h1> */}
             <Link to="/members/edit"><EditButton>회원정보 수정</EditButton></Link>
         </Link>
     </Header>
