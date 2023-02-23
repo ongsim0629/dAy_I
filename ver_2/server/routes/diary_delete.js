@@ -10,6 +10,7 @@ router.post("/", (req, res) => {
   //const id = req.body.id;
   const token = req.body.token;
   const date = req.body.date;
+  const yearMonth = date.substring(0, 8) + "__"; //연월   2023-02-13
   var json = {};
 
   try {
@@ -66,7 +67,7 @@ router.post("/", (req, res) => {
 
           const exec = conn.query(
             "select diary_write_date, diary_summary from diary where diary_writer_id = ? and diary_write_date like ?;",
-            [id, yearMonth],
+            [check.user_id, yearMonth],
             (err, result) => {
               // sql 오류 시
               if (err) {
