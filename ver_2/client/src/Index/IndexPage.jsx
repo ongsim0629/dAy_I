@@ -99,8 +99,9 @@ function IndexPage(){
     return(
         <>
             <TopBarContainer>
+            <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
                 <LeftContents >
-                    <IdxLogo className="LogoImage" alt="LogoImage" src={Logo} />
+                    
                     <AnchorLink href="#section1"><Content >컨텐츠 추천</Content></AnchorLink>
                     <AnchorLink href="#section2"><Content >일기 한달분석</Content></AnchorLink>
                     <AnchorLink href="#section3"><Content >월별 일기 요약</Content></AnchorLink>
