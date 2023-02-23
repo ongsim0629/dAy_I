@@ -36,27 +36,49 @@ const BackButton = styled.button`
 
 const DiaryBack = styled.div`
   background: #f5f5f5;
-  margin-top: 20px;
-  margin-left: 50px;
+  margin-top: 40px;
+  margin-left: auto; /* ChatGPT 변경 */
+  margin-right: auto; /* ChatGPT 변경 */
   border: none;
-  border-radius: 7px;
-  width: 88%;
-  height: 70%;
-  border-radius: 20px;
+  width: 70%;
+  height: 80vh;
+  border-radius: 30px;
   position: relative;
+  overflow: auto;
+
+  background-attachment: local;
+  background-image:
+    /* ChatGPT 추가 부분에서 -50한게 좌우정렬이므로, right 100, left 50으로 설정하여 밑줄도 중앙 정렬 */
+    linear-gradient(to right, #f5f5f5 100px, transparent 100px),
+    linear-gradient(to left, #f5f5f5 50px, transparent 50px), 
+
+    /* 밑줄과 글 간격 서로 맞춰야 함, 줄은 3px = { 뒤의 세개(55px) - 앞에 1개(52px) } 가 두께이며,
+    line-height와 뒤의 세개의 픽셀을 맞춰줘야 글의 줄 간격이 표시되는 줄 간격과 일치 */
+    repeating-linear-gradient(#f5f5f5, #f5f5f5 52px, #ccc 55px, #ccc 55px, #f5f5f5 55px);
+    line-height: 55px;
+    padding: 60px 50px;
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
-  > div {
-    max-width: 90%;
-    max-height: 90%;
-    overflow-y: auto;
-    padding: 20px;
-    border-radius: 20px;
-  }
+  /* ChatGPT 추가*/
+  background-position:
+    -50px 0,
+    100% 0,
+    0 0;
+
 `;
+
+// DiaryBack 내부에 있던 소스 / 모양 바꾸는 과정에서 바꿨음
+// > div {
+//     max-width: 90%;
+//     max-height: 90%;
+//     overflow-y: auto;
+//     padding: 20px;
+//     border-radius: 20px;
+//   }
+// }
 
 const Bar = styled.div`
     background: #A2A1FF;
