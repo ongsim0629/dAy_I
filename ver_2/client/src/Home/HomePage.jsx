@@ -286,7 +286,7 @@ function HomePage() {
   return (
     <>
       <Header>
-        <a href="/"><img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} /></a>
+        <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
         <div style={{float: 'right', display: 'inline-block'}}>
           <CustomButton style={{marginRight: '40px'}} onClick={onLogoutButtonHandler} >로그아웃</CustomButton>
           <CustomButton onClick={onMypageButtonHandler}>마이페이지</CustomButton>
