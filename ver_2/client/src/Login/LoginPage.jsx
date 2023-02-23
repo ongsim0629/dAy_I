@@ -4,9 +4,10 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Logo from "./Logo.png";
 
 const Background = styled.div`
-  height: auto;
+  height: 100vh;
   width: 100%;
   background: url(/image/main_bg.jpg) no-repeat center;
   background-size: cover;
@@ -41,11 +42,12 @@ const SignUpLink = styled.a`
 
 const LoginFormRectangle = styled.div`
   width: 397px;
-  height: 341px;
   background-color: #f5f5f5;
   border-radius: 0.8em;
   box-shadow: 0px 7px 4px #00000040;
   padding: 50px;
+  margin-top: 15%;
+  position:relative;
 `;
 
 const Input = styled.input`
@@ -65,12 +67,13 @@ const Input = styled.input`
 const LoginButton = styled.button`
   color: white;
   font-weight: bold;
-  padding: 5px 1px;
+  padding: 6px 1px;
   background: #a2a1ff;
   font-size: 1.2rem;
   font-weight: bold;
   border: none;
   border-radius: 7px;
+  margin-top: 50px;
   &:hover {
     cursor: pointer;
   }
@@ -175,57 +178,47 @@ function LoginPage(props) {
   }, []);
 
   return (
-    <div>
       <Background>
-        <br />
-        <br />
-        <Link to="/" style={{ textDecoration: "none" }}>
           <center>
-            <h1 style={{ color: "#424448" }}>웹페이지 이름</h1>{" "}
+            <a href="/"><img src={Logo} style={{ marginTop: '100px', width: '200px' }} /></a>
           </center>
-        </Link>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "90vh",
           }}
         >
           <div>
             <LoginFormRectangle>
-              <form style={{ display: "flex", flexDirection: "column" }}>
-                <center>
-                  <h1 style={{ color: "#616161" }}>User Login</h1>
-                </center>
-                <Label>User Id</Label>
+              <form style={{ display: "flex", flexDirection: "column", marginTop: '10px', marginBottom: '10px'}}>
+                {/* <center>
+                  <h1 style={{ color: "#616161" }}>로그인</h1>
+                </center> */}
+                <Label>아이디</Label>
                 <Input type="text" onChange={onIdHandler} value={id} />
                 <br />
                 <br />
-                <Label>Passsword</Label>
+                <Label>비밀번호</Label>
                 <Input
                   type="password"
                   onChange={onPasswordHandler}
                   value={password}
                 />
-                <br />
-                <br />
-                <LoginButton onClick={onLoginHandler}>Log in</LoginButton>{" "}
-                <hr />
+                <LoginButton onClick={onLoginHandler}>로그인</LoginButton>{" "}
               </form>
             </LoginFormRectangle>
             <Link to="/members/register">
               <br />
               <br />
               <center>
-                <SignUpLink>Sign Up</SignUpLink>
+                <SignUpLink>회원가입</SignUpLink>
               </center>
             </Link>
           </div>
         </div>
       </Background>
-    </div>
   );
 }
 export default LoginPage;
