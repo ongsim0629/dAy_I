@@ -104,16 +104,27 @@ useEffect(() => {
   };
 }, []);
 
+    const dateToString = (tempData) => {
+        const year = tempData.getFullYear();
+        const month = tempData.getMonth() + 1;
+        const date = tempData.getDate();
+
+        return `${year}-${month >= 10 ? month : "0" + month}-${
+        date >= 10 ? date : "0" + date
+        }`;
+    };
+
     const onBackHandler = async (event) => {
         event.preventDefault();
     
-        console.log("이전 버튼 클릭!");
+        var nowDate = dateToString(new window.Date())
+        console.log("nowDate: ", nowDate)
     
         const result = await axios
           .post("/members/tohome", {
             //서버로 id, password 전달
             token: sessionStorage.getItem("token"),
-            date : submitDate
+            date : nowDate
           })
           .then((res) => {
             console.log(res);
