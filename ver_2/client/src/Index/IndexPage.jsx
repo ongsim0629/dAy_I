@@ -2,12 +2,12 @@ import {React, useRef} from 'react';
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import DiaryIntroduction from './DiaryIntroduction';
-import IndexLogo from "./IndexLogo.jpg";
+import Logo from "./Logo.png";
 import HomePageImage from "./HomePageImage.png";
 import DiaryPageImage from "./DiaryPageImage.png";
 import MypageImage from "./MypageImage.png";
 import AnchorLink from 'react-anchor-link-smooth-scroll';
-import './Index.css';
+import './IndexPage.css';
 
 const TopBarContainer = styled.div`
     position: fixed;
@@ -24,18 +24,19 @@ const TopBarContainer = styled.div`
 const LeftContents = styled.div`
     display: flex;
 `;
-const Logo = styled.img`
-    margin:40px;
-    width: 17%;
-    margin-top: 48px;
-    height: 55px;
-    color:#A27CB9;
+
+const IdxLogo = styled.img`
+    margin:30px;
+    width: 16%;
+    margin-top: 55px;
+    height: 40px;
 `;
+
 const Content = styled.div`
     margin: 60px;
     margin-right: 0px;
     font-family: AbeeZee;
-    font-size: 19px;
+    font-size: 20px;
     font-weight: bold;
     color: #A27CB9;
     &:hover{
@@ -99,8 +100,8 @@ function IndexPage(){
         <>
             <TopBarContainer>
                 <LeftContents >
-                    <Logo className="LogoImage" alt="LogoImage" src={IndexLogo} />
-                    <AnchorLink href="#section1"><Content >플레이리스트 추천</Content></AnchorLink>
+                    <IdxLogo className="LogoImage" alt="LogoImage" src={Logo} />
+                    <AnchorLink href="#section1"><Content >컨텐츠 추천</Content></AnchorLink>
                     <AnchorLink href="#section2"><Content >일기 한달분석</Content></AnchorLink>
                     <AnchorLink href="#section3"><Content >월별 일기 요약</Content></AnchorLink>
                 </LeftContents>
@@ -110,7 +111,7 @@ function IndexPage(){
             </TopBarContainer>
             <section id="section1">
                 <Empty ref={idxRef}/>
-                <DiaryIntroduction title={"당신의 하루에 꼭 맞는 플리 추천"} description={"일기를 작성하면, 오늘 하루와 어울리는 플레이리스트와 사이트를 추천해드립니다."} />
+                <DiaryIntroduction title={"당신의 하루에 꼭 맞는 컨텐츠 추천"} description={"일기를 작성하면, 오늘 하루와 어울리는 플레이리스트와 사이트를 추천해드립니다."} />
                 <DiaryImg src="./DiaryImage.png" alt="MypageImage"></DiaryImg>
             </section> 
             <section id= "section2">

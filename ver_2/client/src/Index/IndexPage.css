@@ -6,9 +6,14 @@ section{
     height: 100vh;
 
 }
-
-section:nth-child(2n){
+/* section:nth-child(2n){
     background-color: #E5E0FF;
+} */
+section:nth-child(2){
+    background-color: #E5E0FF;
+}
+section:nth-child(4){
+    background-color: #fce7d9;
 }
 
 a {
