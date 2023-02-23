@@ -10,7 +10,7 @@ const SummaryBox = styled.div`
     margin-left: 50px;
     margin-right: 100px;
     width:80%;
-    height: 70%;
+    height: 87%;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.25);
     border: none ;
     overflow-y: auto;
