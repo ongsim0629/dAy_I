@@ -77,6 +77,33 @@ function DiaryPage() {
     const dailyData = location.state.dailyData;
     const submitDate = dailyData.diary_write_date;
 
+    // 새로고침 및 페이지 이동 시 실행되는 코드
+    const preventClose = (e: BeforeUnloadEvent) => { 
+        e.preventDefault();
+        axios .post("/diaries", {
+          token: sessionStorage.getItem("token"),
+          date: submitDate 
+        })
+        .then((res) => {
+          console.log("서버로 date와 id가 전달되었습니다.");
+          navigate("/diaries", {state: {dailyData: res.data}}); //diary.js로부터 받은 일기 데이터를 DiaryPage.jsx로 넘김
+        })
+        .catch((error) => {
+          console.log(error);
+          alert('일기 정보를 가져오는데 실패했습니다.')
+        });
+};
+ 
+useEffect(() => {
+  (() => {
+    window.addEventListener("beforeunload", preventClose);
+  })();
+ 
+  return () => {
+    window.removeEventListener("beforeunload", preventClose);
+  };
+}, []);
+
     const onBackHandler = async (event) => {
         event.preventDefault();
     
