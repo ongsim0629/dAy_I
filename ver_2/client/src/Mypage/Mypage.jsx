@@ -1,6 +1,6 @@
 import React, { useref } from 'react';
 import styled from "styled-components";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from 'axios';
 import {PieChart, Pie, Tooltip, Cell, Legend} from "recharts";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
@@ -31,14 +31,14 @@ const Title = styled.img`
     color:#A27CB9;
 `;
 
-const EditButton = styled.button`
+const Button = styled.button`
   color: #8F8F8F;
   background: #F5F5F5;
   font-weight: bold;
   font-size: 15px;
   border: none;
   border-radius: 4px;
-  margin-right: 60px;
+  margin-right: 20px;
   margin-top: 30px;
   float: right;
   height: 40px;
@@ -94,7 +94,10 @@ const BottomRight = styled.div`
 
 function Mypage(){
     const location = useLocation();
+    const navigate = useNavigate();
     const myData = location.state.myData;
+    const nowDate = location.state.nowDate;
+
     let emo_count_arr = myData.emo_count_arr;
     let playlist_title = myData.playlist_title;
     let playlist_url = myData.playlist_url;
@@ -179,14 +182,33 @@ function Mypage(){
     return null;
   };
 
+  const onBackHandler = async (event) => {
+    event.preventDefault();
+
+    console.log("이전 버튼 클릭!");
+
+    const result = await axios
+      .post("/members/tohome", {
+        //서버로 id, password 전달
+        token: sessionStorage.getItem("token"),
+        date : nowDate
+      })
+      .then((res) => {
+        console.log(res);
+        console.log("이전 버튼 누른 nowDate: ", nowDate)
+        console.log("MyPage에서 이전 버튼 누름- dataList : ",res.data.dataList, ", summaryList : ", res.data.summaryList);
+        navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList }  });
+      });
+  };
+
     return(
     <>
     <Header>
         <Link to="/">
-            <Title className="LogoImage" alt="IndexImage" src={IndexLogoPurple} />
-            {/* <h1 style={{marginTop: '30px', color:'#A27CB9', marginLeft:'30px', display: 'inline-block', textDecoration: 'none'}}> &#128393; 사이트 제목 </h1> */}
-            <Link to="/members/edit"><EditButton>회원정보 수정</EditButton></Link>
+          <Title className="LogoImage" alt="IndexImage" src={IndexLogoPurple} />
         </Link>
+        <Link to="/members/edit"><Button>회원정보 수정</Button></Link>
+        <Button onClick={onBackHandler}>이전</Button>
     </Header>
     <Layout>
         {/* <h1 style={{fontWeight: 'normal'}}>MyPage</h1> */}

@@ -267,14 +267,16 @@ function HomePage() {
       };
 
   const onMypageButtonHandler = (event) =>{
+    var nowDate = dateToString(new window.Date())
 
        axios.post("/members/mypage", {
           token: sessionStorage.getItem("token"),
-          date: dateToString(new window.Date())
+          date: nowDate
       })
       .then((res) => {
         console.log("하이>>>>", res.data)
-        navigate("/members/mypage", {state: {myData: res.data}});
+        console.log("nowDate: ", nowDate)
+        navigate("/members/mypage", {state: {myData: res.data, nowDate: nowDate}});
       })
       .catch((error) => {
         console.log(error);
