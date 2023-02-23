@@ -5,7 +5,8 @@ import axios from 'axios';
 import {PieChart, Pie, Tooltip, Cell, Legend} from "recharts";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import MyAttendance from "./MyAttendance";
-import IndexLogoPurple from "./IndexLogoPurple.jpg";
+//import IndexLogoPurple from "./IndexLogoPurple.jpg";
+import Logo from "../Image/Logo.png";
 
 const Header = styled.header`
   top: 0;
@@ -96,7 +97,6 @@ function Mypage(){
     const location = useLocation();
     const navigate = useNavigate();
     const myData = location.state.myData;
-    const nowDate = location.state.nowDate;
 
     let emo_count_arr = myData.emo_count_arr;
     let playlist_title = myData.playlist_title;
@@ -182,6 +182,16 @@ function Mypage(){
     return null;
   };
 
+  const dateToString = (tempData) => {
+    const year = tempData.getFullYear();
+    const month = tempData.getMonth() + 1;
+    const date = tempData.getDate();
+
+    return `${year}-${month >= 10 ? month : "0" + month}-${
+      date >= 10 ? date : "0" + date
+    }`;
+  };
+
   const onBackHandler = async (event) => {
     event.preventDefault();
 
@@ -191,11 +201,10 @@ function Mypage(){
       .post("/members/tohome", {
         //서버로 id, password 전달
         token: sessionStorage.getItem("token"),
-        date : nowDate
+        date : dateToString(new window.Date())
       })
       .then((res) => {
         console.log(res);
-        console.log("이전 버튼 누른 nowDate: ", nowDate)
         console.log("MyPage에서 이전 버튼 누름- dataList : ",res.data.dataList, ", summaryList : ", res.data.summaryList);
         navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList }  });
       });
@@ -204,11 +213,9 @@ function Mypage(){
     return(
     <>
     <Header>
-        <Link to="/">
-          <Title className="LogoImage" alt="IndexImage" src={IndexLogoPurple} />
-        </Link>
-        <Link to="/members/edit"><Button>회원정보 수정</Button></Link>
-        <Button onClick={onBackHandler}>이전</Button>
+      <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
+      <Link to="/members/edit"><Button>회원정보 수정</Button></Link>
+      <Button onClick={onBackHandler}>이전</Button>
     </Header>
     <Layout>
         {/* <h1 style={{fontWeight: 'normal'}}>MyPage</h1> */}

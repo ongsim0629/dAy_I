@@ -18,9 +18,9 @@ const Header = styled.header`
 `;
 
 const Layout = styled.div`
-  padding-top: 25px;
+  padding-top: 10px;
   width: 100vw;
-  height: 100vh;
+  height: 80vh; //없애면 요약문 크기만큼 유동적으로 작아짐
   display: flex;
   flex-direction: row;
 `;
@@ -275,7 +275,7 @@ function HomePage() {
     .then((res) => {
       console.log("하이>>>>", res.data)
       console.log("nowDate: ", nowDate)
-      navigate("/members/mypage", {state: {myData: res.data, nowDate: nowDate}});
+      navigate("/members/mypage", {state: {myData: res.data}});
     })
     .catch((error) => {
       console.log(error);

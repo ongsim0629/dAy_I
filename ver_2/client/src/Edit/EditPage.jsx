@@ -3,6 +3,7 @@ import styled from "styled-components";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import Logo from "../Image/Logo.png";
 
 const Header = styled.header`
   position: fixed;
@@ -221,7 +222,9 @@ function EditPage(props) {
 
   return (
     <div>
-      <Header></Header>
+      <Header>
+        <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
+      </Header>
       <div>
         <div
           style={{
