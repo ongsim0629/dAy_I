@@ -41,6 +41,17 @@ const Content = styled.div`
     }
 `;
 
+const Asdf = styled.p`
+    margin: 60px;
+    margin-right: 3px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #A27CB9;
+    &:hover{
+        color:orange;
+    }
+`;
+
 const LoginButton = styled.button`
     color: #8F8F8F;
     background: #F5F5F5;
@@ -90,6 +101,9 @@ const ProductImage = styled.img`
   margin-bottom: 20px;
 `;
 
+const Empty = styled.div`
+    height:80px;
+`;
 function IndexPage(){
     const idxRef = useRef(null);
 
@@ -98,9 +112,10 @@ function IndexPage(){
             <TopBarContainer>
                 <LeftContents >
                     <Title className="LogoImage" alt="IndexImage" src={IndexLogo} />
-                    <AnchorLink href="#section1"><Content class="section">플레이리스트 제공</Content></AnchorLink>
-                    <AnchorLink href="#section2"><Content class="section">한 달의 일기 분석</Content></AnchorLink>
-                    <AnchorLink href="#section3"><Content class="section">월별 일기 요약</Content></AnchorLink> 
+                    <AnchorLink href="#section1"><Content >플레이리스트 제공</Content></AnchorLink>
+                    <AnchorLink href="#section2"><Content >한 달의 일기 분석</Content></AnchorLink>
+                    <AnchorLink href="#section3"><Content >월별 일기 요약</Content></AnchorLink>
+                    
                 </LeftContents>
                 <Link to="/members/login">
                     <LoginButton>로그인</LoginButton>
@@ -110,15 +125,14 @@ function IndexPage(){
                 {/* <Layout style={{display:'flex'}}>
                     <div style={{width:'50%'}}>
                             <div style={{margin: '200px', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'center'}}>
-                                <h1 style={{fontSize:'40px'}}>사이트 제목</h1>
                                 <p style={{marginTop:'0px',color:"#6D6D6D", fontFamily:'AbeeZee'}}>노래부터 관련 사이트까지, 일기와 함께해요. <br></br>
                                     상호작용하는 일기를 써보아요. </p>
                             </div>
                     </div>
                 </Layout> */}
-                <section id="section1"><DiaryIntroduction/></section> 
-                <section id= "section2"><DiaryIntroduction/></section>
-                <section id= "section3"><DiaryIntroduction/></section> 
+                <section id="section1"><Empty ref={idxRef}/><DiaryIntroduction/></section> 
+                <section id= "section2"><Empty ref={idxRef}/><DiaryIntroduction/></section>
+                <section id= "section3"><Empty ref={idxRef}/><DiaryIntroduction/></section> 
             </>
     );
 }

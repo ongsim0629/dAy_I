@@ -13,7 +13,7 @@ import styled from "styled-components";
 // `;
 
 const Title = styled.h1`
-  margin-top: 30px;
+  margin-top: 4px;
   margin-bottom: 10px;
   font-size: 45px;
 `;
@@ -36,7 +36,7 @@ const DiaryIntroduction = () => {
     return (
         // <Wrapper>
         <>
-          <Title>Product Name</Title>
+          <Title >Product Name</Title>
           <Description>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua.
