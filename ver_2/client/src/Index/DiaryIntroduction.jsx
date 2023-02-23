@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import HomePageImage from "./HomePageImage.png";
 
 // const Wrapper = styled.section`
 //     display: flex;
@@ -13,35 +14,28 @@ import styled from "styled-components";
 // `;
 
 const Title = styled.h1`
-  margin-top: 4px;
+  margin-top: 30px;
   margin-bottom: 10px;
-  font-size: 45px;
+  font-size: 42px;
+  font-family: AbeeZee;
 `;
 
 const Description = styled.p`
-  max-width: 600px;
-  margin-bottom: 20px;
+  max-width: 100%;
+  margin-bottom: 10px;
   text-align: center;
   font-size: 20px;
   font-family: AbeeZee;
 `;
 
-const Image = styled.img`
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-`;
-
-const DiaryIntroduction = () => {
+const DiaryIntroduction = ({title, description}) => {
     return (
         // <Wrapper>
         <>
-          <Title >Product Name</Title>
+          <Title >{title}</Title>
           <Description>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-              tempor incididunt ut labore et dolore magna aliqua.
+              {description}
           </Description>
-          <Image src="/path/to/product/image.jpg" alt="Product Image" />
         {/*  </Wrapper> */}
         </>
     );

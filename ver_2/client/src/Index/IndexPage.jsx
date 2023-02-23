@@ -1,10 +1,11 @@
 import {React, useRef} from 'react';
 import styled from "styled-components";
-import Test from "./test.png"; //사진 배경에 보라색 포함된 버전 (화질낮음, 자연스러움)
 import { Link } from "react-router-dom";
-// import TopBar from './Topbar';
 import DiaryIntroduction from './DiaryIntroduction';
 import IndexLogo from "./IndexLogo.jpg";
+import HomePageImage from "./HomePageImage.png";
+import DiaryPageImage from "./DiaryPageImage.png";
+import MypageImage from "./MypageImage.png";
 import AnchorLink from 'react-anchor-link-smooth-scroll';
 import './Index.css';
 
@@ -21,30 +22,20 @@ const TopBarContainer = styled.div`
 `;
 
 const LeftContents = styled.div`
-  display: flex;
+    display: flex;
 `;
-const Title = styled.img`
+const Logo = styled.img`
     margin:40px;
     width: 17%;
-    margin-top: 46px;
+    margin-top: 48px;
     height: 55px;
     color:#A27CB9;
 `;
 const Content = styled.div`
     margin: 60px;
-    margin-right: 3px;
-    font-size: 18px;
-    font-weight: bold;
-    color: #A27CB9;
-    &:hover{
-        color:orange;
-    }
-`;
-
-const Asdf = styled.p`
-    margin: 60px;
-    margin-right: 3px;
-    font-size: 18px;
+    margin-right: 0px;
+    font-family: AbeeZee;
+    font-size: 19px;
     font-weight: bold;
     color: #A27CB9;
     &:hover{
@@ -70,40 +61,37 @@ const LoginButton = styled.button`
         box-shadow: 0 0 0 1px gray;
     }
 `;
-// const Wrapper = styled.div`
-//     display: flex;
-//     flex-direction: column;
-//     margin-top: 80px;
-//     align-items: center;
-//     height: 100vh;
-//     :nth-child(2n){
-//         background-color: #E5E0FF;
-//     }
-// `;
-
-const ProductTitle = styled.h1`
-  margin-top: 30px;
-  margin-bottom: 10px;
-  font-size: 45px;
-`;
-
-const ProductDescription = styled.p`
-  max-width: 600px;
-  margin-bottom: 20px;
-  text-align: center;
-  font-size: 20px;
-  font-family: AbeeZee;
-`;
-
-const ProductImage = styled.img`
-  max-width: 100%;
-  height: auto;
-  margin-bottom: 20px;
-`;
 
 const Empty = styled.div`
     height:80px;
 `;
+
+const HomeImg = styled.img.attrs({
+    src: `${HomePageImage}`,
+})`
+    max-width: 70%;
+    height: 65%;
+    box-shadow: 5px 5px 4px 4px #00000040;
+    margin-top: 25px;
+`;
+
+const DiaryImg = styled.img.attrs({
+    src: `${DiaryPageImage}`,
+})`
+    max-width: 60%;
+    height: auto;
+    margin-bottom: 20px;
+`;
+
+const MypageImg = styled.img.attrs({
+    src: `${MypageImage}`,
+})`
+    max-width: 65%;
+    height: auto;
+    margin-top: 25px;
+    box-shadow: 5px 5px 4px 4px #00000040;
+`;
+
 function IndexPage(){
     const idxRef = useRef(null);
 
@@ -111,28 +99,30 @@ function IndexPage(){
         <>
             <TopBarContainer>
                 <LeftContents >
-                    <Title className="LogoImage" alt="IndexImage" src={IndexLogo} />
-                    <AnchorLink href="#section1"><Content >플레이리스트 제공</Content></AnchorLink>
-                    <AnchorLink href="#section2"><Content >한 달의 일기 분석</Content></AnchorLink>
+                    <Logo className="LogoImage" alt="LogoImage" src={IndexLogo} />
+                    <AnchorLink href="#section1"><Content >플레이리스트 추천</Content></AnchorLink>
+                    <AnchorLink href="#section2"><Content >일기 한달분석</Content></AnchorLink>
                     <AnchorLink href="#section3"><Content >월별 일기 요약</Content></AnchorLink>
-                    
                 </LeftContents>
                 <Link to="/members/login">
                     <LoginButton>로그인</LoginButton>
                 </Link>
             </TopBarContainer>
-                {/* <SideNav /> */}
-                {/* <Layout style={{display:'flex'}}>
-                    <div style={{width:'50%'}}>
-                            <div style={{margin: '200px', display:'flex', alignItems:'center', flexDirection:'column', justifyContent:'center'}}>
-                                <p style={{marginTop:'0px',color:"#6D6D6D", fontFamily:'AbeeZee'}}>노래부터 관련 사이트까지, 일기와 함께해요. <br></br>
-                                    상호작용하는 일기를 써보아요. </p>
-                            </div>
-                    </div>
-                </Layout> */}
-                <section id="section1"><Empty ref={idxRef}/><DiaryIntroduction/></section> 
-                <section id= "section2"><Empty ref={idxRef}/><DiaryIntroduction/></section>
-                <section id= "section3"><Empty ref={idxRef}/><DiaryIntroduction/></section> 
+            <section id="section1">
+                <Empty ref={idxRef}/>
+                <DiaryIntroduction title={"당신의 하루에 꼭 맞는 플리 추천"} description={"일기를 작성하면, 오늘 하루와 어울리는 플레이리스트와 사이트를 추천해드립니다."} />
+                <DiaryImg src="./DiaryImage.png" alt="MypageImage"></DiaryImg>
+            </section> 
+            <section id= "section2">
+                <Empty ref={idxRef}/>
+                <DiaryIntroduction title={"섬세한 한 달 분석"} description={"이번 달의 기록을 다양한 분석과 함께 살펴보세요."}/>
+                <MypageImg src="./MypageImage.png" alt="MypageImage"></MypageImg>
+            </section>
+            <section id= "section3">
+                <Empty ref={idxRef}/>
+                <DiaryIntroduction title={"깔끔한 하루 한줄요약"} description={"하루에도 요약이 필요해! 당신의 하루를 명쾌하게 요약해드립니다."}/>
+                <HomeImg src="./HomePageImage.png" alt="MypageImagee" />
+            </section> 
             </>
     );
 }

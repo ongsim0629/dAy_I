@@ -13,6 +13,5 @@ section:nth-child(2n){
 
 a {
     text-decoration-line: none;
-    transition: color .3s;
 }
 
