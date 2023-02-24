@@ -124,11 +124,6 @@ const onSubmitHandler = async(event) => {
             return alert('아이디를 입력해주세요.');
         }
 
-        const idRegExp = /^[a-z]+[a-z0-9]{5,20}$/g;
-        if (!idRegExp.test(id)) {
-            return alert("형식에 맞지 않는 아이디입니다.");
-        }
-
         if(!isIdDupCheck){
             return alert("아이디 중복 확인을 해주세요.");
         }
@@ -178,17 +173,28 @@ const onSubmitHandler = async(event) => {
         console.log("Submit Button Click"); //확인용
     }
 
-    const onDupCheckHandler = async () =>{
+    const onDupCheckHandler = async (event) =>{
+        event.preventDefault();
+
         console.log("중복확인 버튼 클릭");
 
+        if(id === ''){
+            return alert('아이디를 입력해주세요.');
+        }
+
+        const idRegExp = /^[a-z]+[a-z0-9]{5,20}$/g;
+        if (!idRegExp.test(id)) {
+            return alert("형식에 맞지 않는 아이디입니다.");
+        }
+
         await axios
-            .post("/members/new/duplicatedId",{
+            .post("/members/new/duplicateId",{
                 id: id
             })
             .then((res) => {
                 if(res.data.code === 200){
                     isIdDupCheck = true;
-                    return alert("사용 가능한 아이디 입니다.");
+                    alert("사용 가능한 아이디 입니다.");
                 }
                 else if(res.data.code === 400){
                     isIdDupCheck = false;
@@ -208,8 +214,8 @@ const onSubmitHandler = async(event) => {
             </Header>
             <div>
                 <div style={{ 
-                    position: 'fixed', display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    width: '100%', height: '90vh'
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    width: '100%', height: '80vh'
                 }}>
                     <div>
                         <div>

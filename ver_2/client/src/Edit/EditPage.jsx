@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../Image/Logo.png";
 
 const Header = styled.header`
-  position: fixed;
   top: 0;
   width: 100%;
   height: 100px;
@@ -166,12 +165,6 @@ function EditPage(props) {
         date: dateToString(new window.Date()),
       })
       .then((res) => {
-        console.log(
-          ">>>>>>>>",
-          sessionStorage.getItem("token"),
-          " >>>",
-          dateToString(new window.Date())
-        );
         console.log(res.data);
         navigate("/members/mypage", { state: { myData: res.data } });
       })
@@ -219,21 +212,36 @@ function EditPage(props) {
         navigate("/members/login");
       });
   };
+  
+  const onBackHandler = async (event) => {
+    event.preventDefault();
+
+    console.log("이전 버튼 클릭!");
+
+    const result = await axios
+      .post("/members/tohome", {
+        //서버로 id, password 전달
+        token: sessionStorage.getItem("token"),
+        date : dateToString(new window.Date())
+      })
+      .then((res) => {
+        console.log(res);
+        navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList }  });
+      });
+  };
 
   return (
     <div>
       <Header>
-        <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
+        <img onClick={onBackHandler} src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
       </Header>
-      <div>
+      <div style={{marginTop: '4%'}}>
         <div
           style={{
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             width: "100%",
-            height: "100vh",
-            position: "fixed",
           }}
         >
           <div>
@@ -286,7 +294,7 @@ function EditPage(props) {
                   {/* 완료 클릭 이후 Mypage로 가야 함.  */}
                 </SubmitButton>
                 <br></br>
-                <CancelButton onClick={onBackButtonHandler}>취소</CancelButton>
+                <CancelButton onClick={onBackHandler}>취소</CancelButton>
               </div>
             </form>
           </div>

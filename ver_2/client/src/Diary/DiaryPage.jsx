@@ -18,8 +18,8 @@ const Right = styled.div`
 const BackButton = styled.button`
     color: white;
     font-weight: bold;
-    margin-left: 15px;
-    padding: 5px 13px;
+    margin-left: 3%;
+    padding: 10px 20px;
     background: #F5F5F5;
     font-size:1rem;
     font-weight: bold;
@@ -41,7 +41,7 @@ const DiaryBack = styled.div`
   margin-right: auto; /* ChatGPT 변경 */
   border: none;
   width: 70%;
-  height: 80vh;
+  height: 50vh;
   border-radius: 30px;
   position: relative;
   overflow: auto;
@@ -70,7 +70,7 @@ const DiaryBack = styled.div`
 
     /* 폰트 기본체 -> 거친둘기마요체 (눈누 무료 폰트) */
     font-family: "Dovemayo";
-    font-size: x-large;
+    font-size: medium;
   
    /* 개행문자 출력 */
     white-space: pre-line;
@@ -101,6 +101,8 @@ const Bar = styled.div`
 
 const DeleteButton = styled.div`
     margin-right: 70px;
+    display: inline-block;
+    float: right;
     color: #AEAEAE;
     &:hover {
         cursor: pointer;
@@ -205,7 +207,7 @@ useEffect(() => {
         <div style={{width: '100%', display: 'flex', height: '100vh'}}>
             <Left>
                 <br /><br />
-                <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
+                <BackButton onClick={onBackHandler}>이전</BackButton>
                 <div>
                     <h4 style={{marginLeft : '50px', color: '#AEAEAE', fontWeight: 'normal'}}>{dailyData.diary_write_date}</h4>
                     <a style={{marginLeft: '50px', fontWeight: 'bold', fontSize: '1.5rem'}}>{dailyData.diary_title}</a>

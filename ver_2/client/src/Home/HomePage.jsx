@@ -35,7 +35,6 @@ const CustomButton = styled.button`
   margin-right: 15px;
   margin-top: 30px;
   float: right;
-  height: 40px;
   padding: 10px 20px;
   &:hover {
       cursor: pointer;
@@ -45,6 +44,24 @@ const CustomButton = styled.button`
   }
 `;
 
+const Button = styled.button`
+  color: #8F8F8F;
+  background: #F5F5F5;
+  font-weight: bold;
+  font-size: 15px;
+  border: none;
+  border-radius: 4px;
+  margin-right: 15px;
+  margin-top: 30px;
+  float: right;
+  padding: 10px 20px;
+  &:hover {
+      cursor: pointer;
+  }
+  &:focus{
+      box-shadow: 0 0 0 1px gray;
+  }
+`;
 
 function HomePage() {
   const location = useLocation();
@@ -289,7 +306,8 @@ function HomePage() {
         <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
         <div style={{float: 'right', display: 'inline-block'}}>
           <CustomButton style={{marginRight: '40px'}} onClick={onLogoutButtonHandler} >로그아웃</CustomButton>
-          <CustomButton onClick={onMypageButtonHandler}>마이페이지</CustomButton>
+          <Link to="/members/edit"><Button>회원정보 수정</Button></Link> {}
+          <CustomButton onClick={onMypageButtonHandler}>AI 일기 분석</CustomButton>
         </div>
       </Header>
       <Layout> 
