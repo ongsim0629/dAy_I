@@ -11,7 +11,7 @@ import Logo from "../Image/Logo.png";
 const Header = styled.header`
   top: 0;
   width: 100%;
-  height: 80px;
+  height: 100px;
   background-color: #E5E0FF;
 `;
 const Layout = styled.div`
@@ -39,11 +39,10 @@ const Button = styled.button`
   font-size: 15px;
   border: none;
   border-radius: 4px;
-  margin-right: 20px;
+  margin-right: 15px;
   margin-top: 30px;
   float: right;
-  height: 40px;
-  padding: 10px 20px 10px 20px;
+  padding: 10px 20px;
   &:hover {
       cursor: pointer;
   }
@@ -174,8 +173,8 @@ function Mypage(){
       return (
         <div style={{ backgroundColor: '#fff', padding: '5px' }}>
           <div style={{ fontWeight: 'bold' }}>{data.name}</div>
-          <div>Value: {data.value}</div>
-          <div>Ratio: {data.ratio}</div>
+          <div>일기 개수: {data.value}</div>
+          <div>비율: {data.ratio}</div>
         </div>
       );
     }
@@ -213,7 +212,7 @@ function Mypage(){
     return(
     <>
     <Header>
-      <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
+      <img onClick={onBackHandler} src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
       <Link to="/members/edit"><Button>회원정보 수정</Button></Link>
       <Button onClick={onBackHandler}>이전</Button>
     </Header>
@@ -268,9 +267,9 @@ function Mypage(){
             </div>
         </TopRight>
         <BottomLeft>
-            <h3 style={{marginBottom: '0.4em'}}>이달의 플레이리스트 (월별 빈도수 1위)</h3>
+            <h3 style={{marginBottom: '0.4em'}}>이달의 추천 플레이리스트 (월별 빈도수 1위)</h3>
             <div>
-            <a href={playlist_url} target='_blank'><img src={thumbnail_url} onerror="this.src='http://www.hanbit.co.kr/images/common/logo_hanbit.png'" style={{height: '200px', borderRadius: '7px'}}/></a><br />
+            <a href={playlist_url} target='_blank'><img src={thumbnail_url} onerror="this.src='http://www.hanbit.co.kr/images/common/logo_hanbit.png'" style={{height: '180px', borderRadius: '7px', paddingBottom: '12px'}}/></a><br />
               <a href={playlist_url} target='_blank' style={{fontSize: '20px', fontWeight: 'normal', textDecoration: 'none', color: 'black'}}>{playlist_title}</a><br /><br />
             </div>
         </BottomLeft>
