@@ -198,7 +198,7 @@ function WritePage() {
           <Title defaultValue="제목" onChange={onTitleHandler}></Title>
           <hr />
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Content onChange={onContentHandler}>{content}</Content>
+            <Content onChange={onContentHandler} placeholder="정확한 분석을 위해 2문장 이상을 마침표(.)로 마무리해주세요!">{content}</Content>
           </div>
           <SaveButton onClick={onSaveButtonHandler}>저장</SaveButton>
       </Layout>
