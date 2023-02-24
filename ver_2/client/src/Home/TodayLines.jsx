@@ -21,9 +21,9 @@ const TodayLine = styled.div`
     border-radius: 6px;
     margin: 20px 30px;
     padding: 10px 30px;
-    background: #d6d5fb;
+    background: #e5ebff;
     &:nth-child(2n){
-        background: #e0dfdf;
+        background: #FFE3E3;
     }
 `;
 
@@ -37,7 +37,9 @@ function TodayLines({dateList, summaryList}){
 
   return(
     <>
+      
       <SummaryBox>
+      <h2 style={{textAlign: 'center', color: '#828282'}}>AI가 요약한 당신의 하루</h2>
         {
           summaryList.map((summary, idx) => (<TodayLine key={idx}><h3 style={{marginTop: '0px', marginBottom: '7px'}}>{dataList[idx]}</h3><div>{summary}</div></TodayLine>))
         }
