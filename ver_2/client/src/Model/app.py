@@ -9,12 +9,14 @@ app = Flask(__name__)
 @app.route("/sendmodeltext", methods=['POST'])
 def writetest():
     raw_text = request.args['text']
+    if (len(raw_text)<40):
+        raw_text = raw_text + raw_text
     oneLine_text = text_oneLine(raw_text)
     summ = summary_model(oneLine_text)
     emotion = emo_model(summ)
     key_list = keyword_model(raw_text)
     return jsonify({
-        'emotion': emotion,
+        'emotion': emotion, 
         'summ': summ,
         'key_list': key_list
     })
