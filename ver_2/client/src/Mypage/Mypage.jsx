@@ -11,7 +11,7 @@ import Logo from "../Image/Logo.png";
 const Header = styled.header`
   top: 0;
   width: 100%;
-  height: 100px;
+  height: 80px;
   background-color: #E5E0FF;
 `;
 const Layout = styled.div`
