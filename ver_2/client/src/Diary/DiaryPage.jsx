@@ -101,6 +101,8 @@ const Bar = styled.div`
 
 const DeleteButton = styled.div`
     margin-right: 70px;
+    display: inline-block;
+    float: right;
     color: #AEAEAE;
     &:hover {
         cursor: pointer;
@@ -205,7 +207,7 @@ useEffect(() => {
         <div style={{width: '100%', display: 'flex', height: '100vh'}}>
             <Left>
                 <br /><br />
-                <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
+                <BackButton onClick={onBackHandler}>이전</BackButton>
                 <div>
                     <h4 style={{marginLeft : '50px', color: '#AEAEAE', fontWeight: 'normal'}}>{dailyData.diary_write_date}</h4>
                     <a style={{marginLeft: '50px', fontWeight: 'bold', fontSize: '1.5rem'}}>{dailyData.diary_title}</a>
