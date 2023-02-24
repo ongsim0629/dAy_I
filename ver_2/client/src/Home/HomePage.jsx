@@ -12,7 +12,7 @@ import Logo from "../Image/Logo.png";
 const Header = styled.header`
   top: 0;
   width: 100vw;
-  height: 80px;
+  height: 100px;
   flex-direction: row;
   background-color: #e5e0ff;
 `;
