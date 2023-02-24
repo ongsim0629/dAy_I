@@ -127,10 +127,10 @@ function WritePage() {
     setContent(event.target.value);
   };
 
-  const dateToString = () => {
-    const year = startDate.getFullYear();
-    const month = startDate.getMonth() + 1;
-    const date = startDate.getDate();
+  const dateToString = (tempData) => {
+    const year = tempData.getFullYear();
+    const month = tempData.getMonth() + 1;
+    const date = tempData.getDate();
     return `${year}-${month >= 10 ? month : "0" + month}-${
       date >= 10 ? date : "0" + date
     }`;
@@ -140,15 +140,15 @@ function WritePage() {
     event.preventDefault();
 
     console.log("이전 버튼 클릭!");
+    var nowDate = dateToString(new window.Date())
 
     const result = await axios
       .post("/members/tohome", {
         //서버로 id, password 전달
         token: sessionStorage.getItem("token"),
-        date: dateToString(startDate)
+        date: nowDate
       })
       .then((res) => {
-        console.log(dateToString(startDate));
         console.log(res);
         //localStorage.setItem("token", res.data.jwt); //(주석 제거 필요!!) 데이터 받아왔을 때 특정 이름으로 저장하는 거. 다른 곳에서 토큰 불러올 수 있게 처리하는 작업
         navigate("/members/home", { state: { dataList: res.data.dataList, summaryList: res.data.summaryList } });
