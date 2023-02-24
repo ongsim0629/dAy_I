@@ -107,11 +107,9 @@ const DeleteButton = styled.div`
 function DiaryPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    // const dailyData = location.state.dailyData;
-    // const submitDate = dailyData.diary_write_date;
-    const dailyData = [1,2,3,4];
-    const submitDate = new window.Date();
-
+    const dailyData = location.state.dailyData;
+    const submitDate = dailyData.diary_write_date;
+    
     // 새로고침 및 페이지 이동 시 실행되는 코드
     const preventClose = (e: BeforeUnloadEvent) => { 
         e.preventDefault();
