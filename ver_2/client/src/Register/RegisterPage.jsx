@@ -5,26 +5,25 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Logo from "../Image/Logo.png";
 
-//1. 중복 체크시에 멘트 dp되는거
-//2. 비밀번호 유효성 검사
+// 비밀번호 유효성 검사
 
 const Header = styled.header`
-    position: fixed;
     top: 0;
     width: 100%;
-    height: 80px;
+    height: 100px;
     background-color: #E5E0FF;
 `;
 
 const Label = styled.label`
     font-size: 16px;
     color: #373A3C;
+    font-weight: 550;
 `;
 
 const Input = styled.input`
     color: #999999;
-    padding: 8px 100px 3px 0px;
-    margin: 10px 0px;
+    padding: 10px 100px 5px 0px;
+    margin: 12px 0px;
     background: white;
     border-radius: 4px;
     border-width: 1.4px;
@@ -50,6 +49,7 @@ const SubmitButton = styled.button`
     }
     &:focus{
         box-shadow: 0 0 0 1px gray;
+        border-color: #E5E0FF;
     }
 `;
 
@@ -87,9 +87,10 @@ const CancelButton = styled.button`
         box-shadow: 0 0 0 1px gray;
     }
 `;
-// <유효성 검사 여부 저장>
-let isPassword = false;
-let isPasswordConfirm = false;
+
+// <중복 ID 검사 여부 저장>
+let isIdDupCheck = false;
+
 
 // <공백 제거 함수>
 const delSpace = (data) => {
@@ -103,6 +104,7 @@ function RegisterPage(props) {
     const navigate = useNavigate();
 
     const onIdHandler = (event) => {
+        isIdDupCheck = false;
         setId(event.currentTarget.value);
     }
     const onPasswordHandler = (event) => {
@@ -112,24 +114,32 @@ function RegisterPage(props) {
         setConfirmPassword(event.currentTarget.value);
     }
 
-    // 응답(항상 실행)
 let isPassword = false;
 let isPasswordConfirm = false;
 
-    const onSubmitHandler = async(event) => {
+const onSubmitHandler = async(event) => {
         event.preventDefault();
 
         if(id === ''){
             return alert('아이디를 입력해주세요.');
         }
 
+        const idRegExp = /^[a-z]+[a-z0-9]{5,20}$/g;
+        if (!idRegExp.test(id)) {
+            return alert("형식에 맞지 않는 아이디입니다.");
+        }
+
+        if(!isIdDupCheck){
+            return alert("아이디 중복 확인을 해주세요.");
+        }
+
         if (password.length <= 0 || confirmPassword.length <= 0){
         return alert("비밀번호와 비밀번호 확인을 모두 입력해주세요.");
         }
 
-        const regExp = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$ %^&*-]).{8,40}$/;
+        const pwdRegExp = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$ %^&*-]).{8,40}$/;
 
-        isPassword = regExp.test(password);
+        isPassword = pwdRegExp.test(password);
 
         if (!isPassword) {
             return alert("형식에 맞지 않는 비밀번호입니다.");
@@ -143,7 +153,6 @@ let isPasswordConfirm = false;
             return alert('비밀번호와 비밀번호 확인이 같지 않습니다.');
         }
         
-
         /*
         // SELECT TEST
         const result = await axios.get('/register') //서버에 요청 보내기!! (비동기로, 요청 보내면 응답 받기 위해 돌고 있는 와중에 다른 코드들도 돌아감. 요청 받을때까지 기다리고 리턴받음)
@@ -169,20 +178,38 @@ let isPasswordConfirm = false;
         console.log("Submit Button Click"); //확인용
     }
 
-    const onDupCheckHandler = () =>{
-        
+    const onDupCheckHandler = async () =>{
+        console.log("중복확인 버튼 클릭");
+
+        await axios
+            .post("/members/new/duplicatedId",{
+                id: id
+            })
+            .then((res) => {
+                if(res.data.code === 200){
+                    isIdDupCheck = true;
+                    return alert("사용 가능한 아이디 입니다.");
+                }
+                else if(res.data.code === 400){
+                    isIdDupCheck = false;
+                    return alert("사용 불가능한 아이디 입니다.");
+                }
+            })
+            // 응답(실패)
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
-
     return (
-        <div>
-            <Header>
-            <a href="/"  ><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '20px', height: '40px' }} /></a>
+        <div >
+            <Header >
+            <a href="/" ><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '30px', height: '40px' }} /></a>
             </Header>
             <div>
                 <div style={{ 
                     position: 'fixed', display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    width: '100%', height: '110vh'
+                    width: '100%', height: '90vh'
                 }}>
                     <div>
                         <div>
@@ -192,8 +219,9 @@ let isPasswordConfirm = false;
                             <Label>아이디</Label> 
                             <div style={{ display:'flex', flexDirection: 'row'}}>
                             <Input type='text' size ='65' value={id} onChange={onIdHandler} placeholder='6~15자까지 영문자(소문자), 숫자 사용 가능합니다.'/>
-                            <CheckDuplicateButton onClick={onDupCheckHandler}>중복 확인</CheckDuplicateButton>
+                            <CheckDuplicateButton onClick={onDupCheckHandler}> &#10004; 중복 확인</CheckDuplicateButton>
                             </div>
+
                             <br/><br/>
                             <Label>비밀번호</Label>
                             <Input type='password' value={password} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br /><br />
