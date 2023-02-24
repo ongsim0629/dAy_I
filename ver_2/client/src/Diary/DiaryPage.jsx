@@ -70,7 +70,7 @@ const DiaryBack = styled.div`
 
     /* 폰트 기본체 -> 거친둘기마요체 (눈누 무료 폰트) */
     font-family: "Dovemayo";
-    font-size: x-large;
+    font-size: medium;
   
    /* 개행문자 출력 */
     white-space: pre-line;
