@@ -58,7 +58,7 @@ const LoginButton = styled.button`
 `;
 
 const Empty = styled.div`
-    height:80px;
+    height:70px;
 `;
 
 const HomeImg = styled.img.attrs({
@@ -68,21 +68,22 @@ const HomeImg = styled.img.attrs({
     height: 65%;
     box-shadow: 5px 5px 4px 4px #00000040;
     margin-top: 25px;
+    margin-bottom: 40px;
 `;
 
 const DiaryImg = styled.img.attrs({
     src: `${DiaryPageImage}`,
 })`
     max-width: 60%;
-    height: auto;
-    margin-bottom: 20px;
+    height: 65%;
+    margin-bottom: 30px;
 `;
 
 const MypageImg = styled.img.attrs({
     src: `${MypageImage}`,
 })`
     max-width: 65%;
-    height: auto;
+    height: 65%;
     margin-top: 25px;
     box-shadow: 5px 5px 4px 4px #00000040;
 `;
@@ -106,20 +107,20 @@ function IndexPage(){
             </TopBarContainer>
             <section id="section1">
                 <Empty ref={idxRef}/>
-                <div style={{border: 'none', marginTop: '97px'}}></div>
-                <DiaryIntroduction title={"당신의 하루에 꼭 맞는 컨텐츠 추천"} description={"일기를 작성하면, 오늘 하루와 어울리는 플레이리스트와 사이트를 추천해드립니다."} />
+                <div style={{border: 'none', marginTop: '50px'}}></div>
+                <DiaryIntroduction title={"당신의 하루에 꼭 맞는 컨텐츠 추천"} description={"일기를 작성하면, AI가 오늘 하루와 어울리는 플레이리스트와 사이트를 추천해드립니다."} />
                 <DiaryImg src="./DiaryImage.png" alt="MypageImage"></DiaryImg>
             </section> 
             <section id= "section2">
                 <Empty ref={idxRef}/>
-                <DiaryIntroduction title={"섬세한 한 달 분석"} description={"이번 달의 기록을 다양한 분석과 함께 살펴보세요."}/>
+                <DiaryIntroduction title={"섬세한 한 달 분석"} description={"이번 달의 일기를 다양한 분석과 함께 살펴보세요."}/>
                 <MypageImg src="./MypageImage.png" alt="MypageImage"></MypageImg>
             </section>
             <section id= "section3">
                 <Empty ref={idxRef}/>
-                <div style={{border: 'none', marginTop: '97px'}}></div>
-                <DiaryIntroduction title={"깔끔한 하루 한줄요약"} description={"하루에도 요약이 필요해! 당신의 하루를 명쾌하게 요약해드립니다."}/>
-                <HomeImg src="./HomePageImage.png" alt="MypageImagee" />
+                <div style={{border: 'none', marginTop: '91px'}}></div>
+                <DiaryIntroduction title={"깔끔한 하루 한줄요약"} description={"하루에도 요약이 필요해! AI가 당신의 하루를 명쾌하게 요약해드립니다."}/>
+                <HomeImg src="./HomePageImage.png" alt="MypageImage" />
             </section> 
             </>
     );
