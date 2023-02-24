@@ -18,8 +18,8 @@ const Right = styled.div`
 const BackButton = styled.button`
     color: white;
     font-weight: bold;
-    margin-left: 15px;
-    padding: 5px 13px;
+    margin-left: 3%;
+    padding: 10px 20px;
     background: #F5F5F5;
     font-size:1rem;
     font-weight: bold;
@@ -41,7 +41,7 @@ const DiaryBack = styled.div`
   margin-right: auto; /* ChatGPT 변경 */
   border: none;
   width: 70%;
-  height: 80vh;
+  height: 50vh;
   border-radius: 30px;
   position: relative;
   overflow: auto;
