@@ -15,7 +15,7 @@ const TopBarContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     top:0;
-    height: 80px;
+    height: 100px;
     width:100%;
     background-color: white;
     padding: 0 20px;
@@ -26,18 +26,11 @@ const LeftContents = styled.div`
     margin-left: 0px;
 `;
 
-const IdxLogo = styled.img`
-    margin:30px;
-    width: 16%;
-    margin-top: 55px;
-    height: 40px;
-`;
-
 const Content = styled.div`
     margin: 50px;
     margin-right: 0px;
     font-family: AbeeZee;
-    font-size: 20px;
+    font-size: 21px;
     font-weight: bold;
     color: #A27CB9;
     &:hover{
@@ -113,6 +106,7 @@ function IndexPage(){
             </TopBarContainer>
             <section id="section1">
                 <Empty ref={idxRef}/>
+                <div style={{border: 'none', marginTop: '97px'}}></div>
                 <DiaryIntroduction title={"당신의 하루에 꼭 맞는 컨텐츠 추천"} description={"일기를 작성하면, 오늘 하루와 어울리는 플레이리스트와 사이트를 추천해드립니다."} />
                 <DiaryImg src="./DiaryImage.png" alt="MypageImage"></DiaryImg>
             </section> 
@@ -123,6 +117,7 @@ function IndexPage(){
             </section>
             <section id= "section3">
                 <Empty ref={idxRef}/>
+                <div style={{border: 'none', marginTop: '97px'}}></div>
                 <DiaryIntroduction title={"깔끔한 하루 한줄요약"} description={"하루에도 요약이 필요해! 당신의 하루를 명쾌하게 요약해드립니다."}/>
                 <HomeImg src="./HomePageImage.png" alt="MypageImagee" />
             </section> 
