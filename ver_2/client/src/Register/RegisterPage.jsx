@@ -133,7 +133,6 @@ const onSubmitHandler = async(event) => {
         }
 
         const pwdRegExp = /^(?=.*?[a-zA-Z])(?=.*?[#?!@$ %^&*-]).{8,40}$/;
-
         isPassword = pwdRegExp.test(password);
 
         if (!isPassword) {
@@ -183,7 +182,8 @@ const onSubmitHandler = async(event) => {
         }
 
         const idRegExp = /^[a-z]+[a-z0-9]{5,20}$/g;
-        if (!idRegExp.test(id)) {
+        const isValidId = idRegExp.test(id);
+        if (!isValidId) {
             return alert("형식에 맞지 않는 아이디입니다.");
         }
 
