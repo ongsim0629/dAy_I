@@ -165,12 +165,6 @@ function EditPage(props) {
         date: dateToString(new window.Date()),
       })
       .then((res) => {
-        console.log(
-          ">>>>>>>>",
-          sessionStorage.getItem("token"),
-          " >>>",
-          dateToString(new window.Date())
-        );
         console.log(res.data);
         navigate("/members/mypage", { state: { myData: res.data } });
       })
