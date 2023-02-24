@@ -165,16 +165,16 @@ function HomePage() {
   },[]) //자원을 아끼기 위해 처음 렌더링됐을때만 리스너를 달아주도록 빈 배열을 줌
 
 
-  useEffect(()=>{
-    function click(event){
-      window.alert("클릭");
-    }
+  // useEffect(()=>{
+  //   function click(event){
+  //     window.alert("클릭");
+  //   }
 
-    const btnPrev = document.querySelector(".react-datepicker__navigation--previous");
-    btnPrev.addEventListener("click", click);
-    const btnNext = document.querySelector(".react-datepicker__navigation--next");
-    btnNext.addEventListener("click", click); 
-  },[])
+  //   const btnPrev = document.querySelector(".react-datepicker__navigation--previous");
+  //   btnPrev.addEventListener("click", click);
+  //   const btnNext = document.querySelector(".react-datepicker__navigation--next");
+  //   btnNext.addEventListener("click", click); 
+  // },[])
 
   axios
     .get("/members/edit")
