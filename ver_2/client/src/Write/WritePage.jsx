@@ -10,6 +10,7 @@ const Header = styled.header`
   top: 0;
   left: 0;
   width: 100%;
+  height: 80px;
   flex-direction: row;
   background-color: #e5e0ff;
 `;
@@ -27,9 +28,9 @@ const Layout = styled.div`
 `;
 
 const BackButton = styled.button`
-  color: #9F9F9F;
-  font-size: 17px;
-  background: #f5f5f5;
+  color: #8F8F8F;
+  background: #F5F5F5;
+  font-size: 16px;
   font: AbeeZee;
   border: none;
   border-radius: 4px;

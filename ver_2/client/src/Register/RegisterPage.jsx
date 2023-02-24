@@ -12,7 +12,7 @@ const Header = styled.header`
     position: fixed;
     top: 0;
     width: 100%;
-    height: 100px;
+    height: 80px;
     background-color: #E5E0FF;
 `;
 
@@ -45,6 +45,23 @@ const SubmitButton = styled.button`
     font-weight: bold;
     border:none;
     border-radius: 7px;
+    &:hover {
+        cursor: pointer;
+    }
+    &:focus{
+        box-shadow: 0 0 0 1px gray;
+    }
+`;
+
+const CheckDuplicateButton = styled.button`
+    color: #8F8F8F;
+    background: #F5F5F5;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    margin: 10px 20px;
+    padding-left: 12px;
+    padding-right: 12px;    
     &:hover {
         cursor: pointer;
     }
@@ -152,11 +169,15 @@ let isPasswordConfirm = false;
         console.log("Submit Button Click"); //확인용
     }
 
+    const onDupCheckHandler = () =>{
+        
+    }
+
 
     return (
         <div>
             <Header>
-                <a href="/"><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '30px', height: '40px' }} /></a>
+                <a href="/"><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '20px', height: '40px' }} /></a>
             </Header>
             <div>
                 <div style={{ 
@@ -169,7 +190,10 @@ let isPasswordConfirm = false;
                         </div>
                         <form style={{ display: 'flex', flexDirection: 'column'}} >
                             <Label>아이디</Label> 
+                            <div style={{ display:'flex', flexDirection: 'row'}}>
                             <Input type='text' size ='65' value={id} onChange={onIdHandler} placeholder='6~15자까지 영문자(소문자), 숫자 사용 가능합니다.'/>
+                            <CheckDuplicateButton onClick={onDupCheckHandler}>중복 확인</CheckDuplicateButton>
+                            </div>
                             <br/><br/>
                             <Label>비밀번호</Label>
                             <Input type='password' value={password} onChange={onPasswordHandler} placeholder='1개 이상의 특수문자를 포함하고 8자리 이상, 40자 이하여야 합니다.'/><br /><br />

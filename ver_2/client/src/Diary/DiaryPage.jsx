@@ -92,12 +92,25 @@ const Bar = styled.div`
     font-size: 20px;
 `;
 
+const DeleteButton = styled.div`
+    margin-right: 70px;
+    color: #AEAEAE;
+    &:hover {
+        cursor: pointer;
+    }
+    &:focus{
+        box-shadow: 0 0 0 1px gray;
+    }
+`;
+
 
 function DiaryPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const dailyData = location.state.dailyData;
-    const submitDate = dailyData.diary_write_date;
+    // const dailyData = location.state.dailyData;
+    // const submitDate = dailyData.diary_write_date;
+    const dailyData = [1,2,3,4];
+    const submitDate = new window.Date();
 
     // 새로고침 및 페이지 이동 시 실행되는 코드
     const preventClose = (e: BeforeUnloadEvent) => { 
@@ -191,7 +204,8 @@ useEffect(() => {
                 <div>
                     <h4 style={{marginLeft : '50px', color: '#AEAEAE', fontWeight: 'normal'}}>{dailyData.diary_write_date}</h4>
                     <a style={{marginLeft: '50px', fontWeight: 'bold', fontSize: '1.5rem'}}>{dailyData.diary_title}</a>
-                    <a onClick={onClickDelete} style={{float: 'right', marginRight: '70px', color: '#AEAEAE'}}>삭제</a>
+                    {/* <a onClick={onClickDelete} style={{float: 'right', marginRight: '70px', color: '#AEAEAE'}}>삭제</a> */}
+                    <DeleteButton onClick={onClickDelete} >삭제</DeleteButton>
                     {/* <Link to="/diaries/test/write"><a style={{float: 'right', marginRight: '30px', color: '#AEAEAE'}}>수정</a></Link> */}
                 </div>
                 <DiaryBack>

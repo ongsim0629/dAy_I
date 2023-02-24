@@ -23,6 +23,7 @@ const TopBarContainer = styled.div`
 
 const LeftContents = styled.div`
     display: flex;
+    margin-left: 0px;
 `;
 
 const IdxLogo = styled.img`
@@ -33,7 +34,7 @@ const IdxLogo = styled.img`
 `;
 
 const Content = styled.div`
-    margin: 60px;
+    margin: 50px;
     margin-right: 0px;
     font-family: AbeeZee;
     font-size: 20px;
@@ -99,9 +100,9 @@ function IndexPage(){
     return(
         <>
             <TopBarContainer>
-            <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
+            {/* <img src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} /> */}
                 <LeftContents >
-                    
+                <img src={Logo} style={{ margin: '30px', marginTop: '42px', height: '40px' }} />
                     <AnchorLink href="#section1"><Content >컨텐츠 추천</Content></AnchorLink>
                     <AnchorLink href="#section2"><Content >일기 한달분석</Content></AnchorLink>
                     <AnchorLink href="#section3"><Content >월별 일기 요약</Content></AnchorLink>
