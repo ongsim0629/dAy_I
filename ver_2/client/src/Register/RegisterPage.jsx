@@ -214,8 +214,8 @@ const onSubmitHandler = async(event) => {
             </Header>
             <div>
                 <div style={{ 
-                    position: 'fixed', display: 'flex', justifyContent: 'center', alignItems: 'center', 
-                    width: '100%', height: '90vh'
+                    display: 'flex', justifyContent: 'center', alignItems: 'center', 
+                    width: '100%', height: '80vh'
                 }}>
                     <div>
                         <div>
