@@ -5,38 +5,38 @@ import styled from "styled-components";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ko from "date-fns/locale/ko";
+import Logo from "../Image/Logo.png";
 
 const Header = styled.header`
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
+  width: 100vw;
+  position: fixed;
+  height: 100px;
   flex-direction: row;
   background-color: #e5e0ff;
 `;
 
 
 const Layout = styled.div`
-  margin-top: 4%;
+  margin-top: 10%;
   width: 90vw;
-  height: 100vh;
-  flexdirection: "column";
-  alignitems: "center";
+  height: 80vh;
+  flex-direction: row;
   position: fixed;
   padding-left: 80px;
-  margin-right: 100px;
 `;
 
 const BackButton = styled.button`
   color: #8F8F8F;
   background: #F5F5F5;
-  font-size: 16px;
-  font: AbeeZee;
+  font-weight: bold;
+  font-size: 15px;
   border: none;
   border-radius: 4px;
-  margin: 20px;
-  margin-left: 45px;
-  padding: 10px 27px;
+  margin-right: 3%;
+  margin-top: 30px;
+  float: right;
+  padding: 10px 20px;
   &:hover {
     cursor: pointer;
   }
@@ -47,17 +47,15 @@ const BackButton = styled.button`
 
 const SaveButton = styled.button`
   color: white;
-  font-size: 17px;
+  font-size: 15px;
   font: AbeeZee;
   background: #93B5C6;
   font-weight: bold;
   border: none;
   border-radius: 4px;
+  margin-right: 15px;
   float: right;
-  margin: 1px 20px 20px;
-  
-  padding: 10px 27px;
-
+  padding: 10px 20px;
   &:hover {
     cursor: pointer;
   }
@@ -186,8 +184,8 @@ function WritePage() {
   return (
     <div style={{weight: '100vw'}}>
       <Header>
-        <BackButton onClick={onBackHandler}>이전</BackButton>{" "}
-        
+        <img onClick={onBackHandler} src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
+        <BackButton onClick={onBackHandler}>이전</BackButton>
       </Header>
       <Layout>
           <DateInput
