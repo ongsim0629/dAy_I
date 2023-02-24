@@ -177,7 +177,7 @@ let isPasswordConfirm = false;
     return (
         <div>
             <Header>
-                <a href="/"><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '20px', height: '40px' }} /></a>
+            <a href="/"  ><img src={Logo} style={{ width: '9%', margin: '30px', marginTop: '20px', height: '40px' }} /></a>
             </Header>
             <div>
                 <div style={{ 
