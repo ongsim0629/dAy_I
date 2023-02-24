@@ -213,7 +213,6 @@ function Mypage(){
     <>
     <Header>
       <img onClick={onBackHandler} src={Logo} style={{ margin: '30px', marginTop: '30px', height: '40px' }} />
-      <Link to="/members/edit"><Button>회원정보 수정</Button></Link>
       <Button onClick={onBackHandler}>이전</Button>
     </Header>
     <Layout>

@@ -294,7 +294,7 @@ function EditPage(props) {
                   {/* 완료 클릭 이후 Mypage로 가야 함.  */}
                 </SubmitButton>
                 <br></br>
-                <CancelButton onClick={onBackButtonHandler}>취소</CancelButton>
+                <CancelButton onClick={onBackHandler}>취소</CancelButton>
               </div>
             </form>
           </div>
