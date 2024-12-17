@@ -74,3 +74,28 @@
     </td>
   </tr>
 </table>
+
+
+### 서비스 설명
+![image](https://github.com/user-attachments/assets/30aea996-42ee-49af-974a-3e00e4b0775b)
+
+
+### 기능 설명
+![image](https://github.com/user-attachments/assets/a374e16f-66b2-423a-8773-e73a6a9b0be5)
+![image](https://github.com/user-attachments/assets/209c7003-cbc1-4455-a4b9-dc7283f446a9)
+![image](https://github.com/user-attachments/assets/501fcfd6-c5b0-4ea7-b800-0cfc02090146)
+![image](https://github.com/user-attachments/assets/efec628c-e9aa-47ad-8ed1-ce6101b2bfe8)
+![image](https://github.com/user-attachments/assets/dbb5a24f-d7b7-411c-80f6-f3b37208050a)
+![image](https://github.com/user-attachments/assets/54ff28d0-c4c8-4b42-90b3-e88d552c568b)
+
+
+### 시행 착오
+![image](https://github.com/user-attachments/assets/d11921db-fb91-421f-adf9-44d22a4a1906)
+![image](https://github.com/user-attachments/assets/0fe8672a-02e4-4329-91ed-90fe89c6627b)
+
+### Model
+![image](https://github.com/user-attachments/assets/ac7eb233-821d-47b9-9226-7b6dfaab15db)
+
+### DB 구조도
+![image](https://github.com/user-attachments/assets/bdc7e722-8fe0-45aa-8636-0cc69eb2c64a)
+
